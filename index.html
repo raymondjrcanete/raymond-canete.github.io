@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raymond A. Cañete Jr. | Testing &amp; Control Supervisor</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #1F3864;
+            --accent: #2E75B6;
+            --light-accent: #BDD7EE;
+            --bg: #F4F7FB;
+            --white: #ffffff;
+            --text: #2c2c2c;
+            --muted: #6c757d;
+            --success: #375623;
+            --card-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        body {
+            font-family: 'Segoe UI', Calibri, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* ── NAVBAR ── */
+        nav {
+            background-color: var(--primary);
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        nav .logo {
+            color: white;
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        nav .logo span { color: var(--light-accent); }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        nav ul li a {
+            color: rgba(255,255,255,0.85);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        nav ul li a:hover { color: var(--light-accent); }
+
+        /* ── HERO ── */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: white;
+            padding: 80px 40px;
+            text-align: center;
+        }
+
+        .hero .avatar {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            background-color: var(--light-accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 42px;
+            font-weight: bold;
+            color: var(--primary);
+            margin: 0 auto 20px;
+            border: 4px solid rgba(255,255,255,0.3);
+        }
+
+        .hero h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .hero .title {
+            font-size: 16px;
+            color: var(--light-accent);
+            font-weight: 500;
+            margin-bottom: 12px;
+        }
+
+        .hero .email {
+            font-size: 14px;
+            color: rgba(255,255,255,0.75);
+            margin-bottom: 25px;
+        }
+
+        .hero .email a { color: var(--light-accent); text-decoration: none; }
+        .hero .email a:hover { text-decoration: underline; }
+
+        .hero .tags {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .hero .tag {
+            background-color: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+        }
+
+        .hero .cta-btn {
+            background-color: white;
+            color: var(--primary);
+            padding: 12px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 14px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: inline-block;
+        }
+
+        .hero .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+
+        /* ── SECTIONS ── */
+        section {
+            padding: 60px 40px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 2px;
+            background: linear-gradient(to right, var(--accent), transparent);
+        }
+
+        .section-subtitle {
+            color: var(--muted);
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        /* ── ABOUT ── */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .about-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .about-card h3 {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .about-card p {
+            font-size: 14px;
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        /* ── SKILLS ── */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .skill-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: var(--card-shadow);
+            text-align: center;
+            transition: transform 0.2s;
+        }
+
+        .skill-card:hover { transform: translateY(-4px); }
+
+        .skill-card .icon {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .skill-card h4 {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 6px;
+        }
+
+        .skill-card p {
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        .skill-bar-wrap { margin-top: 8px; background: #e9ecef; border-radius: 10px; height: 6px; }
+        .skill-bar { height: 6px; border-radius: 10px; background: linear-gradient(to right, var(--primary), var(--accent)); }
+
+        /* ── EXPERIENCE ── */
+        .timeline { position: relative; padding-left: 30px; }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--light-accent);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+            background: var(--white);
+            border-radius: 12px;
+            padding: 20px 25px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -26px;
+            top: 22px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: 2px solid white;
+            box-shadow: 0 0 0 2px var(--accent);
+        }
+
+        .timeline-item .job-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .timeline-item .company {
+            font-size: 13px;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .timeline-item .period {
+            font-size: 12px;
+            color: var(--muted);
+            margin-bottom: 10px;
+        }
+
+        .timeline-item ul {
+            padding-left: 18px;
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        .timeline-item ul li { margin-bottom: 4px; }
+
+        /* ── KB SECTION ── */
+        .kb-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .kb-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: var(--card-shadow);
+            border-top: 4px solid var(--accent);
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+        }
+
+        .kb-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+        }
+
+        .kb-card .kb-icon {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+
+        .kb-card h3 {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .kb-card p {
+            font-size: 13px;
+            color: var(--muted);
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .kb-card .kb-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 15px;
+        }
+
+        .kb-card .kb-tag {
+            background: var(--bg);
+            color: var(--accent);
+            font-size: 11px;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-weight: 600;
+            border: 1px solid var(--light-accent);
+        }
+
+        .kb-card .open-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            width: 100%;
+        }
+
+        .kb-card .open-btn:hover { background: var(--accent); }
+
+        /* ── MODAL ── */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.active { display: flex; }
+
+        .modal {
+            background: white;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 900px;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+            animation: modalIn 0.25s ease;
+        }
+
+        @keyframes modalIn {
+            from { transform: scale(0.95); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            padding: 20px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .modal-header .modal-title {
+            font-size: 17px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .modal-header .modal-subtitle {
+            font-size: 12px;
+            color: var(--light-accent);
+            margin-top: 3px;
+        }
+
+        .modal-close {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+            flex-shrink: 0;
+        }
+
+        .modal-close:hover { background: rgba(255,255,255,0.35); }
+
+        .modal-toolbar {
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+            padding: 10px 20px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .modal-toolbar a {
+            background: var(--primary);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 15px;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+
+        .modal-toolbar a:hover { background: var(--accent); }
+
+        .modal-toolbar span {
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        .modal-body {
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .modal-body iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            min-height: 500px;
+        }
+
+        /* ── CONTACT ── */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .contact-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: var(--card-shadow);
+            text-align: center;
+            transition: transform 0.2s;
+        }
+
+        .contact-card:hover { transform: translateY(-3px); }
+
+        .contact-card .c-icon { font-size: 28px; margin-bottom: 10px; }
+        .contact-card h4 { font-size: 13px; font-weight: 700; color: var(--primary); margin-bottom: 5px; }
+        .contact-card p { font-size: 13px; color: var(--muted); }
+        .contact-card a { color: var(--accent); text-decoration: none; }
+        .contact-card a:hover { text-decoration: underline; }
+
+        /* ── FOOTER ── */
+        footer {
+            background: var(--primary);
+            color: rgba(255,255,255,0.7);
+            text-align: center;
+            padding: 25px 40px;
+            font-size: 13px;
+        }
+
+        footer span { color: var(--light-accent); }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 768px) {
+            nav ul { display: none; }
+            .hero h1 { font-size: 24px; }
+            .about-grid { grid-template-columns: 1fr; }
+            section { padding: 40px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+    <div class="logo">RC<span>.</span>Portfolio</div>
+    <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#kb">Knowledge Base</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+    <div class="avatar">RC</div>
+    <h1>Raymond A. Ca&ntilde;ete Jr.</h1>
+    <div class="title">Testing &amp; Control Supervisor &nbsp;|&nbsp; ISTQB Certified Test Manager &nbsp;|&nbsp; CTFL</div>
+    <div class="email">
+        📧 <a href="mailto:raymondjr.canete@gmail.com">raymondjr.canete@gmail.com</a>
+        &nbsp;&nbsp;📞 +63 966 816 4931
+        &nbsp;&nbsp;📍 Taguig City, Philippines
+    </div>
+    <div class="tags">
+        <span class="tag">Manual Testing</span>
+        <span class="tag">Test Automation</span>
+        <span class="tag">Performance Testing</span>
+        <span class="tag">JMeter</span>
+        <span class="tag">Robot Framework</span>
+        <span class="tag">UFT One</span>
+        <span class="tag">Selenium</span>
+        <span class="tag">API Testing</span>
+        <span class="tag">Team Leadership</span>
+        <span class="tag">ISTQB CTAL-TM</span>
+        <span class="tag">ISTQB CTFL</span>
+    </div>
+    <a href="#kb" class="cta-btn">📚 View Knowledge Base</a>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+    <div class="section-title">About Me</div>
+    <p class="section-subtitle">A brief overview of who I am and what I do</p>
+    <div class="about-grid">
+        <div class="about-card">
+            <h3>👤 Profile</h3>
+            <p>
+                ISTQB Certified Test Manager and CTFL with 10+ years of experience in software quality assurance.
+                Currently serving as Testing &amp; Control Supervisor at Palawan Group of Companies.
+                Passionate about building quality processes, mentoring QA teams, and ensuring software reliability
+                before it reaches end users.
+            </p>
+        </div>
+        <div class="about-card">
+            <h3>🎯 What I Do</h3>
+            <p>
+                I lead QA teams in designing and executing test strategies across functional, regression,
+                performance, and automation testing. I spearhead QA policy formulation, load testing initiatives,
+                and automation framework implementation using Robot Framework and UFT One.
+            </p>
+        </div>
+        <div class="about-card">
+            <h3>🛠️ Tools &amp; Technologies</h3>
+            <p>
+                JMeter &bull; Locust &bull; Robot Framework &bull; UFT One &bull; Selenium &bull;
+                Postman &bull; Swagger &bull; MySQL &bull; JIRA &bull; Redmine &bull;
+                Azure DevOps &bull; Wrike &bull; TIBCO Spotfire &bull; Python
+            </p>
+        </div>
+        <div class="about-card">
+            <h3>🏅 Certifications</h3>
+            <p>
+                🎓 <strong>ISTQB Certified Test Manager</strong> (CTAL-TM)<br>
+                🎓 <strong>ISTQB Certified Tester Foundation Level</strong> (CTFL)<br>
+                🎓 <strong>ISO/IEC/IEEE 29119</strong> Software Testing
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+    <div class="section-title">Skills</div>
+    <p class="section-subtitle">Core competencies and tools I work with</p>
+    <div class="skills-grid">
+        <div class="skill-card">
+            <div class="icon">⚡</div>
+            <h4>Performance Testing</h4>
+            <p>JMeter, Locust — load, stress, spike testing &amp; result analysis</p>
+            <div class="skill-bar-wrap"><div class="skill-bar" style="width:92%"></div></div>
+        </div>
+        <div class="skill-card">
+            <div class="icon">🤖</div>
+            <h4>Test Automation</h4>
+            <p>Robot Framework, UFT One, Selenium with Python</p>
+            <div class="skill-bar-wrap"><div class="skill-bar" style="width:90%"></div></div>
+        </div>
+        <div class="skill-card">
+            <div class="icon">🔌</div>
+            <h4>API Testing</h4>
+            <p>Postman, Swagger, REST API validation</p>
+            <div class="skill-bar-wrap"><div class="skill-bar" style="width:88%"></div></div>
+        </div>
+        <div class="skill-card">
+            <div class="icon">📋</div>
+            <h4>Manual Testing</h4>
+            <p>Test plan, test design, test case creation &amp; execution</p>
+            <div class="skill-bar-wrap"><div class="skill-bar" style="width:95%"></div></div>
+        </div>
+        <div class="skill-card">
+            <div class="icon">👥</div>
+            <h4>Team Leadership</h4>
+            <p>Mentoring QA team, task delegation, performance monitoring</p>
+            <div class="skill-bar-wrap"><div class="skill-bar" style="width:90%"></div></div>
+        </div>
+        <div class="skill-card">
+            <div class="icon">🗄️</div>
+            <h4>SQL &amp; Data Analysis</h4>
+            <p>MySQL, TIBCO Spotfire data visualization &amp; monitoring</p>
+            <div class="skill-bar-wrap"><div class="skill-bar" style="width:82%"></div></div>
+        </div>
+        <div class="skill-card">
+            <div class="icon">📊</div>
+            <h4>Test Reporting</h4>
+            <p>JMeter HTML reports, Robot Framework reports, metrics analysis</p>
+            <div class="skill-bar-wrap"><div class="skill-bar" style="width:92%"></div></div>
+        </div>
+        <div class="skill-card">
+            <div class="icon">🔄</div>
+            <h4>Project Management Tools</h4>
+            <p>JIRA, Redmine, Azure DevOps, Wrike</p>
+            <div class="skill-bar-wrap"><div class="skill-bar" style="width:85%"></div></div>
+        </div>
+    </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+    <div class="section-title">Experience</div>
+    <p class="section-subtitle">Professional background and key responsibilities</p>
+    <div class="timeline">
+        <div class="timeline-item">
+            <div class="job-title">Testing &amp; Control Supervisor</div>
+            <div class="company">Palawan Group of Companies</div>
+            <div class="period">📅 November 2023 – Present</div>
+            <ul>
+                <li>Create and execute both manual and automated tests with focus on test plans and test strategies</li>
+                <li>Implemented automation frameworks and utilized UFT One as an automation tool; trained team members in automation testing</li>
+                <li>Leading load testing initiatives including planning, execution, and analysis using JMeter and other performance test frameworks</li>
+                <li>Spearheading the formulation and improvement of QA Policies and Processes aligned with organizational goals and industry best practices</li>
+                <li>Managing a team of QA professionals — providing mentorship, task delegation, and performance monitoring</li>
+            </ul>
+        </div>
+        <div class="timeline-item">
+            <div class="job-title">Test Specialist Engineer</div>
+            <div class="company">Music Group Commercial BM Ltd</div>
+            <div class="period">📅 September 2020 – October 2023</div>
+            <ul>
+                <li>Created and executed manual and automation testing for e-commerce and Digital Asset Management (AEM) platforms</li>
+                <li>Responsible for test plan creation, test case design, execution, and automation</li>
+                <li>Served as one of the administrators for Adobe Experience Manager (AEM)</li>
+            </ul>
+        </div>
+        <div class="timeline-item">
+            <div class="job-title">Test Specialist Engineer</div>
+            <div class="company">Salarium</div>
+            <div class="period">📅 January 2020 – August 2020</div>
+            <ul>
+                <li>Analyzed requirements and created test designs and test cases</li>
+                <li>Designed testing scenarios demonstrating conformance to functional and non-functional requirements</li>
+                <li>Executed functional, usability, and performance testing on mobile applications</li>
+                <li>Analyzed test results and reported on testing progress</li>
+            </ul>
+        </div>
+        <div class="timeline-item">
+            <div class="job-title">Test Engineer 4</div>
+            <div class="company">VALTES Advanced Technology</div>
+            <div class="period">📅 January 2018 – January 2020</div>
+            <ul>
+                <li>Analyzed requirements and created test designs and test cases</li>
+                <li>Conducted comprehensive testing for mobile applications in banking and payroll domains</li>
+                <li>Ensured delivery of high-quality and secure software solutions</li>
+                <li>Analyzed test results and reported on testing progress</li>
+            </ul>
+        </div>
+        <div class="timeline-item">
+            <div class="job-title">Failure Analysis (QA)</div>
+            <div class="company">Toshiba Information Equipment (Phils.), Inc.</div>
+            <div class="period">📅 September 2014 – January 2018</div>
+            <ul>
+                <li>Regular monitoring and analysis of workshop pass rate (Electrical/Servo-related failures)</li>
+                <li>Provided countermeasures and design revision suggestions based on investigation results</li>
+                <li>Improved in-process yield by investigating failures and creating Design of Experiments (DOE)</li>
+                <li>Created basic automation tools using VBA for faster workflow and data analysis</li>
+                <li>Published investigation results to concerned parties</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- KNOWLEDGE BASE -->
+<section id="kb">
+    <div class="section-title">Knowledge Base</div>
+    <p class="section-subtitle">Guides, runbooks, and documentation I've created for the QA team</p>
+    <div class="kb-grid">
+
+        <!-- Card 1: JMeter Guide -->
+        <div class="kb-card" onclick="openModal('jmeter')">
+            <div class="kb-icon">⚡</div>
+            <h3>JMeter Installation & Load Testing Guide</h3>
+            <p>
+                Complete guide covering load testing fundamentals, key performance metrics,
+                and step-by-step JMeter installation and test execution.
+            </p>
+            <div class="kb-tags">
+                <span class="kb-tag">JMeter</span>
+                <span class="kb-tag">Performance Testing</span>
+                <span class="kb-tag">Load Testing</span>
+                <span class="kb-tag">Metrics</span>
+            </div>
+            <button class="open-btn">📖 Open Guide</button>
+        </div>
+
+        <!-- Card 2: Robot Framework Guide -->
+        <div class="kb-card" onclick="openModal('robot')">
+            <div class="kb-icon">🤖</div>
+            <h3>Robot Framework Installation Guide</h3>
+            <p>
+                Step-by-step installation guide for Robot Framework with VS Code,
+                including virtual environment setup, libraries, and first test execution.
+            </p>
+            <div class="kb-tags">
+                <span class="kb-tag">Robot Framework</span>
+                <span class="kb-tag">Automation</span>
+                <span class="kb-tag">Python</span>
+                <span class="kb-tag">VS Code</span>
+            </div>
+            <button class="open-btn">📖 Open Guide</button>
+        </div>
+
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+    <div class="section-title">Contact</div>
+    <p class="section-subtitle">Feel free to reach out</p>
+    <div class="contact-grid">
+        <div class="contact-card">
+            <div class="c-icon">📧</div>
+            <h4>Email</h4>
+            <p><a href="mailto:raymondjr.canete@gmail.com">raymondjr.canete@gmail.com</a></p>
+        </div>
+        <div class="contact-card">
+            <div class="c-icon">💼</div>
+            <h4>LinkedIn</h4>
+            <p><a href="https://www.linkedin.com/in/raymond-canete-933a24172" target="_blank">linkedin.com/in/raymond-canete</a></p>
+        </div>
+        <div class="contact-card">
+            <div class="c-icon">🐙</div>
+            <h4>GitHub</h4>
+            <p><a href="#" target="_blank">github.com/raymond-canete</a></p>
+        </div>
+        <div class="contact-card">
+            <div class="c-icon">📍</div>
+            <h4>Location</h4>
+            <p>Philippines</p>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <p>© 2026 <span>Raymond A. Canete Jr</span> &nbsp;|&nbsp; QA Test Supervisor &nbsp;|&nbsp; Built with ❤️ for the QA Team</p>
+</footer>
+
+<!-- KB MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+    <div class="modal">
+        <div class="modal-header">
+            <div>
+                <div class="modal-title" id="modalTitle">📖 Guide</div>
+                <div class="modal-subtitle" id="modalSubtitle">Knowledge Base</div>
+            </div>
+            <button class="modal-close" onclick="closeModal()">✕</button>
+        </div>
+        <div class="modal-toolbar">
+            <a id="modalOpenLink" href="#" target="_blank">🔗 Open in New Tab</a>
+            <span>Scroll inside the guide to read the full content</span>
+        </div>
+        <div class="modal-body">
+            <iframe id="modalIframe" src="" title="Guide"></iframe>
+        </div>
+    </div>
+</div>
+
+<script>
+    const guides = {
+        jmeter: {
+            title: '⚡ JMeter Installation & Load Testing Guide',
+            subtitle: 'Performance Testing · Load Testing · Metrics',
+            file: 'JMeter_Installation_Guide.html'
+        },
+        robot: {
+            title: '🤖 Robot Framework Installation Guide',
+            subtitle: 'Test Automation · Python · VS Code',
+            file: 'Robot_Framework_Installation_Guide.html'
+        }
+    };
+
+    function openModal(key) {
+        const guide = guides[key];
+        document.getElementById('modalTitle').textContent = guide.title;
+        document.getElementById('modalSubtitle').textContent = guide.subtitle;
+        document.getElementById('modalIframe').src = guide.file;
+        document.getElementById('modalOpenLink').href = guide.file;
+        document.getElementById('modalOverlay').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        document.getElementById('modalOverlay').classList.remove('active');
+        document.getElementById('modalIframe').src = '';
+        document.body.style.overflow = '';
+    }
+
+    function closeModalOutside(event) {
+        if (event.target === document.getElementById('modalOverlay')) {
+            closeModal();
+        }
+    }
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeModal();
+    });
+
+    // Smooth scroll for nav links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                e.preventDefault();
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

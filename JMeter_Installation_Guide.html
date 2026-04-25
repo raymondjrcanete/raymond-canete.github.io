@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JMeter Installation & Load Testing Guide</title>
+    <style>
+        body { font-family: Calibri, Arial, sans-serif; font-size: 11pt; margin: 2.54cm; color: #000; line-height: 1.5; }
+        h1 { font-size: 20pt; font-weight: bold; color: #1F3864; text-align: center; margin-bottom: 5px; }
+        h2 { font-size: 14pt; font-weight: bold; color: #1F3864; border-bottom: 2px solid #1F3864; padding-bottom: 4px; margin-top: 30px; }
+        h3 { font-size: 12pt; font-weight: bold; color: #2E75B6; margin-top: 20px; }
+        .subtitle { text-align: center; font-size: 12pt; color: #555; margin-bottom: 5px; }
+        .doc-info { text-align: center; font-size: 10pt; color: #777; margin-bottom: 40px; }
+        .toc { background-color: #F2F2F2; border: 1px solid #CCC; padding: 20px 30px; margin: 30px 0; page-break-after: always; }
+        .toc h2 { border-bottom: 2px solid #1F3864; margin-top: 0; }
+        .toc ol { margin: 0; padding-left: 20px; }
+        .toc li { margin: 6px 0; font-size: 11pt; }
+        .toc a { color: #1F3864; text-decoration: none; }
+        .toc .section-title { font-weight: bold; color: #1F3864; margin-top: 10px; margin-bottom: 2px; list-style: none; }
+        pre { background-color: #F4F4F4; border: 1px solid #DDD; border-left: 4px solid #2E75B6; padding: 12px 15px; font-family: Consolas, Courier New, monospace; font-size: 10pt; margin: 10px 0; }
+        code { background-color: #F4F4F4; font-family: Consolas, Courier New, monospace; font-size: 10pt; padding: 2px 5px; border-radius: 3px; }
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 10.5pt; }
+        th { background-color: #1F3864; color: #FFF; padding: 8px 12px; text-align: left; font-weight: bold; }
+        td { padding: 7px 12px; border: 1px solid #CCC; vertical-align: top; }
+        tr:nth-child(even) { background-color: #EEF2F7; }
+        tr:nth-child(odd) { background-color: #FFF; }
+        .note { background-color: #FFF9E6; border-left: 4px solid #FFC000; padding: 10px 15px; margin: 10px 0; font-size: 10.5pt; }
+        .important { background-color: #FDECEA; border-left: 4px solid #C00000; padding: 10px 15px; margin: 10px 0; font-size: 10.5pt; }
+        .success { background-color: #EBF5EB; border-left: 4px solid #375623; padding: 10px 15px; margin: 10px 0; font-size: 10.5pt; }
+        .info { background-color: #E8F4FD; border-left: 4px solid #2E75B6; padding: 10px 15px; margin: 10px 0; font-size: 10.5pt; }
+        .step-header { background-color: #1F3864; color: white; padding: 8px 15px; font-size: 13pt; font-weight: bold; margin-top: 30px; margin-bottom: 10px; }
+        .section-header { background-color: #2E75B6; color: white; padding: 8px 15px; font-size: 13pt; font-weight: bold; margin-top: 30px; margin-bottom: 10px; }
+        ul { margin: 8px 0; padding-left: 25px; }
+        li { margin: 4px 0; }
+        ol { margin: 8px 0; padding-left: 25px; }
+        ol li { margin: 6px 0; }
+        .page-break { page-break-before: always; }
+        .checklist li { list-style-type: none; margin: 5px 0; }
+        .checklist li::before { content: "☐ "; font-size: 12pt; }
+        hr { border: none; border-top: 1px solid #CCC; margin: 20px 0; }
+        .footer { text-align: center; font-size: 9pt; color: #999; margin-top: 50px; border-top: 1px solid #CCC; padding-top: 10px; }
+        .metric-good { color: #375623; font-weight: bold; }
+        .metric-warn { color: #7F6000; font-weight: bold; }
+        .metric-bad { color: #C00000; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<!-- COVER -->
+<h1>JMeter Installation &amp; Load Testing Guide</h1>
+<p class="subtitle">For QA Team Members &nbsp;|&nbsp; Performance Testing Reference</p>
+<p class="doc-info">
+    Prepared by: Raymond A. Canete Jr &nbsp;|&nbsp; Version: 1.0 &nbsp;|&nbsp; Date: April 2026<br>
+    Email: <a href="mailto:raymondjr.canete@gmail.com">raymondjr.canete@gmail.com</a>
+</p>
+
+<hr>
+
+<!-- TABLE OF CONTENTS -->
+<div class="toc">
+    <h2>Table of Contents</h2>
+    <ol>
+        <li class="section-title">PART 1 &mdash; LOAD TESTING FUNDAMENTALS</li>
+        <li><a href="#what-is-load-testing">What is Load Testing?</a></li>
+        <li><a href="#why-load-testing">Why Do We Do Load Testing?</a></li>
+        <li><a href="#types-of-load-testing">Types of Load Testing</a></li>
+        <li><a href="#metrics">Key Performance Metrics</a></li>
+        <li><a href="#metrics-relationship">How Metrics Relate to Each Other</a></li>
+        <li><a href="#thresholds">Acceptable Thresholds &amp; Benchmarks</a></li>
+        <li class="section-title">PART 2 &mdash; JMETER INSTALLATION</li>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#step1">Step 1 &mdash; Install Java (JDK)</a></li>
+        <li><a href="#step2">Step 2 &mdash; Download Apache JMeter</a></li>
+        <li><a href="#step3">Step 3 &mdash; Install &amp; Configure JMeter</a></li>
+        <li><a href="#step4">Step 4 &mdash; Launch JMeter</a></li>
+        <li><a href="#step5">Step 5 &mdash; Install JMeter Plugins (Optional but Recommended)</a></li>
+        <li><a href="#step6">Step 6 &mdash; Create Your First Test Plan</a></li>
+        <li><a href="#step7">Step 7 &mdash; Configure Thread Group</a></li>
+        <li><a href="#step8">Step 8 &mdash; Add HTTP Request Sampler</a></li>
+        <li><a href="#step9">Step 9 &mdash; Add Listeners (View Results)</a></li>
+        <li><a href="#step10">Step 10 &mdash; Run the Test</a></li>
+        <li><a href="#step11">Step 11 &mdash; Generate HTML Report</a></li>
+        <li><a href="#troubleshooting">Common Issues &amp; Fixes</a></li>
+        <li><a href="#summary">Summary</a></li>
+    </ol>
+</div>
+
+<!-- ==================== PART 1 ==================== -->
+<div class="section-header" id="part1">PART 1 &mdash; LOAD TESTING FUNDAMENTALS</div>
+
+<!-- WHAT IS LOAD TESTING -->
+<h2 id="what-is-load-testing">What is Load Testing?</h2>
+<p>
+    <strong>Load testing</strong> is a type of performance testing that simulates multiple users accessing a system at the same time to measure how it behaves under expected and peak conditions.
+</p>
+<p>
+    Think of it like a <strong>fire drill for your application</strong> — you simulate a real-world scenario before it actually happens, so you can find and fix problems before your users do.
+</p>
+
+<div class="info">
+    💡 <strong>Simple Definition:</strong> Load testing answers the question — <em>"Can our system handle the number of users we expect?"</em>
+</div>
+
+<h3>What Load Testing Checks</h3>
+<table>
+    <tr><th>Question</th><th>What It Measures</th></tr>
+    <tr><td>Can the system handle 500 users at once?</td><td>Capacity and concurrency</td></tr>
+    <tr><td>How fast does it respond under load?</td><td>Response time under stress</td></tr>
+    <tr><td>Does it crash or return errors?</td><td>Stability and reliability</td></tr>
+    <tr><td>Does performance degrade over time?</td><td>Endurance and memory leaks</td></tr>
+    <tr><td>How many requests can it handle per second?</td><td>Throughput and capacity</td></tr>
+</table>
+
+<!-- WHY LOAD TESTING -->
+<h2 id="why-load-testing">Why Do We Do Load Testing?</h2>
+
+<table>
+    <tr><th>Without Load Testing</th><th>With Load Testing</th></tr>
+    <tr><td>System crashes on launch day</td><td>Issues found and fixed before go-live</td></tr>
+    <tr><td>Users experience slow pages</td><td>Bottlenecks identified early</td></tr>
+    <tr><td>No idea of system limits</td><td>Know exact capacity and breaking point</td></tr>
+    <tr><td>Reactive — fix after failure</td><td>Proactive — fix before failure</td></tr>
+    <tr><td>Business loss due to downtime</td><td>Confidence in system reliability</td></tr>
+</table>
+
+<div class="important">
+    ⚠️ <strong>Real World Impact:</strong> A system that works fine for 10 users can completely fail for 500 users. Load testing reveals this before your real users experience it.
+</div>
+
+<!-- TYPES OF LOAD TESTING -->
+<h2 id="types-of-load-testing">Types of Load Testing</h2>
+
+<h3>1. Load Testing</h3>
+<p>Tests the system under the <strong>expected normal load</strong> it was designed for.</p>
+<p><strong>Example:</strong> Your app expects 500 users during business hours — simulate exactly 500 users.</p>
+<p><strong>Goal:</strong> Verify the system works correctly under normal conditions.</p>
+
+<h3>2. Stress Testing</h3>
+<p>Pushes the system <strong>beyond its normal limits</strong> to find the breaking point.</p>
+<p><strong>Example:</strong> Keep adding users (600, 700, 800...) until the system fails.</p>
+<p><strong>Goal:</strong> Find out at what point the system breaks and how it fails.</p>
+
+<h3>3. Spike Testing</h3>
+<p>Suddenly throws a <strong>massive load</strong> at the system in a very short time.</p>
+<p><strong>Example:</strong> Normal load is 200 users — suddenly jump to 2,000 users in seconds.</p>
+<p><strong>Goal:</strong> See how the system handles sudden unexpected traffic surges.</p>
+
+<h3>4. Endurance Testing (Soak Testing)</h3>
+<p>Runs the system under <strong>normal load for a long period</strong> (hours or days).</p>
+<p><strong>Example:</strong> Simulate 500 users continuously for 8 hours.</p>
+<p><strong>Goal:</strong> Find issues that only appear over time, like memory leaks.</p>
+
+<h3>5. Scalability Testing</h3>
+<p>Tests how well the system <strong>scales up</strong> as load increases.</p>
+<p><strong>Example:</strong> Test with 1 server, then 2 servers, then 3 servers at the same load.</p>
+<p><strong>Goal:</strong> Understand if adding resources improves performance proportionally.</p>
+
+<table>
+    <tr><th>Type</th><th>Load Level</th><th>Duration</th><th>Goal</th></tr>
+    <tr><td><strong>Load</strong></td><td>Normal expected load</td><td>Short–Medium</td><td>Verify normal performance</td></tr>
+    <tr><td><strong>Stress</strong></td><td>Beyond normal limits</td><td>Short</td><td>Find breaking point</td></tr>
+    <tr><td><strong>Spike</strong></td><td>Sudden massive surge</td><td>Very short</td><td>Handle sudden traffic</td></tr>
+    <tr><td><strong>Endurance</strong></td><td>Normal load</td><td>Very long (hours/days)</td><td>Find time-based issues</td></tr>
+    <tr><td><strong>Scalability</strong></td><td>Increasing load</td><td>Medium</td><td>Understand growth capacity</td></tr>
+</table>
+
+<!-- KEY METRICS -->
+<div class="page-break"></div>
+<h2 id="metrics">Key Performance Metrics</h2>
+<p>These are the numbers you read and analyze in every JMeter report. Understanding each one is essential for a QA engineer.</p>
+
+<h3>1. Response Time</h3>
+<p>The time from when a user sends a request to when they receive a complete response. Measured in <strong>milliseconds (ms)</strong>.</p>
+<div class="info">
+    💡 <strong>Think of it like:</strong> Ordering food at a restaurant — response time is how long you wait from placing your order to getting your food.
+</div>
+<table>
+    <tr><th>Metric</th><th>What It Means</th></tr>
+    <tr><td><strong>Minimum</strong></td><td>Fastest response recorded during the test</td></tr>
+    <tr><td><strong>Maximum</strong></td><td>Slowest response recorded — watch for extreme outliers</td></tr>
+    <tr><td><strong>Average</strong></td><td>Sum of all response times ÷ total requests. Can be misleading if outliers exist.</td></tr>
+    <tr><td><strong>Median (50th pct)</strong></td><td>50% of requests are faster than this value. More reliable than average.</td></tr>
+    <tr><td><strong>90th Percentile</strong></td><td>90% of requests completed faster than this. 10% were slower.</td></tr>
+    <tr><td><strong>95th Percentile</strong></td><td>95% of requests completed faster than this. Commonly used in SLAs.</td></tr>
+    <tr><td><strong>99th Percentile</strong></td><td>99% of requests completed faster than this. Represents worst-case users.</td></tr>
+</table>
+
+<div class="note">
+    💡 <strong>Why percentiles matter more than average:</strong><br>
+    Example: 9 requests take 100ms, 1 request takes 10,000ms.<br>
+    Average = 1,090ms — looks bad for everyone.<br>
+    90th percentile = 100ms — most users are actually fine.<br>
+    The average is misleading; percentiles tell the real story.
+</div>
+
+<h3>2. Throughput (Transactions Per Second — TPS)</h3>
+<p>The number of requests the system successfully processes per second.</p>
+<div class="info">
+    💡 <strong>Think of it like:</strong> A highway — throughput is how many cars pass through per minute. Higher throughput = more capacity.
+</div>
+<p><strong>Key rule:</strong> Always check <em>successful</em> throughput, not just raw throughput.</p>
+<pre>Successful TPS = Raw TPS × (Success Rate / 100)
+Example: 290 TPS × 81.25% = ~236 successful TPS</pre>
+
+<h3>3. Error Rate</h3>
+<p>The percentage of requests that failed out of total requests sent.</p>
+<pre>Error Rate = (Failed Requests ÷ Total Requests) × 100</pre>
+<p><strong>Common JMeter errors:</strong></p>
+<table>
+    <tr><th>Error Code</th><th>Meaning</th><th>Likely Cause</th></tr>
+    <tr><td><strong>503</strong></td><td>Service Unavailable</td><td>Server too busy, thread pool exhausted</td></tr>
+    <tr><td><strong>504</strong></td><td>Gateway Time-out</td><td>Backend took too long to respond</td></tr>
+    <tr><td><strong>408</strong></td><td>Request Time-out</td><td>Client-side timeout waiting for response</td></tr>
+    <tr><td><strong>ConnectionClosedException</strong></td><td>Connection closed unexpectedly</td><td>Server crashed or closed connection prematurely</td></tr>
+    <tr><td><strong>HttpHostConnectException</strong></td><td>Cannot connect to host</td><td>Server unreachable or connection pool exhausted</td></tr>
+</table>
+
+<h3>4. APDEX Score (Application Performance Index)</h3>
+<p>A single score from <strong>0 to 1</strong> that measures overall user satisfaction based on response times.</p>
+<table>
+    <tr><th>User Experience</th><th>Response Time</th><th>Score Weight</th></tr>
+    <tr><td>Satisfied</td><td>&le; 500ms (T threshold)</td><td>1.0 point</td></tr>
+    <tr><td>Tolerated</td><td>500ms – 1500ms (F threshold)</td><td>0.5 points</td></tr>
+    <tr><td>Frustrated</td><td>&gt; 1500ms</td><td>0 points</td></tr>
+</table>
+<pre>APDEX = (Satisfied + (Tolerated / 2)) ÷ Total Requests</pre>
+
+<h3>5. Concurrent Users (Virtual Users / Threads)</h3>
+<p>The number of simulated users hitting the system at the same time. In JMeter, each user is called a <strong>Thread</strong>.</p>
+<table>
+    <tr><th>Term</th><th>Meaning</th></tr>
+    <tr><td><strong>Threads</strong></td><td>Number of concurrent virtual users</td></tr>
+    <tr><td><strong>Ramp-up Period</strong></td><td>Time to gradually reach the target number of users</td></tr>
+    <tr><td><strong>Duration</strong></td><td>How long the test runs at full load</td></tr>
+</table>
+
+<div class="note">
+    💡 <strong>Ramp-up Formula:</strong> A good rule of thumb is Ramp-up = Number of Users ÷ 10.<br>
+    Example: 1000 users → 100 second ramp-up (adds 10 users per second gradually).
+</div>
+
+<h3>6. Network Throughput (KB/s)</h3>
+<p>The amount of data transferred between the client (JMeter) and the server per second.</p>
+<table>
+    <tr><th>Metric</th><th>Meaning</th></tr>
+    <tr><td><strong>Received KB/s</strong></td><td>Data downloaded from server per second</td></tr>
+    <tr><td><strong>Sent KB/s</strong></td><td>Data uploaded to server per second</td></tr>
+</table>
+
+<!-- METRICS RELATIONSHIP -->
+<h2 id="metrics-relationship">How Metrics Relate to Each Other</h2>
+<p>These metrics do not work in isolation — they affect each other. Understanding the relationship is key to diagnosing performance problems.</p>
+
+<pre>More Users Added
+      ↓
+Server Gets Busier
+      ↓
+Response Time Increases
+      ↓
+Some Requests Start Timing Out / Failing
+      ↓
+Error Rate Increases
+      ↓
+APDEX Score Drops
+      ↓
+Throughput Plateaus (hits capacity ceiling)
+      ↓
+System at Maximum Capacity or Failing</pre>
+
+<h3>What Good Scaling Looks Like</h3>
+<table>
+    <tr><th>Metric</th><th>Good Behavior (Scaling Well)</th><th>Bad Behavior (Bottleneck)</th></tr>
+    <tr><td>Throughput</td><td>Increases proportionally with users</td><td>Plateaus while errors rise</td></tr>
+    <tr><td>Response Time</td><td>Stays stable as load increases</td><td>Jumps significantly with more users</td></tr>
+    <tr><td>Error Rate</td><td>Stays below 1% at all load levels</td><td>Spikes as users increase</td></tr>
+    <tr><td>APDEX</td><td>Stays above 0.85 at all load levels</td><td>Drops below 0.70 under load</td></tr>
+</table>
+
+<div class="important">
+    ⚠️ <strong>Key Insight:</strong> High throughput with a high error rate is NOT good performance. Always check successful throughput alongside error rate. A system processing 500 TPS with 50% errors is only effectively delivering 250 TPS.
+</div>
+
+<!-- THRESHOLDS -->
+<h2 id="thresholds">Acceptable Thresholds &amp; Benchmarks</h2>
+
+<h3>Response Time Thresholds</h3>
+<table>
+    <tr><th>Rating</th><th>Response Time</th><th>User Experience</th></tr>
+    <tr><td><span class="metric-good">✅ Excellent</span></td><td>&lt; 200ms</td><td>Feels instant, no noticeable delay</td></tr>
+    <tr><td><span class="metric-good">✅ Good</span></td><td>200ms – 500ms</td><td>Fast, acceptable for most applications</td></tr>
+    <tr><td><span class="metric-warn">⚠️ Acceptable</span></td><td>500ms – 1 second</td><td>Noticeable but tolerable</td></tr>
+    <tr><td><span class="metric-bad">❌ Poor</span></td><td>1 – 3 seconds</td><td>Users start getting impatient</td></tr>
+    <tr><td><span class="metric-bad">❌ Critical</span></td><td>&gt; 3 seconds</td><td>Users abandon the page</td></tr>
+</table>
+
+<h3>Error Rate Thresholds</h3>
+<table>
+    <tr><th>Rating</th><th>Error Rate</th><th>Assessment</th></tr>
+    <tr><td><span class="metric-good">✅ Excellent</span></td><td>&lt; 0.1%</td><td>Production ready</td></tr>
+    <tr><td><span class="metric-good">✅ Good</span></td><td>0.1% – 1%</td><td>Acceptable for most systems</td></tr>
+    <tr><td><span class="metric-warn">⚠️ Acceptable</span></td><td>1% – 5%</td><td>Needs investigation</td></tr>
+    <tr><td><span class="metric-bad">❌ Poor</span></td><td>5% – 10%</td><td>System under stress</td></tr>
+    <tr><td><span class="metric-bad">❌ Critical</span></td><td>&gt; 10%</td><td>Do not deploy to production</td></tr>
+</table>
+
+<h3>APDEX Score Thresholds</h3>
+<table>
+    <tr><th>Score Range</th><th>Rating</th><th>Meaning</th></tr>
+    <tr><td>0.94 – 1.00</td><td><span class="metric-good">✅ Excellent</span></td><td>Users are very satisfied</td></tr>
+    <tr><td>0.85 – 0.93</td><td><span class="metric-good">✅ Good</span></td><td>Users are satisfied</td></tr>
+    <tr><td>0.70 – 0.84</td><td><span class="metric-warn">⚠️ Acceptable</span></td><td>Some users are frustrated</td></tr>
+    <tr><td>0.50 – 0.69</td><td><span class="metric-bad">❌ Poor</span></td><td>Many users are frustrated</td></tr>
+    <tr><td>0.00 – 0.49</td><td><span class="metric-bad">❌ Unacceptable</span></td><td>Most users are frustrated</td></tr>
+</table>
+
+<h3>Quick Reference Cheat Sheet</h3>
+<table>
+    <tr><th>Metric</th><th>Target</th><th>Red Flag</th></tr>
+    <tr><td>Response Time (Median)</td><td>&lt; 200ms</td><td>&gt; 1 second</td></tr>
+    <tr><td>90th Percentile</td><td>&lt; 500ms</td><td>&gt; 2 seconds</td></tr>
+    <tr><td>95th Percentile</td><td>&lt; 1 second</td><td>&gt; 3 seconds</td></tr>
+    <tr><td>99th Percentile</td><td>&lt; 2 seconds</td><td>&gt; 5 seconds</td></tr>
+    <tr><td>Error Rate</td><td>&lt; 1%</td><td>&gt; 5%</td></tr>
+    <tr><td>APDEX Score</td><td>&gt; 0.85</td><td>&lt; 0.70</td></tr>
+    <tr><td>Throughput</td><td>Scales with users</td><td>Plateaus while errors rise</td></tr>
+</table>
+
+<!-- ==================== PART 2 ==================== -->
+<div class="page-break"></div>
+<div class="section-header" id="part2">PART 2 &mdash; JMETER INSTALLATION</div>
+
+<!-- PREREQUISITES -->
+<h2 id="prerequisites">Prerequisites</h2>
+<p>Before installing JMeter, make sure you have the following:</p>
+<ul>
+    <li>Windows machine</li>
+    <li>Internet connection</li>
+    <li>Administrator access</li>
+    <li>At least <strong>4GB RAM</strong> (8GB recommended for 500+ users)</li>
+    <li>At least <strong>500MB free disk space</strong></li>
+</ul>
+
+<div class="important">
+    ⚠️ <strong>Java is required.</strong> JMeter is a Java-based application. You must install Java before JMeter will work.
+</div>
+
+<!-- STEP 1 -->
+<div class="step-header" id="step1">Step 1 &mdash; Install Java (JDK)</div>
+<p>JMeter requires <strong>Java 8 or higher</strong>. We recommend Java 11 or Java 17 (LTS versions).</p>
+
+<ol>
+    <li>Go to <code>https://adoptium.net</code> (Eclipse Temurin — free and open source)</li>
+    <li>Select <strong>Java 17</strong> (LTS), <strong>Windows</strong>, <strong>x64</strong></li>
+    <li>Click <strong>Download .msi</strong></li>
+    <li>Run the installer</li>
+    <li>On the "Custom Setup" screen, make sure these are enabled:
+        <ul>
+            <li>✅ <strong>Add to PATH</strong></li>
+            <li>✅ <strong>Set JAVA_HOME variable</strong></li>
+        </ul>
+    </li>
+    <li>Click <strong>Next</strong> and then <strong>Install</strong></li>
+    <li>Click <strong>Finish</strong> when done</li>
+</ol>
+
+<h3>Verify Java Installation</h3>
+<p>Open <strong>Command Prompt</strong> and run:</p>
+<pre>java -version</pre>
+<p>Expected output:</p>
+<pre>openjdk version "17.x.x" ...</pre>
+
+<div class="note">
+    💡 If you see <em>"java is not recognized"</em>, Java was not added to PATH. Reinstall and make sure to enable "Add to PATH" and "Set JAVA_HOME variable".
+</div>
+
+<!-- STEP 2 -->
+<div class="step-header" id="step2">Step 2 &mdash; Download Apache JMeter</div>
+<ol>
+    <li>Go to <code>https://jmeter.apache.org/download_jmeter.cgi</code></li>
+    <li>Under <strong>Binaries</strong>, download the <strong>.zip</strong> file:<br>
+        <code>apache-jmeter-5.6.x.zip</code></li>
+    <li>Save it to a location you can easily find (e.g., <code>C:\Downloads</code>)</li>
+</ol>
+
+<div class="note">
+    💡 JMeter does not have a traditional installer — it runs directly from the extracted folder. No installation wizard needed.
+</div>
+
+<!-- STEP 3 -->
+<div class="step-header" id="step3">Step 3 &mdash; Install &amp; Configure JMeter</div>
+
+<h3>Extract JMeter</h3>
+<ol>
+    <li>Right-click the downloaded <code>apache-jmeter-5.6.x.zip</code></li>
+    <li>Select <strong>Extract All</strong></li>
+    <li>Extract to a clean location, recommended: <code>C:\JMeter\</code></li>
+    <li>Your folder structure should look like:
+        <pre>C:\JMeter\apache-jmeter-5.6.x\
+    ├── bin\
+    ├── lib\
+    ├── docs\
+    └── extras\</pre>
+    </li>
+</ol>
+
+<h3>Set JMETER_HOME Environment Variable (Recommended)</h3>
+<ol>
+    <li>Press <code>Win + S</code>, search for <strong>"Environment Variables"</strong></li>
+    <li>Click <strong>"Edit the system environment variables"</strong></li>
+    <li>Click <strong>"Environment Variables"</strong> button</li>
+    <li>Under <strong>System Variables</strong>, click <strong>New</strong></li>
+    <li>Set:
+        <ul>
+            <li><strong>Variable name:</strong> <code>JMETER_HOME</code></li>
+            <li><strong>Variable value:</strong> <code>C:\JMeter\apache-jmeter-5.6.x</code></li>
+        </ul>
+    </li>
+    <li>Click <strong>OK</strong></li>
+    <li>Find the <strong>Path</strong> variable, click <strong>Edit</strong></li>
+    <li>Click <strong>New</strong> and add: <code>%JMETER_HOME%\bin</code></li>
+    <li>Click <strong>OK</strong> on all dialogs</li>
+</ol>
+
+<h3>Increase JMeter Memory (Important for Large Tests)</h3>
+<p>For tests with 500+ users, increase the JVM heap size to prevent out-of-memory errors.</p>
+<ol>
+    <li>Navigate to <code>C:\JMeter\apache-jmeter-5.6.x\bin\</code></li>
+    <li>Open <code>jmeter.bat</code> with a text editor (right-click → Edit)</li>
+    <li>Find the line with <code>HEAP</code> and update it:</li>
+</ol>
+<pre>set HEAP=-Xms1g -Xmx4g -XX:MaxMetaspaceSize=256m</pre>
+<p>Save the file. This sets minimum heap to 1GB and maximum to 4GB.</p>
+
+<!-- STEP 4 -->
+<div class="step-header" id="step4">Step 4 &mdash; Launch JMeter</div>
+
+<h3>Option A &mdash; GUI Mode (for building and debugging tests)</h3>
+<ol>
+    <li>Navigate to <code>C:\JMeter\apache-jmeter-5.6.x\bin\</code></li>
+    <li>Double-click <strong><code>jmeter.bat</code></strong></li>
+    <li>The JMeter GUI window will open</li>
+</ol>
+
+<h3>Option B &mdash; Command Line (for running actual tests)</h3>
+<pre>jmeter -n -t your_test.jmx -l results.jtl -e -o report_output</pre>
+
+<div class="important">
+    ⚠️ <strong>IMPORTANT:</strong> Always run actual load tests in <strong>Non-GUI mode</strong> (command line). GUI mode consumes significantly more memory and CPU, which affects test accuracy — especially for 500+ users.
+</div>
+
+<table>
+    <tr><th>Mode</th><th>When to Use</th><th>Command</th></tr>
+    <tr><td><strong>GUI Mode</strong></td><td>Building scripts, debugging, small tests</td><td>Double-click jmeter.bat</td></tr>
+    <tr><td><strong>Non-GUI Mode</strong></td><td>Running actual load tests (100+ users)</td><td><code>jmeter -n -t script.jmx -l results.jtl</code></td></tr>
+</table>
+
+<!-- STEP 5 -->
+<div class="step-header" id="step5">Step 5 &mdash; Install JMeter Plugins (Optional but Recommended)</div>
+<p>Plugins add extra graphs, samplers, and utilities that make JMeter more powerful.</p>
+
+<h3>Install Plugins Manager</h3>
+<ol>
+    <li>Go to <code>https://jmeter-plugins.org/install/Install/</code></li>
+    <li>Download <code>jmeter-plugins-manager-x.x.jar</code></li>
+    <li>Copy the downloaded <code>.jar</code> file to:<br>
+        <code>C:\JMeter\apache-jmeter-5.6.x\lib\ext\</code></li>
+    <li>Restart JMeter</li>
+    <li>Go to <strong>Options → Plugins Manager</strong> in the JMeter menu</li>
+</ol>
+
+<h3>Recommended Plugins to Install</h3>
+<table>
+    <tr><th>Plugin</th><th>Purpose</th></tr>
+    <tr><td><strong>3 Basic Graphs</strong></td><td>Response Times Over Time, Transactions per Second, Active Threads</td></tr>
+    <tr><td><strong>Custom Thread Groups</strong></td><td>Ultimate Thread Group for advanced ramp-up patterns</td></tr>
+    <tr><td><strong>Throughput Shaping Timer</strong></td><td>Control exact TPS rate during test</td></tr>
+    <tr><td><strong>Dummy Sampler</strong></td><td>Useful for debugging test logic</td></tr>
+</table>
+
+<!-- STEP 6 -->
+<div class="step-header" id="step6">Step 6 &mdash; Create Your First Test Plan</div>
+<p>A <strong>Test Plan</strong> is the top-level container for your entire performance test. Everything lives inside it.</p>
+
+<ol>
+    <li>Open JMeter GUI</li>
+    <li>You will see <strong>"Test Plan"</strong> already created in the left panel</li>
+    <li>Click on <strong>Test Plan</strong> and give it a name (e.g., <code>Search API Load Test</code>)</li>
+    <li>Right-click <strong>Test Plan</strong> → <strong>Add → Threads (Users) → Thread Group</strong></li>
+</ol>
+
+<div class="info">
+    💡 <strong>Test Plan Structure:</strong>
+    <pre>Test Plan
+  └── Thread Group (Virtual Users)
+        ├── HTTP Request (Sampler)
+        ├── HTTP Header Manager (Config)
+        ├── Response Assertion (Assertion)
+        └── View Results Tree (Listener)</pre>
+</div>
+
+<!-- STEP 7 -->
+<div class="step-header" id="step7">Step 7 &mdash; Configure Thread Group</div>
+<p>The <strong>Thread Group</strong> defines how many virtual users run, how fast they ramp up, and how long the test runs.</p>
+
+<ol>
+    <li>Click on the <strong>Thread Group</strong> you just added</li>
+    <li>Configure the following settings:</li>
+</ol>
+
+<table>
+    <tr><th>Setting</th><th>Description</th><th>Example Value</th></tr>
+    <tr><td><strong>Number of Threads (users)</strong></td><td>Total concurrent virtual users</td><td>200</td></tr>
+    <tr><td><strong>Ramp-up Period (seconds)</strong></td><td>Time to reach full user count gradually</td><td>20</td></tr>
+    <tr><td><strong>Loop Count</strong></td><td>How many times each user repeats the test</td><td>Set to "Infinite" if using Duration</td></tr>
+    <tr><td><strong>Duration (seconds)</strong></td><td>How long the test runs at full load</td><td>600 (10 minutes)</td></tr>
+    <tr><td><strong>Scheduler</strong></td><td>Enable to use Duration instead of Loop Count</td><td>✅ Checked</td></tr>
+</table>
+
+<div class="note">
+    💡 <strong>Ramp-up Tip:</strong> Use Ramp-up = Users ÷ 10. For 200 users → 20 second ramp-up. This avoids hitting the server with all users at once and simulates realistic traffic growth.
+</div>
+
+<!-- STEP 8 -->
+<div class="step-header" id="step8">Step 8 &mdash; Add HTTP Request Sampler</div>
+<p>The <strong>HTTP Request Sampler</strong> defines the actual API call or web page request to test.</p>
+
+<ol>
+    <li>Right-click <strong>Thread Group</strong> → <strong>Add → Sampler → HTTP Request</strong></li>
+    <li>Configure the HTTP Request:</li>
+</ol>
+
+<table>
+    <tr><th>Field</th><th>Description</th><th>Example</th></tr>
+    <tr><td><strong>Name</strong></td><td>Label for this request in reports</td><td>Search API</td></tr>
+    <tr><td><strong>Protocol</strong></td><td>http or https</td><td>https</td></tr>
+    <tr><td><strong>Server Name or IP</strong></td><td>Target server address</td><td>192.168.1.100</td></tr>
+    <tr><td><strong>Port Number</strong></td><td>Server port</td><td>8080</td></tr>
+    <tr><td><strong>HTTP Method</strong></td><td>GET, POST, PUT, DELETE</td><td>GET</td></tr>
+    <tr><td><strong>Path</strong></td><td>API endpoint path</td><td>/api/search</td></tr>
+    <tr><td><strong>Parameters / Body</strong></td><td>Request parameters or JSON body</td><td>q=test&amp;page=1</td></tr>
+</table>
+
+<h3>Add HTTP Header Manager (if needed)</h3>
+<ol>
+    <li>Right-click <strong>Thread Group</strong> → <strong>Add → Config Element → HTTP Header Manager</strong></li>
+    <li>Add headers like:</li>
+</ol>
+<table>
+    <tr><th>Name</th><th>Value</th></tr>
+    <tr><td>Content-Type</td><td>application/json</td></tr>
+    <tr><td>Authorization</td><td>Bearer &lt;your_token&gt;</td></tr>
+</table>
+
+<!-- STEP 9 -->
+<div class="step-header" id="step9">Step 9 &mdash; Add Listeners (View Results)</div>
+<p><strong>Listeners</strong> collect and display test results. Add these to your Thread Group:</p>
+
+<ol>
+    <li>Right-click <strong>Thread Group</strong> → <strong>Add → Listener</strong></li>
+</ol>
+
+<table>
+    <tr><th>Listener</th><th>Purpose</th><th>When to Use</th></tr>
+    <tr><td><strong>View Results Tree</strong></td><td>Shows each request and response in detail</td><td>Debugging only — disable during actual load tests</td></tr>
+    <tr><td><strong>Summary Report</strong></td><td>Shows aggregate stats per request label</td><td>Quick overview during test</td></tr>
+    <tr><td><strong>Aggregate Report</strong></td><td>Shows percentiles, min, max, avg per label</td><td>Detailed analysis</td></tr>
+    <tr><td><strong>View Results in Table</strong></td><td>Shows each request as a table row</td><td>Small tests only</td></tr>
+</table>
+
+<div class="important">
+    ⚠️ <strong>IMPORTANT:</strong> Disable all listeners during actual load tests — they consume memory and affect results. Use the <strong>-e -o</strong> flags in command line to generate the HTML report after the test instead.
+</div>
+
+<!-- STEP 10 -->
+<div class="step-header" id="step10">Step 10 &mdash; Run the Test</div>
+
+<h3>Option A &mdash; GUI Mode (small tests / debugging only)</h3>
+<ol>
+    <li>Click the <strong>▶ Start</strong> button (green play button) in the toolbar</li>
+    <li>Watch results in your Listeners</li>
+    <li>Click the <strong>⏹ Stop</strong> button to end the test</li>
+</ol>
+
+<h3>Option B &mdash; Non-GUI Mode (recommended for actual load tests)</h3>
+<pre># Basic run
+jmeter -n -t your_test.jmx -l results.jtl
+
+# Run and generate HTML report
+jmeter -n -t your_test.jmx -l results.jtl -e -o report_output
+
+# Run on remote slaves (distributed testing)
+jmeter -n -t your_test.jmx -r -l results.jtl -e -o report_output</pre>
+
+<table>
+    <tr><th>Flag</th><th>Meaning</th></tr>
+    <tr><td><code>-n</code></td><td>Non-GUI mode</td></tr>
+    <tr><td><code>-t</code></td><td>Path to your .jmx test script</td></tr>
+    <tr><td><code>-l</code></td><td>Path to save results (.jtl file)</td></tr>
+    <tr><td><code>-e</code></td><td>Generate HTML report after test</td></tr>
+    <tr><td><code>-o</code></td><td>Output folder for HTML report (must be empty)</td></tr>
+    <tr><td><code>-r</code></td><td>Run on all remote slaves (distributed mode)</td></tr>
+    <tr><td><code>-R</code></td><td>Run on specific slave IPs</td></tr>
+</table>
+
+<!-- STEP 11 -->
+<div class="step-header" id="step11">Step 11 &mdash; Generate HTML Report</div>
+<p>JMeter generates a detailed HTML dashboard report from your test results.</p>
+
+<h3>Option A &mdash; Generate During Test Run</h3>
+<pre>jmeter -n -t your_test.jmx -l results.jtl -e -o report_output</pre>
+
+<h3>Option B &mdash; Generate from Existing Results File</h3>
+<pre>jmeter -g results.jtl -o report_output</pre>
+
+<h3>Option C &mdash; Generate from GUI</h3>
+<ol>
+    <li>Go to <strong>Tools → Generate HTML Report</strong></li>
+    <li>Select your <code>.jtl</code> results file</li>
+    <li>Select your <code>user.properties</code> file</li>
+    <li>Select an empty output directory</li>
+    <li>Click <strong>Generate Report</strong></li>
+</ol>
+
+<h3>Reading the HTML Report</h3>
+<p>Open <code>report_output/index.html</code> in your browser. Key sections to review:</p>
+<table>
+    <tr><th>Section</th><th>What to Look For</th></tr>
+    <tr><td><strong>APDEX Table</strong></td><td>Score should be &gt; 0.85. Lower = poor user experience.</td></tr>
+    <tr><td><strong>Statistics Table</strong></td><td>Check error %, average, 90th/95th/99th percentiles, throughput</td></tr>
+    <tr><td><strong>Errors Section</strong></td><td>Identify error types and frequency</td></tr>
+    <tr><td><strong>Response Times Over Time</strong></td><td>Should be flat/stable. Spikes = bottlenecks.</td></tr>
+    <tr><td><strong>Transactions per Second</strong></td><td>Should increase with load. Plateau = capacity ceiling.</td></tr>
+    <tr><td><strong>Active Threads Over Time</strong></td><td>Shows your ramp-up pattern</td></tr>
+</table>
+
+<!-- TROUBLESHOOTING -->
+<div class="page-break"></div>
+<h2 id="troubleshooting">Common Issues &amp; Fixes</h2>
+<table>
+    <tr><th>Problem</th><th>Cause</th><th>Fix</th></tr>
+    <tr><td>JMeter won't start</td><td>Java not installed or not in PATH</td><td>Install Java and verify with <code>java -version</code></td></tr>
+    <tr><td><code>java</code> not recognized</td><td>Java not added to PATH</td><td>Reinstall Java with "Add to PATH" and "Set JAVA_HOME" enabled</td></tr>
+    <tr><td>Out of memory error</td><td>JVM heap too small for large tests</td><td>Increase heap in <code>jmeter.bat</code>: <code>-Xmx4g</code></td></tr>
+    <tr><td>GUI is slow / freezing</td><td>Running large test in GUI mode</td><td>Switch to Non-GUI mode (<code>-n</code> flag)</td></tr>
+    <tr><td>Report folder already exists error</td><td>Output folder not empty</td><td>Delete or empty the output folder before generating report</td></tr>
+    <tr><td>Connection refused errors</td><td>Wrong server IP or port</td><td>Verify server IP, port, and that the app is running</td></tr>
+    <tr><td>SSL/HTTPS errors</td><td>Certificate issues</td><td>Add <code>-Djavax.net.ssl.trustStore=...</code> or disable SSL check in HTTP Request</td></tr>
+    <tr><td>Results file already exists</td><td>.jtl file from previous run exists</td><td>Delete old .jtl file or use a new filename</td></tr>
+    <tr><td>Plugins Manager not showing</td><td>.jar not in correct folder</td><td>Ensure .jar is in <code>lib\ext\</code> folder and restart JMeter</td></tr>
+</table>
+
+<!-- SUMMARY -->
+<h2 id="summary">Summary</h2>
+<table>
+    <tr><th>Step</th><th>Action</th><th>Status</th></tr>
+    <tr><td>1</td><td>Install Java (JDK 17)</td><td>☐</td></tr>
+    <tr><td>2</td><td>Download Apache JMeter</td><td>☐</td></tr>
+    <tr><td>3</td><td>Extract JMeter and set JMETER_HOME</td><td>☐</td></tr>
+    <tr><td>4</td><td>Launch JMeter and verify it opens</td><td>☐</td></tr>
+    <tr><td>5</td><td>Install Plugins Manager and recommended plugins</td><td>☐</td></tr>
+    <tr><td>6</td><td>Create Test Plan</td><td>☐</td></tr>
+    <tr><td>7</td><td>Configure Thread Group (users, ramp-up, duration)</td><td>☐</td></tr>
+    <tr><td>8</td><td>Add HTTP Request Sampler</td><td>☐</td></tr>
+    <tr><td>9</td><td>Add Listeners</td><td>☐</td></tr>
+    <tr><td>10</td><td>Run test in Non-GUI mode</td><td>☐</td></tr>
+    <tr><td>11</td><td>Generate and review HTML report</td><td>☐</td></tr>
+</table>
+
+<div class="success">
+    ✅ Your team should be up and running with JMeter in <strong>30–45 minutes</strong> following this guide.
+</div>
+
+<div class="footer">
+    JMeter Installation &amp; Load Testing Guide &nbsp;|&nbsp; QA Team &nbsp;|&nbsp; Version 1.0 &nbsp;|&nbsp; April 2026<br>
+    Prepared by: Raymond A. Canete Jr &nbsp;|&nbsp; raymondjr.canete@gmail.com
+</div>
+
+</body>
+</html>

@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robot Framework Installation Guide</title>
+    <style>
+        body {
+            font-family: Calibri, Arial, sans-serif;
+            font-size: 11pt;
+            margin: 2.54cm;
+            color: #000000;
+            line-height: 1.5;
+        }
+
+        h1 {
+            font-size: 20pt;
+            font-weight: bold;
+            color: #1F3864;
+            text-align: center;
+            margin-bottom: 5px;
+        }
+
+        h2 {
+            font-size: 14pt;
+            font-weight: bold;
+            color: #1F3864;
+            border-bottom: 2px solid #1F3864;
+            padding-bottom: 4px;
+            margin-top: 30px;
+        }
+
+        h3 {
+            font-size: 12pt;
+            font-weight: bold;
+            color: #2E75B6;
+            margin-top: 20px;
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 12pt;
+            color: #555555;
+            margin-bottom: 5px;
+        }
+
+        .doc-info {
+            text-align: center;
+            font-size: 10pt;
+            color: #777777;
+            margin-bottom: 40px;
+        }
+
+        /* Table of Contents */
+        .toc {
+            background-color: #F2F2F2;
+            border: 1px solid #CCCCCC;
+            padding: 20px 30px;
+            margin: 30px 0;
+            page-break-after: always;
+        }
+
+        .toc h2 {
+            border-bottom: 2px solid #1F3864;
+            margin-top: 0;
+        }
+
+        .toc ol {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .toc li {
+            margin: 6px 0;
+            font-size: 11pt;
+        }
+
+        .toc a {
+            color: #1F3864;
+            text-decoration: none;
+        }
+
+        .toc a:hover {
+            text-decoration: underline;
+        }
+
+        .toc .sub-item {
+            margin-left: 20px;
+            font-size: 10.5pt;
+            color: #333333;
+        }
+
+        /* Code blocks */
+        pre {
+            background-color: #F4F4F4;
+            border: 1px solid #DDDDDD;
+            border-left: 4px solid #2E75B6;
+            padding: 12px 15px;
+            font-family: Consolas, Courier New, monospace;
+            font-size: 10pt;
+            overflow-x: auto;
+            margin: 10px 0;
+        }
+
+        code {
+            background-color: #F4F4F4;
+            font-family: Consolas, Courier New, monospace;
+            font-size: 10pt;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 10.5pt;
+        }
+
+        th {
+            background-color: #1F3864;
+            color: #FFFFFF;
+            padding: 8px 12px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        td {
+            padding: 7px 12px;
+            border: 1px solid #CCCCCC;
+            vertical-align: top;
+        }
+
+        tr:nth-child(even) {
+            background-color: #EEF2F7;
+        }
+
+        tr:nth-child(odd) {
+            background-color: #FFFFFF;
+        }
+
+        /* Note/Warning boxes */
+        .note {
+            background-color: #FFF9E6;
+            border-left: 4px solid #FFC000;
+            padding: 10px 15px;
+            margin: 10px 0;
+            font-size: 10.5pt;
+        }
+
+        .important {
+            background-color: #FDECEA;
+            border-left: 4px solid #C00000;
+            padding: 10px 15px;
+            margin: 10px 0;
+            font-size: 10.5pt;
+        }
+
+        .success {
+            background-color: #EBF5EB;
+            border-left: 4px solid #375623;
+            padding: 10px 15px;
+            margin: 10px 0;
+            font-size: 10.5pt;
+        }
+
+        /* Step number badge */
+        .step-header {
+            background-color: #1F3864;
+            color: white;
+            padding: 8px 15px;
+            font-size: 13pt;
+            font-weight: bold;
+            margin-top: 30px;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            margin: 8px 0;
+            padding-left: 25px;
+        }
+
+        li {
+            margin: 4px 0;
+        }
+
+        ol {
+            margin: 8px 0;
+            padding-left: 25px;
+        }
+
+        ol li {
+            margin: 6px 0;
+        }
+
+        .page-break {
+            page-break-before: always;
+        }
+
+        .checklist li {
+            list-style-type: none;
+            margin: 5px 0;
+        }
+
+        .checklist li::before {
+            content: "☐ ";
+            font-size: 12pt;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #CCCCCC;
+            margin: 20px 0;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 9pt;
+            color: #999999;
+            margin-top: 50px;
+            border-top: 1px solid #CCCCCC;
+            padding-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COVER -->
+    <h1>Robot Framework Installation Guide</h1>
+    <p class="subtitle">For QA Team Members &nbsp;|&nbsp; IDE: Visual Studio Code</p>
+    <p class="doc-info">
+        Prepared by: Raymond A. Canete Jr &nbsp;|&nbsp; Version: 1.0 &nbsp;|&nbsp; Date: April 2026
+        <br>Email: <a href="mailto:raymondjr.canete@gmail.com">raymondjr.canete@gmail.com</a>
+    </p>
+
+    <hr>
+
+    <!-- TABLE OF CONTENTS -->
+    <div class="toc">
+        <h2>Table of Contents</h2>
+        <ol>
+            <li><a href="#prerequisites">Prerequisites</a></li>
+            <li><a href="#step1">Step 1 &mdash; Install Python</a></li>
+            <li><a href="#step2">Step 2 &mdash; Set Up Virtual Environment</a></li>
+            <li><a href="#step3">Step 3 &mdash; Install Robot Framework</a></li>
+            <li><a href="#step4">Step 4 &mdash; Install Robot Framework Libraries</a></li>
+            <li><a href="#step5">Step 5 &mdash; Install Browser Driver (For UI Testing)</a></li>
+            <li><a href="#step6">Step 6 &mdash; Install Visual Studio Code</a></li>
+            <li><a href="#step7">Step 7 &mdash; Install Robot Framework Extension in VS Code</a></li>
+            <li><a href="#step8">Step 8 &mdash; Configure VS Code for Robot Framework</a></li>
+            <li><a href="#step9">Step 9 &mdash; Create Your First Project</a></li>
+            <li><a href="#step10">Step 10 &mdash; Write Your First Test</a></li>
+            <li><a href="#step11">Step 11 &mdash; Run Your First Test</a></li>
+            <li><a href="#step12">Step 12 &mdash; View Results</a></li>
+            <li><a href="#step13">Step 13 &mdash; Create requirements.txt</a></li>
+            <li><a href="#verification">Quick Verification Checklist</a></li>
+            <li><a href="#troubleshooting">Common Issues &amp; Fixes</a></li>
+            <li><a href="#structure">Folder Structure Best Practice</a></li>
+            <li><a href="#summary">Summary</a></li>
+        </ol>
+    </div>
+
+    <!-- PREREQUISITES -->
+    <h2 id="prerequisites">Prerequisites</h2>
+    <p>Before starting, make sure you have the following:</p>
+    <ul>
+        <li>Windows machine</li>
+        <li>Internet connection</li>
+        <li>Administrator access on your machine</li>
+    </ul>
+
+    <!-- STEP 1 -->
+    <div class="step-header" id="step1">Step 1 &mdash; Install Python</div>
+    <p>Robot Framework runs on Python, so this must be installed first.</p>
+    <ol>
+        <li>Go to <code>https://www.python.org/downloads</code></li>
+        <li>Click <strong>"Download Python 3.x.x"</strong> (latest stable version)</li>
+        <li>Run the downloaded installer</li>
+        <li>
+            <div class="important">
+                ⚠️ <strong>IMPORTANT:</strong> Check <strong>"Add Python to PATH"</strong> at the bottom of the installer screen before clicking Install. If you miss this, Python commands will not work in the terminal.
+            </div>
+        </li>
+        <li>Click <strong>"Install Now"</strong></li>
+        <li>Wait for installation to complete, then click <strong>Close</strong></li>
+    </ol>
+
+    <h3>Verify Installation</h3>
+    <p>Open <strong>Command Prompt</strong> (press <code>Win + R</code>, type <code>cmd</code>, press Enter) and run:</p>
+    <pre>python --version</pre>
+    <p>Expected output:</p>
+    <pre>Python 3.x.x</pre>
+    <pre>pip --version</pre>
+    <p>Expected output:</p>
+    <pre>pip 23.x.x from ...</pre>
+
+    <div class="note">
+        💡 If you see <em>"python is not recognized"</em>, Python was not added to PATH. Reinstall and make sure to check <strong>"Add Python to PATH"</strong>.
+    </div>
+
+    <!-- STEP 2 - VIRTUAL ENVIRONMENT -->
+    <div class="step-header" id="step2">Step 2 &mdash; Set Up Virtual Environment</div>
+    <p>A virtual environment creates an <strong>isolated Python workspace</strong> for your project. This keeps your project's libraries separate from other projects and prevents version conflicts across your team.</p>
+
+    <div class="note">
+        💡 <strong>Why this matters:</strong> Without a virtual environment, all projects share the same Python libraries. If one project needs a different version of a library, it can break another project. A virtual environment prevents this.
+    </div>
+
+    <h3>Create the Virtual Environment</h3>
+    <p>Open <strong>Command Prompt</strong>, navigate to your project folder, and run:</p>
+    <pre># Navigate to your project folder first
+cd C:\path\to\my_project
+
+# Create virtual environment (named "venv")
+python -m venv venv</pre>
+
+    <p>This creates a <code>venv/</code> folder inside your project directory.</p>
+
+    <h3>Activate the Virtual Environment</h3>
+    <p>You must activate the virtual environment every time you work on the project:</p>
+
+    <table>
+        <tr>
+            <th>OS</th>
+            <th>Command</th>
+        </tr>
+        <tr>
+            <td>Windows (Command Prompt)</td>
+            <td><code>venv\Scripts\activate</code></td>
+        </tr>
+        <tr>
+            <td>Windows (PowerShell)</td>
+            <td><code>venv\Scripts\Activate.ps1</code></td>
+        </tr>
+        <tr>
+            <td>Mac / Linux</td>
+            <td><code>source venv/bin/activate</code></td>
+        </tr>
+    </table>
+
+    <p>Once activated, your terminal prompt will show <code>(venv)</code> at the beginning:</p>
+    <pre>(venv) C:\my_project></pre>
+
+    <div class="success">
+        ✅ When you see <strong>(venv)</strong> in your terminal, the virtual environment is active. All libraries you install will go into this isolated environment only.
+    </div>
+
+    <h3>Deactivate When Done</h3>
+    <p>When you finish working, deactivate the virtual environment:</p>
+    <pre>deactivate</pre>
+
+    <h3>Configure VS Code to Use the Virtual Environment</h3>
+    <ol>
+        <li>Open your project folder in VS Code</li>
+        <li>Press <code>Ctrl + Shift + P</code></li>
+        <li>Type <strong>"Python: Select Interpreter"</strong> and select it</li>
+        <li>Choose the interpreter inside your <code>venv</code> folder:<br>
+            <code>.\venv\Scripts\python.exe</code></li>
+    </ol>
+
+    <div class="note">
+        💡 VS Code will automatically activate the virtual environment in its integrated terminal once the interpreter is selected.
+    </div>
+
+    <h3>Add venv to .gitignore</h3>
+    <p>If your team uses Git, make sure to exclude the <code>venv/</code> folder from version control. Create a <code>.gitignore</code> file in your project root and add:</p>
+    <pre>venv/
+results/
+__pycache__/
+*.pyc</pre>
+
+    <div class="important">
+        ⚠️ <strong>IMPORTANT:</strong> From this point forward, make sure your virtual environment is <strong>always activated</strong> before installing libraries or running tests. All pip install commands in the next steps should be run with <code>(venv)</code> active.
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="step-header" id="step3">Step 3 &mdash; Install Robot Framework</div>
+    <p>Open <strong>Command Prompt</strong> and run the following command:</p>
+    <pre>pip install robotframework</pre>
+
+    <h3>Verify Installation</h3>
+    <pre>robot --version</pre>
+    <p>Expected output:</p>
+    <pre>Robot Framework 7.x.x (Python 3.x.x)</pre>
+
+    <!-- STEP 4 -->
+    <div class="step-header" id="step4">Step 4 &mdash; Install Robot Framework Libraries</div>
+    <p>Install the most commonly used libraries for your team:</p>
+
+    <h3>SeleniumLibrary (Web / UI Testing)</h3>
+    <pre>pip install robotframework-seleniumlibrary</pre>
+
+    <h3>RequestsLibrary (API Testing)</h3>
+    <pre>pip install robotframework-requests</pre>
+
+    <h3>DatabaseLibrary (Database Testing)</h3>
+    <pre>pip install robotframework-databaselibrary</pre>
+
+    <div class="note">
+        💡 <strong>BuiltIn, Collections, and String</strong> libraries come pre-installed with Robot Framework — no additional installation needed.
+    </div>
+
+    <!-- STEP 5 -->
+    <div class="step-header" id="step5">Step 5 &mdash; Install Browser Driver (For UI Testing)</div>
+    <p>Required only if your team will perform <strong>web UI testing</strong>.</p>
+
+    <h3>Option A &mdash; Manual ChromeDriver Installation</h3>
+    <ol>
+        <li>Check your Chrome version: Chrome menu &rarr; Help &rarr; About Google Chrome</li>
+        <li>Go to <code>https://chromedriver.chromium.org/downloads</code></li>
+        <li>Download the ChromeDriver version that matches your Chrome version</li>
+        <li>Extract <code>chromedriver.exe</code></li>
+        <li>Place it in <code>C:\Windows\System32</code> or add its folder to your system PATH</li>
+    </ol>
+
+    <h3>Option B &mdash; WebDriver Manager (Recommended / Easier)</h3>
+    <pre>pip install webdriver-manager</pre>
+    <div class="success">
+        ✅ WebDriver Manager automatically downloads and manages the correct driver version for you.
+    </div>
+
+    <!-- STEP 6 -->
+    <div class="step-header" id="step6">Step 6 &mdash; Install Visual Studio Code</div>
+    <ol>
+        <li>Go to <code>https://code.visualstudio.com</code></li>
+        <li>Click <strong>"Download for Windows"</strong></li>
+        <li>Run the installer</li>
+        <li>Accept the license agreement</li>
+        <li>Keep all default settings and click <strong>Next</strong> through all steps</li>
+        <li>Check <strong>"Add to PATH"</strong> option if available</li>
+        <li>Click <strong>Install</strong></li>
+        <li>Launch VS Code after installation completes</li>
+    </ol>
+
+    <!-- STEP 7 -->
+    <div class="step-header" id="step7">Step 7 &mdash; Install Robot Framework Extension in VS Code</div>
+    <p>This extension provides syntax highlighting, autocomplete, and test execution inside VS Code.</p>
+    <ol>
+        <li>Open VS Code</li>
+        <li>Click the <strong>Extensions icon</strong> on the left sidebar (or press <code>Ctrl + Shift + X</code>)</li>
+        <li>Search for <strong>"Robot Framework Language Server"</strong></li>
+        <li>Select the one published by <strong>Robocorp</strong></li>
+        <li>Click <strong>Install</strong></li>
+    </ol>
+
+    <h3>Additional Recommended Extensions</h3>
+    <table>
+        <tr>
+            <th>Extension Name</th>
+            <th>Publisher</th>
+            <th>Purpose</th>
+        </tr>
+        <tr>
+            <td>Robot Framework Language Server</td>
+            <td>Robocorp</td>
+            <td>Syntax highlighting, autocomplete, test runner</td>
+        </tr>
+        <tr>
+            <td>Python</td>
+            <td>Microsoft</td>
+            <td>Python language support</td>
+        </tr>
+        <tr>
+            <td>Material Icon Theme</td>
+            <td>Philipp Kief</td>
+            <td>Better file icons for easier navigation</td>
+        </tr>
+    </table>
+
+    <!-- STEP 8 -->
+    <div class="step-header" id="step8">Step 8 &mdash; Configure VS Code for Robot Framework</div>
+    <ol>
+        <li>Open VS Code</li>
+        <li>Press <code>Ctrl + Shift + P</code> to open the Command Palette</li>
+        <li>Type <strong>"Open Settings (JSON)"</strong> and select it</li>
+        <li>Add the following configuration:</li>
+    </ol>
+
+    <pre>{
+    "robot.language-server.python": "python",
+    "robot.python.executable": "python",
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    "files.associations": {
+        "*.robot": "robotframework",
+        "*.resource": "robotframework"
+    }
+}</pre>
+
+    <ol start="5">
+        <li>Save the file using <code>Ctrl + S</code></li>
+    </ol>
+
+    <!-- STEP 9 -->
+    <div class="step-header" id="step9">Step 9 &mdash; Create Your First Project</div>
+
+    <h3>Recommended Folder Structure</h3>
+    <pre>my_project/
+│
+├── tests/
+│   └── sample_test.robot
+│
+├── resources/
+│   └── keywords.resource
+│
+├── data/
+│   └── test_data.csv
+│
+├── results/
+│
+└── requirements.txt</pre>
+
+    <h3>How to Create in VS Code</h3>
+    <ol>
+        <li>Open VS Code</li>
+        <li>Click <strong>File &rarr; Open Folder</strong></li>
+        <li>Create a new folder called <code>my_project</code> and open it</li>
+        <li>Create the folders and files following the structure above</li>
+    </ol>
+
+    <!-- STEP 10 -->
+    <div class="step-header" id="step10">Step 10 &mdash; Write Your First Test</div>
+    <p>Create the file <code>tests/sample_test.robot</code> and add the following content:</p>
+
+    <pre>*** Settings ***
+Library    Collections
+
+*** Variables ***
+${NAME}    Robot Framework
+
+*** Test Cases ***
+First Test
+    [Documentation]    This is my first Robot Framework test
+    Log    Hello from ${NAME}!
+    Should Be Equal    ${NAME}    Robot Framework
+
+Second Test
+    [Documentation]    Simple math check
+    ${result}=    Evaluate    2 + 2
+    Should Be Equal As Numbers    ${result}    4</pre>
+
+    <div class="note">
+        💡 Robot Framework uses <strong>spaces (not tabs)</strong> to separate keywords and arguments. Use at least 2 spaces between keywords and their arguments.
+    </div>
+
+    <!-- STEP 11 -->
+    <div class="step-header" id="step11">Step 11 &mdash; Run Your First Test</div>
+
+    <h3>Option A &mdash; From VS Code Terminal</h3>
+    <ol>
+        <li>Open Terminal in VS Code using <code>Ctrl + `</code></li>
+        <li>Navigate to your project folder</li>
+        <li>Run one of the following commands:</li>
+    </ol>
+
+    <table>
+        <tr>
+            <th>Command</th>
+            <th>What it does</th>
+        </tr>
+        <tr>
+            <td><code>robot tests/</code></td>
+            <td>Run all tests in the tests folder</td>
+        </tr>
+        <tr>
+            <td><code>robot tests/sample_test.robot</code></td>
+            <td>Run a specific test file</td>
+        </tr>
+        <tr>
+            <td><code>robot --outputdir results tests/</code></td>
+            <td>Run all tests and save results to results folder</td>
+        </tr>
+    </table>
+
+    <h3>Option B &mdash; From VS Code Directly</h3>
+    <ol>
+        <li>Open the <code>.robot</code> file in VS Code</li>
+        <li>You will see a <strong>▶ Run</strong> button above each test case (provided by the Robot Framework extension)</li>
+        <li>Click it to run that specific test</li>
+    </ol>
+
+    <!-- STEP 12 -->
+    <div class="step-header" id="step12">Step 12 &mdash; View Results</div>
+    <p>After running, Robot Framework automatically generates 3 output files:</p>
+
+    <table>
+        <tr>
+            <th>File</th>
+            <th>Description</th>
+            <th>How to Open</th>
+        </tr>
+        <tr>
+            <td><code>output.xml</code></td>
+            <td>Raw test results data</td>
+            <td>Used by tools, not for manual reading</td>
+        </tr>
+        <tr>
+            <td><code>log.html</code></td>
+            <td>Detailed step-by-step test log</td>
+            <td>Open in any web browser</td>
+        </tr>
+        <tr>
+            <td><code>report.html</code></td>
+            <td>Summary report with pass/fail status</td>
+            <td>Open in any web browser</td>
+        </tr>
+    </table>
+
+    <h3>Run with Output Folder</h3>
+    <pre>robot --outputdir results tests/</pre>
+    <p>Then open <code>results/report.html</code> in your browser to view the test report.</p>
+
+    <!-- STEP 13 -->
+    <div class="step-header" id="step13">Step 13 &mdash; Create requirements.txt</div>
+    <p>This file allows your team to install all dependencies with a single command.</p>
+    <p>Create <code>requirements.txt</code> in your project root folder:</p>
+
+    <pre>robotframework==7.0
+robotframework-seleniumlibrary==6.3.0
+robotframework-requests==0.9.7
+robotframework-databaselibrary==1.4.3
+webdriver-manager==4.0.1</pre>
+
+    <h3>Team Members Install All Dependencies With:</h3>
+    <pre>pip install -r requirements.txt</pre>
+
+    <div class="success">
+        ✅ This ensures all team members use the same library versions, avoiding compatibility issues.
+    </div>
+
+    <!-- VERIFICATION -->
+    <div class="page-break"></div>
+    <h2 id="verification">Quick Verification Checklist</h2>
+    <p>After completing all steps, run these commands to verify everything is working:</p>
+
+    <pre># Check Python
+python --version
+
+# Check pip
+pip --version
+
+# Check Robot Framework
+robot --version
+
+# Check SeleniumLibrary
+python -c "import SeleniumLibrary; print('SeleniumLibrary OK')"
+
+# Check RequestsLibrary
+python -c "import RequestsLibrary; print('RequestsLibrary OK')"</pre>
+
+    <p>All commands should return version numbers or "OK" without any errors.</p>
+
+    <h3>Installation Checklist</h3>
+    <ul class="checklist">
+        <li>Python installed and added to PATH</li>
+        <li>Virtual environment created and activated</li>
+        <li>VS Code configured to use virtual environment interpreter</li>
+        <li>Robot Framework installed (<code>robot --version</code> works)</li>
+        <li>SeleniumLibrary installed</li>
+        <li>RequestsLibrary installed</li>
+        <li>DatabaseLibrary installed</li>
+        <li>ChromeDriver installed (if doing UI testing)</li>
+        <li>Visual Studio Code installed</li>
+        <li>Robot Framework Language Server extension installed</li>
+        <li>VS Code settings configured</li>
+        <li>First test runs successfully</li>
+        <li>Report opens in browser</li>
+        <li>requirements.txt created</li>
+    </ul>
+
+    <!-- TROUBLESHOOTING -->
+    <h2 id="troubleshooting">Common Issues &amp; Fixes</h2>
+
+    <table>
+        <tr>
+            <th>Problem</th>
+            <th>Cause</th>
+            <th>Fix</th>
+        </tr>
+        <tr>
+            <td><code>python</code> not recognized</td>
+            <td>Python not added to PATH</td>
+            <td>Reinstall Python and check "Add Python to PATH"</td>
+        </tr>
+        <tr>
+            <td><code>robot</code> not recognized</td>
+            <td>Robot Framework not installed</td>
+            <td>Run <code>pip install robotframework</code></td>
+        </tr>
+        <tr>
+            <td>Extension not working in VS Code</td>
+            <td>Wrong Python path in settings</td>
+            <td>Set <code>robot.language-server.python</code> in VS Code settings</td>
+        </tr>
+        <tr>
+            <td>No autocomplete in .robot files</td>
+            <td>Extension not configured properly</td>
+            <td>Revisit Step 7 and verify settings JSON</td>
+        </tr>
+        <tr>
+            <td>ChromeDriver error</td>
+            <td>Version mismatch with Chrome</td>
+            <td>Match ChromeDriver version to your Chrome version or use webdriver-manager</td>
+        </tr>
+        <tr>
+            <td>IndentationError in test file</td>
+            <td>Using tabs instead of spaces</td>
+            <td>Use spaces only; set VS Code tab size to 4 spaces</td>
+        </tr>
+        <tr>
+            <td>Library not found error</td>
+            <td>Library not installed</td>
+            <td>Run <code>pip install robotframework-[libraryname]</code></td>
+        </tr>
+        <tr>
+            <td>Libraries installed but not found</td>
+            <td>Virtual environment not activated</td>
+            <td>Run <code>venv\Scripts\activate</code> before installing or running tests</td>
+        </tr>
+        <tr>
+            <td>Wrong Python interpreter in VS Code</td>
+            <td>VS Code not pointing to venv</td>
+            <td>Press <code>Ctrl+Shift+P</code> → "Python: Select Interpreter" → choose <code>venv\Scripts\python.exe</code></td>
+        </tr>
+    </table>
+
+    <!-- FOLDER STRUCTURE -->
+    <h2 id="structure">Folder Structure Best Practice</h2>
+
+    <pre>project/
+│
+├── venv/                   ← Virtual environment (DO NOT commit to Git)
+│
+├── tests/                  ← Test files (.robot)
+│   ├── login_test.robot
+│   ├── search_test.robot
+│   └── api_test.robot
+│
+├── resources/              ← Reusable keywords (.resource)
+│   ├── common.resource
+│   └── api_keywords.resource
+│
+├── data/                   ← Test data files (.csv, .json)
+│   └── users.csv
+│
+├── results/                ← Test results (auto-generated)
+│
+├── .gitignore              ← Excludes venv/ and results/ from Git
+│
+└── requirements.txt        ← Project dependencies</pre>
+
+    <table>
+        <tr>
+            <th>Folder</th>
+            <th>Purpose</th>
+            <th>File Types</th>
+        </tr>
+        <tr>
+            <td><code>tests/</code></td>
+            <td>Contains all test cases</td>
+            <td>.robot</td>
+        </tr>
+        <tr>
+            <td><code>resources/</code></td>
+            <td>Reusable keywords shared across tests</td>
+            <td>.resource</td>
+        </tr>
+        <tr>
+            <td><code>data/</code></td>
+            <td>Test data files used by tests</td>
+            <td>.csv, .json, .xlsx</td>
+        </tr>
+        <tr>
+            <td><code>results/</code></td>
+            <td>Auto-generated test reports and logs</td>
+            <td>.html, .xml</td>
+        </tr>
+        <tr>
+            <td><code>requirements.txt</code></td>
+            <td>Lists all project dependencies</td>
+            <td>.txt</td>
+        </tr>
+    </table>
+
+    <!-- SUMMARY -->
+    <h2 id="summary">Summary</h2>
+
+    <table>
+        <tr>
+            <th>Step</th>
+            <th>Action</th>
+            <th>Status</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>Install Python</td>
+            <td>☐</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Set Up Virtual Environment</td>
+            <td>☐</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>Install Robot Framework</td>
+            <td>☐</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>Install Libraries (Selenium, Requests, Database)</td>
+            <td>☐</td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>Install Browser Driver</td>
+            <td>☐</td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td>Install Visual Studio Code</td>
+            <td>☐</td>
+        </tr>
+        <tr>
+            <td>7</td>
+            <td>Install Robot Framework Extension in VS Code</td>
+            <td>☐</td>
+        </tr>
+        <tr>
+            <td>8</td>
+            <td>Configure VS Code Settings</td>
+            <td>☐</td>
+        </tr>
+        <tr>
+            <td>9</td>
+            <td>Create Project Folder Structure</td>
+            <td>☐</td>
+        </tr>
+        <tr>
+            <td>10</td>
+            <td>Write First Test</td>
+            <td>☐</td>
+        </tr>
+        <tr>
+            <td>11</td>
+            <td>Run First Test</td>
+            <td>☐</td>
+        </tr>
+        <tr>
+            <td>12</td>
+            <td>View Test Results in Browser</td>
+            <td>☐</td>
+        </tr>
+        <tr>
+            <td>13</td>
+            <td>Create requirements.txt</td>
+            <td>☐</td>
+        </tr>
+    </table>
+
+    <div class="success">
+        ✅ Your team should be up and running in <strong>30–45 minutes</strong> following this guide.
+    </div>
+
+    <div class="footer">
+        Robot Framework Installation Guide &nbsp;|&nbsp; QA Team &nbsp;|&nbsp; Version 1.0 &nbsp;|&nbsp; April 2026
+    </div>
+
+</body>
+</html>
