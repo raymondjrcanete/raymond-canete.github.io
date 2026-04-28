@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAC XPath Extractor — User Guide</title>
+    <style>
+        body { font-family: Calibri, Arial, sans-serif; font-size: 11pt; margin: 2.54cm; color: #000; line-height: 1.5; }
+        h1 { font-size: 20pt; font-weight: bold; color: #1F3864; text-align: center; margin-bottom: 5px; }
+        h2 { font-size: 14pt; font-weight: bold; color: #1F3864; border-bottom: 2px solid #1F3864; padding-bottom: 4px; margin-top: 30px; }
+        h3 { font-size: 12pt; font-weight: bold; color: #2E75B6; margin-top: 20px; }
+        .subtitle { text-align: center; font-size: 12pt; color: #555; margin-bottom: 5px; }
+        .doc-info { text-align: center; font-size: 10pt; color: #777; margin-bottom: 40px; }
+        .toc { background-color: #F2F2F2; border: 1px solid #CCC; padding: 20px 30px; margin: 30px 0; }
+        .toc h2 { border-bottom: 2px solid #1F3864; margin-top: 0; }
+        .toc ol { margin: 0; padding-left: 20px; }
+        .toc li { margin: 6px 0; font-size: 11pt; }
+        .toc a { color: #1F3864; text-decoration: none; }
+        pre { background-color: #1e1e1e; color: #d4d4d4; border-left: 4px solid #2E75B6; padding: 12px 15px; font-family: Consolas, Courier New, monospace; font-size: 10pt; margin: 10px 0; border-radius: 4px; overflow-x: auto; }
+        code { background-color: #F4F4F4; font-family: Consolas, Courier New, monospace; font-size: 10pt; padding: 2px 5px; border-radius: 3px; }
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 10.5pt; }
+        th { background-color: #1F3864; color: #FFF; padding: 8px 12px; text-align: left; font-weight: bold; }
+        td { padding: 7px 12px; border: 1px solid #CCC; vertical-align: top; }
+        tr:nth-child(even) { background-color: #EEF2F7; }
+        tr:nth-child(odd) { background-color: #FFF; }
+        .note { background-color: #FFF9E6; border-left: 4px solid #FFC000; padding: 10px 15px; margin: 10px 0; font-size: 10.5pt; }
+        .important { background-color: #FDECEA; border-left: 4px solid #C00000; padding: 10px 15px; margin: 10px 0; font-size: 10.5pt; }
+        .success { background-color: #EBF5EB; border-left: 4px solid #375623; padding: 10px 15px; margin: 10px 0; font-size: 10.5pt; }
+        .info { background-color: #E8F4FD; border-left: 4px solid #2E75B6; padding: 10px 15px; margin: 10px 0; font-size: 10.5pt; }
+        .step-header { background-color: #1F3864; color: white; padding: 8px 15px; font-size: 13pt; font-weight: bold; margin-top: 30px; margin-bottom: 10px; }
+        ul { margin: 8px 0; padding-left: 25px; }
+        li { margin: 4px 0; }
+        ol { margin: 8px 0; padding-left: 25px; }
+        ol li { margin: 6px 0; }
+        hr { border: none; border-top: 1px solid #CCC; margin: 20px 0; }
+        .footer { text-align: center; font-size: 9pt; color: #999; margin-top: 50px; border-top: 1px solid #CCC; padding-top: 10px; }
+        .ui-mockup { background: #f4f7fb; border: 1px solid #ccc; border-radius: 8px; padding: 15px; margin: 15px 0; font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; }
+        .ui-header { background: linear-gradient(135deg, #1F3864, #2E75B6); color: white; padding: 10px 14px; border-radius: 5px 5px 0 0; margin: -15px -15px 10px -15px; font-weight: bold; }
+        .ui-btn { display: inline-block; padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: bold; margin: 3px; }
+        .ui-btn-blue { background: #1F3864; color: white; }
+        .ui-btn-green { background: #375623; color: white; }
+        .ui-btn-gray { background: #e9ecef; color: #495057; }
+        .ui-chip { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 10px; margin: 2px; border: 1px solid #1F3864; background: #1F3864; color: white; }
+        .ui-output { background: #1e1e1e; color: #d4d4d4; padding: 10px; border-radius: 4px; font-family: Consolas, monospace; font-size: 10px; margin-top: 8px; }
+    </style>
+</head>
+<body>
+
+<h1>RAC XPath Extractor</h1>
+<p class="subtitle">Chrome Extension — Robot Framework Variable Generator</p>
+<p class="doc-info">
+    Author: Raymond A. Cañete Jr. &nbsp;|&nbsp; Version: 1.0<br>
+    Email: <a href="mailto:raymondjr.canete@gmail.com">raymondjr.canete@gmail.com</a>
+</p>
+
+<hr>
+
+<!-- TOC -->
+<div class="toc">
+    <h2>Table of Contents</h2>
+    <ol>
+        <li><a href="#overview">Overview</a></li>
+        <li><a href="#install">Installation</a></li>
+        <li><a href="#ui">Extension Interface</a></li>
+        <li><a href="#howto">How to Use — Step by Step</a></li>
+        <li><a href="#filters">Element Filters</a></li>
+        <li><a href="#output">Output Format</a></li>
+        <li><a href="#variable-naming">Variable Naming Convention</a></li>
+        <li><a href="#example">Full Example</a></li>
+        <li><a href="#tips">Tips &amp; Best Practices</a></li>
+        <li><a href="#troubleshooting">Troubleshooting</a></li>
+    </ol>
+</div>
+
+<!-- OVERVIEW -->
+<h2 id="overview">Overview</h2>
+<p>
+    <strong>RAC XPath Extractor</strong> is a Chrome browser extension built for QA automation engineers
+    using <strong>Robot Framework</strong>. It automatically scans any web page and extracts XPaths
+    for all interactive elements — outputting them directly as Robot Framework variable declarations,
+    ready to paste into your test scripts.
+</p>
+
+<div class="info">
+    💡 <strong>What it solves:</strong> Instead of manually inspecting each element in DevTools and writing XPaths one by one, this tool scans the entire page at once and generates all variables in the correct Robot Framework format automatically.
+</div>
+
+<h3>What It Extracts</h3>
+<table>
+    <tr><th>Element Type</th><th>Variable Prefix</th><th>XPath Strategy</th></tr>
+    <tr><td>Buttons</td><td><code>BTN_</code></td><td>Uses button text: <code>//button[normalize-space()='Text']</code></td></tr>
+    <tr><td>Text Input Fields</td><td><code>TXT_</code></td><td>Uses placeholder, label, id, or name</td></tr>
+    <tr><td>Textareas</td><td><code>TXT_</code></td><td>Uses placeholder, label, or id</td></tr>
+    <tr><td>Dropdowns / Select</td><td><code>DDL_</code></td><td>Uses id, label, or name</td></tr>
+    <tr><td>Checkboxes</td><td><code>CHK_</code></td><td>Uses id or name attribute</td></tr>
+    <tr><td>Radio Buttons</td><td><code>RDO_</code></td><td>Uses id or name attribute</td></tr>
+    <tr><td>Popups / Modals</td><td><code>MSG_</code></td><td>Uses role="dialog" or modal class</td></tr>
+</table>
+
+<!-- INSTALLATION -->
+<h2 id="install">Installation</h2>
+
+<div class="step-header">Step 1 — Get the Extension Files</div>
+<p>The extension folder <code>xpath-extractor-extension</code> contains these files:</p>
+<pre>xpath-extractor-extension/
+├── manifest.json    ← Extension configuration
+├── content.js       ← Page scanning logic
+├── popup.html       ← Extension UI
+├── popup.js         ← UI logic
+└── icon.png         ← Extension icon</pre>
+
+<div class="step-header">Step 2 — Open Chrome Extensions</div>
+<ol>
+    <li>Open <strong>Google Chrome</strong></li>
+    <li>Go to the address bar and type: <code>chrome://extensions</code></li>
+    <li>Press <strong>Enter</strong></li>
+</ol>
+
+<div class="step-header">Step 3 — Enable Developer Mode</div>
+<ol>
+    <li>Look for the <strong>"Developer mode"</strong> toggle in the top-right corner</li>
+    <li>Click to turn it <strong>ON</strong></li>
+    <li>Three new buttons will appear: Load unpacked, Pack extension, Update</li>
+</ol>
+
+<div class="step-header">Step 4 — Load the Extension</div>
+<ol>
+    <li>Click <strong>"Load unpacked"</strong></li>
+    <li>Browse to and select the <code>xpath-extractor-extension</code> folder</li>
+    <li>Click <strong>Select Folder</strong></li>
+    <li>The <strong>RAC XPath Extractor</strong> extension will appear in your extensions list</li>
+</ol>
+
+<div class="step-header">Step 5 — Pin to Toolbar</div>
+<ol>
+    <li>Click the <strong>puzzle piece icon</strong> (🧩) in the Chrome toolbar</li>
+    <li>Find <strong>RAC XPath Extractor</strong></li>
+    <li>Click the <strong>pin icon</strong> 📌 to pin it to the toolbar</li>
+    <li>The 🔍 icon will now appear in your Chrome toolbar for easy access</li>
+</ol>
+
+<div class="success">
+    ✅ Installation complete! The extension is now ready to use on any website.
+</div>
+
+<!-- UI -->
+<h2 id="ui">Extension Interface</h2>
+
+<div class="ui-mockup">
+    <div class="ui-header">🔍 RAC XPath Extractor &nbsp;&nbsp;&nbsp; Robot Framework Variable Generator</div>
+    <div style="padding: 6px 0; font-size: 11px;">
+        <strong>📁 Section Name:</strong> &nbsp;
+        <input type="text" value="Transaction Form Fields" style="font-family:monospace; font-size:11px; padding:3px 8px; border:1px solid #ccc; border-radius:3px; width:250px;" readonly>
+    </div>
+    <div style="padding: 6px 0;">
+        <span class="ui-btn ui-btn-blue">🔍 Extract XPaths</span>
+        <span class="ui-btn ui-btn-green">📋 Copy All</span>
+        <span class="ui-btn ui-btn-green">💾 Download .robot</span>
+        <span class="ui-btn ui-btn-gray">🗑️ Clear</span>
+    </div>
+    <div style="padding: 4px 0; font-size: 10px;">
+        <strong>Show:</strong>
+        <span class="ui-chip">🔘 Buttons</span>
+        <span class="ui-chip">📝 Text Fields</span>
+        <span class="ui-chip">📋 Dropdowns</span>
+        <span class="ui-chip">☑️ Checkboxes</span>
+        <span class="ui-chip">🔵 Radio</span>
+        <span class="ui-chip">📄 Textarea</span>
+        <span class="ui-chip">💬 Popups</span>
+    </div>
+    <div class="ui-output">
+*** Variables ***<br>
+# Transaction Form Fields<br><br>
+# 🔘 Buttons<br>
+${BTN_CREATE_NEW_CUSTOMER}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//button[normalize-space()='Create New Customer']<br>
+${BTN_QUICK}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//button[normalize-space()='Quick']<br><br>
+# 📝 Text Fields<br>
+${TXT_JUAN}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//input[@placeholder='Juan']
+    </div>
+</div>
+
+<h3>Interface Components</h3>
+<table>
+    <tr><th>Component</th><th>Description</th></tr>
+    <tr><td><strong>Section Name</strong></td><td>Custom label for the comment header in the output (e.g. "Transaction Form Fields", "Login Page")</td></tr>
+    <tr><td><strong>🔍 Extract XPaths</strong></td><td>Scans the current page and extracts all matching elements</td></tr>
+    <tr><td><strong>📋 Copy All</strong></td><td>Copies the entire output to clipboard — ready to paste into your .robot file</td></tr>
+    <tr><td><strong>💾 Download .robot</strong></td><td>Downloads the output as a <code>.robot</code> file named after the section</td></tr>
+    <tr><td><strong>🗑️ Clear</strong></td><td>Clears the current output</td></tr>
+    <tr><td><strong>Filter Chips</strong></td><td>Toggle which element types to include in the output</td></tr>
+    <tr><td><strong>Status Bar</strong></td><td>Shows total elements found with count badges per type</td></tr>
+    <tr><td><strong>Output Area</strong></td><td>Dark-themed code editor showing the generated Robot Framework variables</td></tr>
+</table>
+
+<!-- HOW TO USE -->
+<h2 id="howto">How to Use — Step by Step</h2>
+
+<div class="step-header">Step 1 — Navigate to the Page</div>
+<p>Open the web application page you want to automate in Chrome. For example, a login page, transaction form, or any page with interactive elements.</p>
+
+<div class="step-header">Step 2 — Open the Extension</div>
+<p>Click the <strong>🔍 RAC XPath Extractor</strong> icon in the Chrome toolbar. The extension popup will open.</p>
+
+<div class="step-header">Step 3 — Set the Section Name</div>
+<p>Type a meaningful section name in the <strong>📁 Section Name</strong> field. This becomes the comment header in your output.</p>
+<table>
+    <tr><th>Page</th><th>Suggested Section Name</th></tr>
+    <tr><td>Login page</td><td><code>Login Page</code></td></tr>
+    <tr><td>Transaction form</td><td><code>Transaction Form Fields</code></td></tr>
+    <tr><td>Customer registration</td><td><code>Customer Registration Form</code></td></tr>
+    <tr><td>Search page</td><td><code>Search Page Elements</code></td></tr>
+</table>
+
+<div class="step-header">Step 4 — Select Filters (Optional)</div>
+<p>Toggle the filter chips to include or exclude specific element types. All are enabled by default. Click a chip to deactivate it (turns white) or activate it (turns dark blue).</p>
+
+<div class="step-header">Step 5 — Click Extract XPaths</div>
+<p>Click the <strong>🔍 Extract XPaths</strong> button. The tool will scan the entire page and display the results in the output area.</p>
+<p>The status bar will show: <code>✅ Found X elements</code> with count badges for each type.</p>
+
+<div class="step-header">Step 6 — Copy or Download</div>
+<ul>
+    <li>Click <strong>📋 Copy All</strong> → paste directly into your <code>.robot</code> file</li>
+    <li>Click <strong>💾 Download .robot</strong> → saves as a <code>.robot</code> file automatically named after your section</li>
+</ul>
+
+<!-- FILTERS -->
+<h2 id="filters">Element Filters</h2>
+<table>
+    <tr><th>Filter</th><th>Elements Captured</th><th>Variable Prefix</th></tr>
+    <tr><td>🔘 <strong>Buttons</strong></td><td><code>&lt;button&gt;</code>, <code>&lt;input type="button"&gt;</code>, <code>&lt;input type="submit"&gt;</code></td><td><code>BTN_</code></td></tr>
+    <tr><td>📝 <strong>Text Fields</strong></td><td><code>&lt;input type="text"&gt;</code>, <code>email</code>, <code>password</code>, <code>number</code>, etc.</td><td><code>TXT_</code></td></tr>
+    <tr><td>📋 <strong>Dropdowns</strong></td><td><code>&lt;select&gt;</code> elements</td><td><code>DDL_</code></td></tr>
+    <tr><td>☑️ <strong>Checkboxes</strong></td><td><code>&lt;input type="checkbox"&gt;</code></td><td><code>CHK_</code></td></tr>
+    <tr><td>🔵 <strong>Radio</strong></td><td><code>&lt;input type="radio"&gt;</code></td><td><code>RDO_</code></td></tr>
+    <tr><td>📄 <strong>Textarea</strong></td><td><code>&lt;textarea&gt;</code> elements</td><td><code>TXT_</code></td></tr>
+    <tr><td>💬 <strong>Popups</strong></td><td>Elements with <code>role="dialog"</code>, <code>role="alertdialog"</code>, or modal/popup class names</td><td><code>MSG_</code></td></tr>
+</table>
+
+<div class="note">
+    💡 <strong>Popups are only captured if they are visible on the page</strong> when you click Extract. To capture a popup's XPath, trigger the popup first (e.g. click a button that opens it), then click Extract XPaths while the popup is open.
+</div>
+
+<!-- OUTPUT FORMAT -->
+<h2 id="output">Output Format</h2>
+<p>The output is formatted as a Robot Framework <code>*** Variables ***</code> section:</p>
+<pre>*** Variables ***
+# Transaction Form Fields
+
+# 🔘 Buttons
+${BTN_CREATE_NEW_CUSTOMER}              //button[normalize-space()='Create New Customer']
+${BTN_QUICK}                            //button[normalize-space()='Quick']
+${BTN_FULL}                             //button[normalize-space()='Full']
+
+# 📝 Text Fields
+${TXT_JUAN}                             //input[@placeholder='Juan']
+${TXT_EMAIL}                            //input[@placeholder='Email Address']
+${TXT_PASSWORD}                         //input[@type='password']
+
+# 📋 Dropdowns
+${DDL_STATUS}                           //select[@id='status']
+
+# ☑️ Checkboxes
+${CHK_AGREE}                            //input[@id='agree']</pre>
+
+<div class="success">
+    ✅ Variables are automatically padded to 40 characters for clean alignment — matching Robot Framework coding standards.
+</div>
+
+<!-- VARIABLE NAMING -->
+<h2 id="variable-naming">Variable Naming Convention</h2>
+<p>The tool automatically generates variable names based on element attributes in this priority order:</p>
+
+<h3>For Buttons</h3>
+<table>
+    <tr><th>Source</th><th>Example Input</th><th>Variable Name</th></tr>
+    <tr><td>Button text</td><td><code>Create New Customer</code></td><td><code>${BTN_CREATE_NEW_CUSTOMER}</code></td></tr>
+    <tr><td>Input value</td><td><code>Submit</code></td><td><code>${BTN_SUBMIT}</code></td></tr>
+    <tr><td>ID attribute</td><td><code>id="btnSave"</code></td><td><code>${BTN_BTNSAVE}</code></td></tr>
+    <tr><td>Fallback</td><td>No text/id</td><td><code>${BTN_BUTTON_1}</code></td></tr>
+</table>
+
+<h3>For Text Fields</h3>
+<table>
+    <tr><th>Priority</th><th>Source</th><th>Example</th><th>Variable Name</th></tr>
+    <tr><td>1st</td><td>Associated label</td><td><code>&lt;label&gt;First Name&lt;/label&gt;</code></td><td><code>${TXT_FIRST_NAME}</code></td></tr>
+    <tr><td>2nd</td><td>Placeholder</td><td><code>placeholder="Juan"</code></td><td><code>${TXT_JUAN}</code></td></tr>
+    <tr><td>3rd</td><td>ID attribute</td><td><code>id="firstName"</code></td><td><code>${TXT_FIRSTNAME}</code></td></tr>
+    <tr><td>4th</td><td>Name attribute</td><td><code>name="first_name"</code></td><td><code>${TXT_FIRST_NAME}</code></td></tr>
+    <tr><td>5th</td><td>Fallback</td><td>No attributes</td><td><code>${TXT_FIELD_1}</code></td></tr>
+</table>
+
+<div class="note">
+    💡 <strong>Duplicate names</strong> are automatically handled — if two elements generate the same name, the second one gets a <code>_2</code> suffix (e.g. <code>${BTN_SUBMIT_2}</code>).
+</div>
+
+<!-- EXAMPLE -->
+<h2 id="example">Full Example</h2>
+
+<h3>Scenario: Extracting from a Transaction Form</h3>
+<p>You are automating a transaction form with the following elements:</p>
+<ul>
+    <li>A "Create New Customer" button</li>
+    <li>A "Quick" button and a "Full" button</li>
+    <li>A text field with placeholder "Juan" (First Name)</li>
+    <li>A text field with placeholder "Email Address"</li>
+    <li>A dropdown for Status</li>
+</ul>
+
+<h3>Steps</h3>
+<ol>
+    <li>Navigate to the transaction form page in Chrome</li>
+    <li>Click the 🔍 RAC XPath Extractor icon</li>
+    <li>Set Section Name to: <code>Transaction Form Fields</code></li>
+    <li>Click <strong>Extract XPaths</strong></li>
+    <li>Click <strong>📋 Copy All</strong></li>
+    <li>Paste into your Robot Framework <code>.robot</code> file</li>
+</ol>
+
+<h3>Generated Output</h3>
+<pre>*** Variables ***
+# Transaction Form Fields
+
+# 🔘 Buttons
+${BTN_CREATE_NEW_CUSTOMER}              //button[normalize-space()='Create New Customer']
+${BTN_QUICK}                            //button[normalize-space()='Quick']
+${BTN_FULL}                             //button[normalize-space()='Full']
+
+# 📝 Text Fields
+${TXT_JUAN}                             //input[@placeholder='Juan']
+${TXT_EMAIL_ADDRESS}                    //input[@placeholder='Email Address']
+
+# 📋 Dropdowns
+${DDL_STATUS}                           //select[@id='status']</pre>
+
+<h3>Use in Robot Framework Test</h3>
+<pre>*** Settings ***
+Library    SeleniumLibrary
+
+*** Variables ***
+# Transaction Form Fields
+${BTN_CREATE_NEW_CUSTOMER}              //button[normalize-space()='Create New Customer']
+${TXT_JUAN}                             //input[@placeholder='Juan']
+
+*** Test Cases ***
+Create New Customer
+    Click Element       ${BTN_CREATE_NEW_CUSTOMER}
+    Input Text          ${TXT_JUAN}    John</pre>
+
+<!-- TIPS -->
+<h2 id="tips">Tips &amp; Best Practices</h2>
+<table>
+    <tr><th>Tip</th><th>Detail</th></tr>
+    <tr><td>✅ Extract per page/form</td><td>Use a different Section Name for each page or form to keep variables organized</td></tr>
+    <tr><td>✅ Capture popups while open</td><td>Trigger the popup first, then click Extract to capture its elements</td></tr>
+    <tr><td>✅ Use Download for large pages</td><td>For pages with many elements, download as .robot file instead of copying</td></tr>
+    <tr><td>✅ Review before using</td><td>Always review generated XPaths — some may need manual adjustment for dynamic pages</td></tr>
+    <tr><td>✅ Rename vague variables</td><td>If a variable is named <code>${TXT_FIELD_1}</code>, rename it to something meaningful</td></tr>
+    <tr><td>⚠️ Dynamic content</td><td>XPaths based on text may break if the page text changes — use ID-based XPaths when available</td></tr>
+    <tr><td>⚠️ iFrames</td><td>Elements inside iFrames may not be captured — switch to the iFrame context first</td></tr>
+    <tr><td>⚠️ Single Page Apps</td><td>For React/Angular/Vue apps, wait for the page to fully load before extracting</td></tr>
+</table>
+
+<!-- TROUBLESHOOTING -->
+<h2 id="troubleshooting">Troubleshooting</h2>
+<table>
+    <tr><th>Problem</th><th>Cause</th><th>Fix</th></tr>
+    <tr><td>Extension not showing in toolbar</td><td>Not pinned</td><td>Click 🧩 puzzle icon → pin RAC XPath Extractor</td></tr>
+    <tr><td>"Could not extract XPaths" error</td><td>Page not fully loaded or restricted page</td><td>Refresh the page and try again. Does not work on <code>chrome://</code> pages.</td></tr>
+    <tr><td>No elements found</td><td>All filters deactivated or page has no matching elements</td><td>Check that at least one filter chip is active</td></tr>
+    <tr><td>Popup elements not captured</td><td>Popup was not open when Extract was clicked</td><td>Open the popup first, then click Extract XPaths</td></tr>
+    <tr><td>Wrong variable name generated</td><td>Element has no label, placeholder, or id</td><td>Manually rename the variable in your .robot file</td></tr>
+    <tr><td>Extension stopped working after Chrome update</td><td>Manifest compatibility issue</td><td>Go to <code>chrome://extensions</code> → click Update</td></tr>
+    <tr><td>Copy button not working</td><td>Clipboard permission denied</td><td>Allow clipboard access when Chrome prompts, or use Download instead</td></tr>
+</table>
+
+<div class="footer">
+    RAC XPath Extractor &nbsp;|&nbsp; Chrome Extension &nbsp;|&nbsp; Author: Raymond A. Cañete Jr. &nbsp;|&nbsp; Version 1.0
+</div>
+
+</body>
+</html>
