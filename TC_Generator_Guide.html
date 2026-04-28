@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PGC Format Test Case Generator Guide</title>
+    <style>
+        body { font-family: Calibri, Arial, sans-serif; font-size: 11pt; margin: 2.54cm; color: #000; line-height: 1.5; }
+        h1 { font-size: 20pt; font-weight: bold; color: #1F3864; text-align: center; margin-bottom: 5px; }
+        h2 { font-size: 14pt; font-weight: bold; color: #1F3864; border-bottom: 2px solid #1F3864; padding-bottom: 4px; margin-top: 30px; }
+        h3 { font-size: 12pt; font-weight: bold; color: #2E75B6; margin-top: 20px; }
+        .subtitle { text-align: center; font-size: 12pt; color: #555; margin-bottom: 5px; }
+        .doc-info { text-align: center; font-size: 10pt; color: #777; margin-bottom: 40px; }
+        .toc { background-color: #F2F2F2; border: 1px solid #CCC; padding: 20px 30px; margin: 30px 0; }
+        .toc h2 { border-bottom: 2px solid #1F3864; margin-top: 0; }
+        .toc ol { margin: 0; padding-left: 20px; }
+        .toc li { margin: 6px 0; font-size: 11pt; }
+        .toc a { color: #1F3864; text-decoration: none; }
+        pre { background-color: #1e1e1e; color: #d4d4d4; border-left: 4px solid #2E75B6; padding: 12px 15px; font-family: Consolas, Courier New, monospace; font-size: 10pt; margin: 10px 0; border-radius: 4px; overflow-x: auto; }
+        code { background-color: #F4F4F4; font-family: Consolas, Courier New, monospace; font-size: 10pt; padding: 2px 5px; border-radius: 3px; }
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 10.5pt; }
+        th { background-color: #1F3864; color: #FFF; padding: 8px 12px; text-align: left; font-weight: bold; }
+        td { padding: 7px 12px; border: 1px solid #CCC; vertical-align: top; }
+        tr:nth-child(even) { background-color: #EEF2F7; }
+        tr:nth-child(odd) { background-color: #FFF; }
+        .note { background-color: #FFF9E6; border-left: 4px solid #FFC000; padding: 10px 15px; margin: 10px 0; font-size: 10.5pt; }
+        .important { background-color: #FDECEA; border-left: 4px solid #C00000; padding: 10px 15px; margin: 10px 0; font-size: 10.5pt; }
+        .success { background-color: #EBF5EB; border-left: 4px solid #375623; padding: 10px 15px; margin: 10px 0; font-size: 10.5pt; }
+        .info { background-color: #E8F4FD; border-left: 4px solid #2E75B6; padding: 10px 15px; margin: 10px 0; font-size: 10.5pt; }
+        .step-header { background-color: #1F3864; color: white; padding: 8px 15px; font-size: 13pt; font-weight: bold; margin-top: 30px; margin-bottom: 10px; }
+        ul { margin: 8px 0; padding-left: 25px; }
+        li { margin: 4px 0; }
+        ol { margin: 8px 0; padding-left: 25px; }
+        ol li { margin: 6px 0; }
+        .checklist li { list-style-type: none; margin: 5px 0; }
+        .checklist li::before { content: "☐ "; font-size: 12pt; }
+        hr { border: none; border-top: 1px solid #CCC; margin: 20px 0; }
+        .footer { text-align: center; font-size: 9pt; color: #999; margin-top: 50px; border-top: 1px solid #CCC; padding-top: 10px; }
+        .keyword-given { color: #4EC9B0; font-weight: bold; }
+        .keyword-when  { color: #DCDCAA; font-weight: bold; }
+        .keyword-then  { color: #9CDCFE; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<h1>PGC Format Test Case Generator</h1>
+<p class="subtitle">TestCase Generator</p>
+<p class="doc-info">
+    Author: Raymond A. Cañete Jr. &nbsp;|&nbsp; Version: 1.0.0<br>
+    Email: <a href="mailto:raymondjr.canete@gmail.com">raymondjr.canete@gmail.com</a>
+</p>
+
+<hr>
+
+<!-- TOC -->
+<div class="toc">
+    <h2>Table of Contents</h2>
+    <ol>
+        <li><a href="#overview">Overview</a></li>
+        <li><a href="#requirements">Requirements &amp; Installation</a></li>
+        <li><a href="#howtorun">How to Run</a></li>
+        <li><a href="#steps">Step-by-Step Usage</a></li>
+        <li><a href="#scenario-format">Scenario Format</a></li>
+        <li><a href="#output">Output — Excel Columns</a></li>
+        <li><a href="#example">Full Example Session</a></li>
+        <li><a href="#tips">Tips &amp; Best Practices</a></li>
+        <li><a href="#troubleshooting">Troubleshooting</a></li>
+    </ol>
+</div>
+
+<!-- OVERVIEW -->
+<h2 id="overview">Overview</h2>
+<p>
+    The <strong>PGC Format Test Case Generator</strong> is a Python command-line tool that converts
+    use case scenarios written in <strong>Given/When/Then</strong> format into a
+    formatted <strong>Excel (.xlsx) test case file</strong> — matching the standard PGC QA template.
+</p>
+
+<div class="info">
+    💡 <strong>What it does:</strong> You paste your use case scenarios → the tool automatically
+    extracts each scenario → generates test case rows in Excel with proper formatting,
+    TC IDs, test steps, and expected results.
+</div>
+
+<h3>Key Features</h3>
+<table>
+    <tr><th>Feature</th><th>Description</th></tr>
+    <tr><td>Auto-parses scenarios</td><td>Detects Scenario 1, Scenario 2... automatically</td></tr>
+    <tr><td>Extracts user role</td><td>Reads "Persona:" or "As a..." and fills Test Data column</td></tr>
+    <tr><td>Builds test steps</td><td>Formats Given/When/Then into structured test steps</td></tr>
+    <tr><td>Generates expected results</td><td>Converts THEN clause into expected result</td></tr>
+    <tr><td>Auto TC ID formula</td><td>Excel formula auto-generates TC IDs when ticket is entered</td></tr>
+    <tr><td>Append mode</td><td>Add more scenarios to an existing file without overwriting</td></tr>
+    <tr><td>Color-coded Excel</td><td>Amber header, blue section rows, white data rows</td></tr>
+</table>
+
+<!-- REQUIREMENTS -->
+<h2 id="requirements">Requirements &amp; Installation</h2>
+
+<h3>Prerequisites</h3>
+<ul>
+    <li>Python 3.10 or higher</li>
+    <li><code>openpyxl</code> library</li>
+</ul>
+
+<h3>Install Dependency</h3>
+<p>Open <strong>Command Prompt</strong> and run:</p>
+<pre>pip install openpyxl</pre>
+
+<h3>Verify Python Version</h3>
+<pre>python --version</pre>
+<p>Expected output: <code>Python 3.10.x</code> or higher</p>
+
+<!-- HOW TO RUN -->
+<h2 id="howtorun">How to Run</h2>
+
+<ol>
+    <li>Open <strong>Command Prompt</strong></li>
+    <li>Navigate to the tool folder:</li>
+</ol>
+<pre>cd "D:\QA Tools\Others\TescaseGenerator"</pre>
+<ol start="3">
+    <li>Run the tool:</li>
+</ol>
+<pre>python tc_generator.py</pre>
+
+<div class="important">
+    ⚠️ <strong>Do NOT double-click the .py file</strong> — it may open a text editor instead of running.
+    Always use <code>python tc_generator.py</code> in Command Prompt.
+</div>
+
+<!-- STEP BY STEP -->
+<h2 id="steps">Step-by-Step Usage</h2>
+
+<div class="step-header">Step 1 — Choose Mode</div>
+<pre>[1] Create new file
+[2] Append to existing file
+Choose (1 or 2):</pre>
+
+<table>
+    <tr><th>Option</th><th>What it does</th></tr>
+    <tr><td><strong>1 — Create new file</strong></td><td>Creates a new Excel file with timestamp: <code>TC_20260427_153000.xlsx</code></td></tr>
+    <tr><td><strong>2 — Append to existing</strong></td><td>Prompts for an existing filename and adds new scenarios to it without overwriting</td></tr>
+</table>
+
+<div class="step-header">Step 2 — Enter Ticket Number</div>
+<pre>Enter Ticket Number (press Enter to leave blank):</pre>
+<p>Type the ticket number (e.g. <code>12345</code>) or press <strong>Enter</strong> to leave blank and fill manually in Excel later.</p>
+
+<div class="step-header">Step 3 — Enter Epic / Functionality Area</div>
+<pre>Enter Epic Name or Functionality Area:</pre>
+<p>This becomes the <strong>blue section header row</strong> in the Excel file.</p>
+<p><strong>Example:</strong> <code>User Enrollment</code>, <code>Transaction Processing</code>, <code>Login</code></p>
+
+<div class="step-header">Step 4 — Enter Feature Name</div>
+<pre>Enter Ticket Title or Feature Name:</pre>
+<p>This is prepended to each scenario title in the Functionality Area column.</p>
+<table>
+    <tr><th>Input</th><th>Output in Excel</th></tr>
+    <tr><td><code>Login</code></td><td><code>Login - Scenario 1: Display login form</code></td></tr>
+    <tr><td><em>(blank)</em></td><td><code>Scenario 1: Display login form</code></td></tr>
+</table>
+
+<div class="step-header">Step 5 — Paste Your Scenarios</div>
+<pre>Paste your use-case scenario text below.
+When done, type  END  on a new line and press Enter.</pre>
+
+<ol>
+    <li>Paste your full scenario text</li>
+    <li>Type <code>END</code> on a new line</li>
+    <li>Press <strong>Enter</strong></li>
+</ol>
+
+<div class="note">
+    💡 Nothing will happen until you type <code>END</code>. This is intentional so you can paste multi-line text freely without it triggering early.
+</div>
+
+<div class="step-header">Step 6 — Add More Scenarios (Optional)</div>
+<pre>Add another scenario batch to the same file? (y/n):</pre>
+<ul>
+    <li>Type <code>y</code> → adds another batch to the <strong>same Excel file</strong> with a new blue section row</li>
+    <li>Type <code>n</code> → finishes and exits</li>
+</ul>
+
+<!-- SCENARIO FORMAT -->
+<h2 id="scenario-format">Scenario Format</h2>
+<p>The tool expects scenarios in this structure:</p>
+
+<pre>Persona: Rematado Processing Clerk
+Feature: Settings > Price and Rate
+
+As a user, I want to...
+
+Scenario 1: Title of the scenario
+GIVEN: some precondition
+WHEN: some action
+THEN: expected outcome
+AND: additional condition (optional)
+
+Scenario 2: Another scenario
+GIVEN: another precondition
+WHEN: another action
+THEN: another expected outcome</pre>
+
+<h3>Key Rules</h3>
+<table>
+    <tr><th>Rule</th><th>Detail</th></tr>
+    <tr><td>Scenario headers</td><td>Must start with <code>Scenario N:</code> (e.g. Scenario 1:, Scenario 2:)</td></tr>
+    <tr><td>Keywords</td><td>GIVEN, WHEN, THEN, AND — case insensitive</td></tr>
+    <tr><td>AND clauses</td><td>Automatically attached to the preceding keyword (GIVEN/WHEN/THEN)</td></tr>
+    <tr><td>SAMPLE UI sections</td><td>Automatically ignored and stripped from output</td></tr>
+    <tr><td>Persona line</td><td>Optional — auto-fills Test Data column if present</td></tr>
+</table>
+
+<h3>User Role Extraction (Test Data Column)</h3>
+<table>
+    <tr><th>Input in Scenario Text</th><th>Test Data Output</th></tr>
+    <tr><td><code>Persona: Rematado Processing Clerk</code></td><td><code>User : Rematado Processing Clerk</code></td></tr>
+    <tr><td><code>As a Requestor,</code></td><td><code>User : Requestor</code></td></tr>
+    <tr><td>Neither present</td><td><em>(blank)</em></td></tr>
+</table>
+<div class="note">
+    💡 <strong>Priority:</strong> <code>Persona:</code> takes precedence over <code>As a...</code> if both are present.
+</div>
+
+<!-- OUTPUT -->
+<h2 id="output">Output — Excel Columns</h2>
+
+<table>
+    <tr><th>Column</th><th>Description</th><th>Auto-filled?</th></tr>
+    <tr><td><strong>Open Project Ticket</strong></td><td>Ticket number entered in Step 2</td><td>✅ Yes</td></tr>
+    <tr><td><strong>Functionality Area</strong></td><td>Feature + Scenario title</td><td>✅ Yes</td></tr>
+    <tr><td><strong>TC ID</strong></td><td>Auto-generated Excel formula (fills when ticket is entered)</td><td>✅ Formula</td></tr>
+    <tr><td><strong>Test Case Description</strong></td><td>THEN content prefixed with "Verify"</td><td>✅ Yes</td></tr>
+    <tr><td><strong>Prerequisite</strong></td><td>Left blank — fill manually</td><td>❌ Manual</td></tr>
+    <tr><td><strong>Test Data</strong></td><td>Auto-extracted user role from Persona/As a</td><td>✅ Yes</td></tr>
+    <tr><td><strong>Test Steps</strong></td><td>Given / When / Then: Check for expected result</td><td>✅ Yes</td></tr>
+    <tr><td><strong>Expected Result</strong></td><td>THEN content ("must" → "will")</td><td>✅ Yes</td></tr>
+    <tr><td><strong>Actual Result</strong></td><td>Left blank — fill after execution</td><td>❌ Manual</td></tr>
+    <tr><td><strong>Status</strong></td><td>Left blank — fill after execution</td><td>❌ Manual</td></tr>
+    <tr><td><strong>Date of Execution</strong></td><td>Left blank — fill after execution</td><td>❌ Manual</td></tr>
+    <tr><td><strong>Tester</strong></td><td>Left blank — fill after execution</td><td>❌ Manual</td></tr>
+    <tr><td><strong>Remarks</strong></td><td>Left blank — fill after execution</td><td>❌ Manual</td></tr>
+</table>
+
+<h3>File Naming</h3>
+<table>
+    <tr><th>Mode</th><th>Output Filename</th></tr>
+    <tr><td>New file</td><td><code>TC_YYYYMMDD_HHMMSS.xlsx</code> (e.g. <code>TC_20260427_153000.xlsx</code>)</td></tr>
+    <tr><td>Append mode</td><td>Appends to the filename you specified</td></tr>
+</table>
+<p>Files are saved in the <strong>same folder</strong> as the tool (<code>TescaseGenerator\</code>).</p>
+
+<!-- EXAMPLE -->
+<h2 id="example">Full Example Session</h2>
+
+<h3>Input Scenario</h3>
+<pre>As a Requestor,
+I WANT to submit a User Enrollment request.
+
+Scenario 1: Displaying the Request for someone else option
+GIVEN: The Requestor is within the Online Banking Request Form.
+WHEN: The request form is displayed.
+THEN: The system must show a checkbox labeled Request for someone else.
+AND: The checkbox must be Unchecked by default.
+
+Scenario 2: Behavior if checkbox is checked
+GIVEN: The Requestor is viewing the User Enrollment request form.
+WHEN: The Requestor checks the Request for someone else checkbox.
+THEN: The system must hide the Data Privacy Notice.
+AND: Set all applicable fields to uneditable.</pre>
+
+<h3>Tool Session</h3>
+<pre>============================================================
+  PGC FORMAT TEST CASE GENERATOR
+  Author : RAC | Version : 1.0.0
+============================================================
+
+[1] Create new file
+[2] Append to existing file
+Choose (1 or 2): 1
+
+📄 Output file: TC_20260427_153000.xlsx
+
+Enter Ticket Number (press Enter to leave blank): 12345
+Enter Epic Name or Functionality Area: User Enrollment
+Enter Ticket Title or Feature Name: Online Banking Request
+
+Paste your use-case scenario text below.
+When done, type  END  on a new line and press Enter.
+
+[paste scenario here]
+END
+
+✅  Detected 2 scenario(s):
+   • Scenario 1: Displaying the Request for someone else option
+   • Scenario 2: Behavior if checkbox is checked
+   👤 Test Data: User : Requestor
+
+✅  Saved to: TC_20260427_153000.xlsx
+
+Add another scenario batch to the same file? (y/n): n
+
+Done! Goodbye.</pre>
+
+<h3>Excel Output</h3>
+<table>
+    <tr><th>Ticket</th><th>Functionality Area</th><th>TC ID</th><th>Test Case Description</th><th>Test Steps</th><th>Expected Result</th></tr>
+    <tr><td colspan="6" style="background:#00B0F0; font-weight:bold;">User Enrollment</td></tr>
+    <tr>
+        <td>12345</td>
+        <td>Online Banking Request - Scenario 1: Displaying the Request for someone else option</td>
+        <td>12345_1</td>
+        <td>Verify The system must show a checkbox labeled Request for someone else. The checkbox must be Unchecked by default.</td>
+        <td>Given: The Requestor is within the Online Banking Request Form.<br>When: The request form is displayed.<br>Then: Check for expected result</td>
+        <td>The system will show a checkbox labeled Request for someone else. The checkbox will be Unchecked by default.</td>
+    </tr>
+    <tr>
+        <td>12345</td>
+        <td>Online Banking Request - Scenario 2: Behavior if checkbox is checked</td>
+        <td>12345_2</td>
+        <td>Verify The system must hide the Data Privacy Notice. Set all applicable fields to uneditable.</td>
+        <td>Given: The Requestor is viewing the User Enrollment request form.<br>When: The Requestor checks the Request for someone else checkbox.<br>Then: Check for expected result</td>
+        <td>The system will hide the Data Privacy Notice. Set all applicable fields to uneditable.</td>
+    </tr>
+</table>
+
+<!-- TIPS -->
+<h2 id="tips">Tips &amp; Best Practices</h2>
+
+<table>
+    <tr><th>Tip</th><th>Detail</th></tr>
+    <tr><td>✅ Always include Persona or As a</td><td>Ensures Test Data column is auto-filled correctly</td></tr>
+    <tr><td>✅ Use Append mode for same ticket</td><td>Keeps all scenarios for one ticket in one file</td></tr>
+    <tr><td>✅ Use SAMPLE UI sections freely</td><td>Tool automatically ignores them — no need to remove before pasting</td></tr>
+    <tr><td>✅ Leave Ticket blank if unknown</td><td>TC ID formula will auto-fill once you enter the ticket in Excel</td></tr>
+    <tr><td>⚠️ Each scenario needs Scenario N:</td><td>Without this header, the tool won't detect the scenario</td></tr>
+    <tr><td>⚠️ Don't forget to type END</td><td>Nothing processes until END is typed on its own line</td></tr>
+    <tr><td>⚠️ AND must follow a keyword</td><td>AND without a preceding GIVEN/WHEN/THEN will be ignored</td></tr>
+</table>
+
+<!-- TROUBLESHOOTING -->
+<h2 id="troubleshooting">Troubleshooting</h2>
+
+<table>
+    <tr><th>Problem</th><th>Cause</th><th>Fix</th></tr>
+    <tr><td><code>python</code> not recognized</td><td>Python not in PATH</td><td>Reinstall Python and check "Add to PATH"</td></tr>
+    <tr><td><code>ModuleNotFoundError: openpyxl</code></td><td>openpyxl not installed</td><td>Run <code>pip install openpyxl</code></td></tr>
+    <tr><td>No scenarios detected</td><td>Missing <code>Scenario N:</code> headers</td><td>Ensure each scenario starts with <code>Scenario 1:</code>, <code>Scenario 2:</code> etc.</td></tr>
+    <tr><td>File not found in append mode</td><td>Wrong filename entered</td><td>Check the exact filename including extension (.xlsx)</td></tr>
+    <tr><td>Test Data column is blank</td><td>No Persona or As a line in scenario</td><td>Add <code>Persona: Role Name</code> at the top of your scenario text</td></tr>
+    <tr><td>AND content missing</td><td>AND placed before any GIVEN/WHEN/THEN</td><td>Ensure AND always follows a GIVEN, WHEN, or THEN line</td></tr>
+    <tr><td>Excel file is open</td><td>File locked by Excel</td><td>Close the Excel file before running the tool</td></tr>
+</table>
+
+<div class="success">
+    ✅ <strong>Quick Start:</strong> Install Python + openpyxl → run <code>python tc_generator.py</code> → choose mode → paste scenario → type END → done!
+</div>
+
+<div class="footer">
+    PGC Format Test Case Generator &nbsp;|&nbsp; Author: Raymond A. Cañete Jr. &nbsp;|&nbsp; Version 1.0.0
+</div>
+
+</body>
+</html>

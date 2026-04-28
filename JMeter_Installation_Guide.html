@@ -50,7 +50,7 @@
 <h1>JMeter Installation &amp; Load Testing Guide</h1>
 <p class="subtitle">For QA Team Members &nbsp;|&nbsp; Performance Testing Reference</p>
 <p class="doc-info">
-    Prepared by: Raymond A. Canete Jr &nbsp;|&nbsp; Version: 1.0 &nbsp;|&nbsp; Date: April 2026<br>
+    Prepared by: Raymond A. Canete Jr &nbsp;|&nbsp; Version: 1.0<br>
     Email: <a href="mailto:raymondjr.canete@gmail.com">raymondjr.canete@gmail.com</a>
 </p>
 
@@ -68,20 +68,21 @@
         <li><a href="#metrics-relationship">How Metrics Relate to Each Other</a></li>
         <li><a href="#thresholds">Acceptable Thresholds &amp; Benchmarks</a></li>
         <li class="section-title">PART 2 &mdash; JMETER INSTALLATION</li>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#step1">Step 1 &mdash; Install Java (JDK)</a></li>
-        <li><a href="#step2">Step 2 &mdash; Download Apache JMeter</a></li>
-        <li><a href="#step3">Step 3 &mdash; Install &amp; Configure JMeter</a></li>
-        <li><a href="#step4">Step 4 &mdash; Launch JMeter</a></li>
-        <li><a href="#step5">Step 5 &mdash; Install JMeter Plugins (Optional but Recommended)</a></li>
-        <li><a href="#step6">Step 6 &mdash; Create Your First Test Plan</a></li>
-        <li><a href="#step7">Step 7 &mdash; Configure Thread Group</a></li>
-        <li><a href="#step8">Step 8 &mdash; Add HTTP Request Sampler</a></li>
-        <li><a href="#step9">Step 9 &mdash; Add Listeners (View Results)</a></li>
-        <li><a href="#step10">Step 10 &mdash; Run the Test</a></li>
-        <li><a href="#step11">Step 11 &mdash; Generate HTML Report</a></li>
-        <li><a href="#troubleshooting">Common Issues &amp; Fixes</a></li>
-        <li><a href="#summary">Summary</a></li>
+        <li style="list-style:none"><a href="#prerequisites">Prerequisites</a></li>
+        <li style="list-style:none"><a href="#step1">Step 1 &mdash; Install Java (JDK)</a></li>
+        <li style="list-style:none"><a href="#step2">Step 2 &mdash; Download Apache JMeter</a></li>
+        <li style="list-style:none"><a href="#step3">Step 3 &mdash; Install &amp; Configure JMeter</a></li>
+        <li style="list-style:none"><a href="#step4">Step 4 &mdash; Launch JMeter</a></li>
+        <li style="list-style:none"><a href="#step5">Step 5 &mdash; Install JMeter Plugins (Optional but Recommended)</a></li>
+        <li style="list-style:none"><a href="#step6">Step 6 &mdash; Create Your First Test Plan</a></li>
+        <li style="list-style:none"><a href="#step7">Step 7 &mdash; Configure Thread Group</a></li>
+        <li style="list-style:none"><a href="#step8">Step 8 &mdash; Add HTTP Request Sampler</a></li>
+        <li style="list-style:none"><a href="#step9">Step 9 &mdash; Add Listeners (View Results)</a></li>
+        <li style="list-style:none"><a href="#timers">Step 10 &mdash; Add Timers (Think Time)</a></li>
+        <li style="list-style:none"><a href="#step10">Step 11 &mdash; Run the Test</a></li>
+        <li style="list-style:none"><a href="#step11">Step 12 &mdash; Generate HTML Report</a></li>
+        <li style="list-style:none"><a href="#troubleshooting">Common Issues &amp; Fixes</a></li>
+        <li style="list-style:none"><a href="#summary">Summary</a></li>
     </ol>
 </div>
 
@@ -571,8 +572,120 @@ System at Maximum Capacity or Failing</pre>
     ⚠️ <strong>IMPORTANT:</strong> Disable all listeners during actual load tests — they consume memory and affect results. Use the <strong>-e -o</strong> flags in command line to generate the HTML report after the test instead.
 </div>
 
-<!-- STEP 10 -->
-<div class="step-header" id="step10">Step 10 &mdash; Run the Test</div>
+<!-- TIMERS -->
+<div class="step-header" id="timers">Step 10 &mdash; Add Timers (Think Time)</div>
+
+<p>A <strong>Timer</strong> in JMeter adds a delay between requests to simulate realistic user behavior. Without timers, JMeter sends requests as fast as possible — which is unrealistic and can unfairly overwhelm the server.</p>
+
+<div class="info">
+    💡 <strong>Think of it like a real user:</strong> They click a button, read the result, think for a moment, then click again. They don't send 100 requests per second. Timers simulate this natural pause between actions.
+</div>
+
+<h3>Where to Add a Timer</h3>
+<ul>
+    <li>Right-click <strong>Thread Group</strong> → <strong>Add → Timer → [choose timer]</strong></li>
+    <li>Timer under <strong>Thread Group</strong> = applies to <strong>all requests</strong></li>
+    <li>Timer under a <strong>specific HTTP Request</strong> = applies only to that request</li>
+</ul>
+
+<div class="important">
+    ⚠️ <strong>Always add a timer when running load tests.</strong> Running without a timer sends requests at maximum speed and does not reflect real user behavior.
+</div>
+
+<h3>1. Constant Timer</h3>
+<p>Adds a <strong>fixed delay</strong> between every request. Simple and predictable.</p>
+<table>
+    <tr><th>Setting</th><th>Description</th></tr>
+    <tr><td><strong>Thread Delay (ms)</strong></td><td>Fixed wait time in milliseconds before the next request</td></tr>
+</table>
+<p><strong>Example:</strong> Thread Delay = 1000ms → every user waits exactly 1 second between requests.</p>
+<div class="note">
+    💡 <strong>Use when:</strong> You want a simple, predictable think time for basic tests. Not the most realistic since real users don't all wait the exact same amount of time.
+</div>
+
+<h3>2. Uniform Random Timer</h3>
+<p>Adds a <strong>random delay within a range</strong>. More realistic than Constant Timer.</p>
+<table>
+    <tr><th>Setting</th><th>Description</th></tr>
+    <tr><td><strong>Random Delay Maximum (ms)</strong></td><td>Maximum random delay added</td></tr>
+    <tr><td><strong>Constant Delay Offset (ms)</strong></td><td>Fixed base delay added on top of the random value</td></tr>
+</table>
+<p><strong>Formula:</strong> <code>Total delay = Random(0 to max) + constant offset</code></p>
+<p><strong>Example:</strong> Random max = 2000ms, Offset = 1000ms → delay is between 1000ms and 3000ms</p>
+<div class="note">
+    💡 <strong>Use when:</strong> You want to simulate varied user think times. This is the most commonly used timer for general load testing. A range of <strong>1000–3000ms</strong> is a good default for most web applications.
+</div>
+
+<h3>3. Gaussian Random Timer</h3>
+<p>Adds a delay based on a <strong>normal (bell curve) distribution</strong>. Most users cluster around the average, with some faster and some slower.</p>
+<table>
+    <tr><th>Setting</th><th>Description</th></tr>
+    <tr><td><strong>Deviation (ms)</strong></td><td>Standard deviation — controls how spread out the delays are</td></tr>
+    <tr><td><strong>Constant Delay Offset (ms)</strong></td><td>Base delay added on top</td></tr>
+</table>
+<p><strong>Formula:</strong> <code>Total delay = Gaussian(deviation) + constant offset</code></p>
+<div class="note">
+    💡 <strong>Use when:</strong> You want the most realistic simulation of human think time. The bell curve distribution closely mirrors how real users behave — most take a similar amount of time, with a few being much faster or slower.
+</div>
+
+<h3>4. Poisson Random Timer</h3>
+<p>Adds a delay based on a <strong>Poisson distribution</strong> — models random events occurring over time.</p>
+<table>
+    <tr><th>Setting</th><th>Description</th></tr>
+    <tr><td><strong>Lambda (ms)</strong></td><td>Average delay in milliseconds</td></tr>
+    <tr><td><strong>Constant Delay Offset (ms)</strong></td><td>Base delay added on top</td></tr>
+</table>
+<div class="note">
+    💡 <strong>Use when:</strong> Simulating random user arrival patterns — for example, users arriving at unpredictable intervals like customers entering a store.
+</div>
+
+<h3>5. Constant Throughput Timer ⭐ (Most Powerful)</h3>
+<p>Controls the <strong>number of requests per minute (TPS rate)</strong> rather than adding a fixed delay. JMeter automatically adjusts timing to hit the target throughput.</p>
+<table>
+    <tr><th>Setting</th><th>Description</th></tr>
+    <tr><td><strong>Target Throughput (requests/minute)</strong></td><td>How many requests per minute you want the test to generate</td></tr>
+    <tr><td><strong>Calculate Throughput Based On</strong></td><td>All threads / This thread only / All threads in current thread group</td></tr>
+</table>
+<p><strong>Example:</strong> Target = 60 requests/minute = exactly 1 request per second regardless of thread count.</p>
+<div class="success">
+    ✅ <strong>Use when:</strong> You want to test at a <strong>specific TPS rate</strong> to match an SLA or business requirement. This is the most powerful timer for controlled, precise load testing. Ideal when you know your target throughput (e.g., "system must handle 100 TPS").
+</div>
+
+<h3>6. Synchronizing Timer (Barrier / Spike)</h3>
+<p>Holds all threads and <strong>releases them all at the same time</strong> — simulates a sudden spike where all users hit the system simultaneously.</p>
+<table>
+    <tr><th>Setting</th><th>Description</th></tr>
+    <tr><td><strong>Number of Simulated Users to Group</strong></td><td>How many threads to hold before releasing all at once</td></tr>
+    <tr><td><strong>Timeout (ms)</strong></td><td>Maximum wait time before releasing anyway (0 = wait forever)</td></tr>
+</table>
+<div class="important">
+    ⚠️ <strong>Use when:</strong> Spike testing — simulating all users clicking "Submit" at the exact same moment. For example, everyone submitting a form at shift start or a flash sale scenario.
+</div>
+
+<h3>7. JSR223 Timer / BeanShell Timer</h3>
+<p>Allows you to write <strong>custom Groovy or Java code</strong> to calculate the delay dynamically at runtime.</p>
+<div class="note">
+    💡 <strong>Use when:</strong> You need complex logic for think time — for example, different delays based on user type, time of day, response content, or previous test data. Requires programming knowledge.
+</div>
+
+<h3>Timer Comparison Summary</h3>
+<table>
+    <tr><th>Timer</th><th>Delay Type</th><th>Best For</th><th>Difficulty</th></tr>
+    <tr><td><strong>Constant</strong></td><td>Fixed</td><td>Simple tests, quick setup</td><td>⭐ Easy</td></tr>
+    <tr><td><strong>Uniform Random</strong></td><td>Random range</td><td>General load testing — most common</td><td>⭐ Easy</td></tr>
+    <tr><td><strong>Gaussian Random</strong></td><td>Bell curve</td><td>Realistic human behavior simulation</td><td>⭐⭐ Medium</td></tr>
+    <tr><td><strong>Poisson Random</strong></td><td>Poisson distribution</td><td>Random user arrival patterns</td><td>⭐⭐ Medium</td></tr>
+    <tr><td><strong>Constant Throughput</strong></td><td>Controls TPS rate</td><td>SLA-based / controlled load testing</td><td>⭐⭐ Medium</td></tr>
+    <tr><td><strong>Synchronizing</strong></td><td>Holds then releases all</td><td>Spike testing</td><td>⭐⭐ Medium</td></tr>
+    <tr><td><strong>JSR223 / BeanShell</strong></td><td>Custom code</td><td>Complex dynamic scenarios</td><td>⭐⭐⭐ Advanced</td></tr>
+</table>
+
+<div class="success">
+    ✅ <strong>Recommended Default:</strong> Use <strong>Uniform Random Timer</strong> with Random Delay = 2000ms and Constant Offset = 1000ms for most web application load tests. This gives a realistic 1–3 second think time between requests.
+</div>
+
+<!-- STEP 11 -->
+<div class="step-header" id="step10">Step 11 &mdash; Run the Test</div>
 
 <h3>Option A &mdash; GUI Mode (small tests / debugging only)</h3>
 <ol>
@@ -602,8 +715,8 @@ jmeter -n -t your_test.jmx -r -l results.jtl -e -o report_output</pre>
     <tr><td><code>-R</code></td><td>Run on specific slave IPs</td></tr>
 </table>
 
-<!-- STEP 11 -->
-<div class="step-header" id="step11">Step 11 &mdash; Generate HTML Report</div>
+<!-- STEP 12 -->
+<div class="step-header" id="step11">Step 12 &mdash; Generate HTML Report</div>
 <p>JMeter generates a detailed HTML dashboard report from your test results.</p>
 
 <h3>Option A &mdash; Generate During Test Run</h3>
@@ -632,6 +745,119 @@ jmeter -n -t your_test.jmx -r -l results.jtl -e -o report_output</pre>
     <tr><td><strong>Transactions per Second</strong></td><td>Should increase with load. Plateau = capacity ceiling.</td></tr>
     <tr><td><strong>Active Threads Over Time</strong></td><td>Shows your ramp-up pattern</td></tr>
 </table>
+
+<!-- TIMERS -->
+<div class="page-break"></div>
+<div class="step-header" id="timers">Step 12 &mdash; JMeter Timers (Think Time)</div>
+
+<p>A <strong>Timer</strong> in JMeter adds a delay between requests to simulate realistic user behavior. Without timers, JMeter sends requests as fast as possible — which is unrealistic and can unfairly overwhelm the server.</p>
+
+<div class="info">
+    💡 <strong>Think of it like a real user:</strong> They click a button, read the result, think for a moment, then click again. They don't send 100 requests per second. Timers simulate this natural pause between actions.
+</div>
+
+<h3>Where to Add a Timer</h3>
+<ul>
+    <li>Right-click <strong>Thread Group</strong> → <strong>Add → Timer → [choose timer]</strong></li>
+    <li>Timer under <strong>Thread Group</strong> = applies to <strong>all requests</strong></li>
+    <li>Timer under a <strong>specific HTTP Request</strong> = applies only to that request</li>
+</ul>
+
+<div class="important">
+    ⚠️ <strong>Always add a timer when running load tests.</strong> Running without a timer sends requests at maximum speed and does not reflect real user behavior.
+</div>
+
+<h3>1. Constant Timer</h3>
+<p>Adds a <strong>fixed delay</strong> between every request. Simple and predictable.</p>
+<table>
+    <tr><th>Setting</th><th>Description</th></tr>
+    <tr><td><strong>Thread Delay (ms)</strong></td><td>Fixed wait time in milliseconds before the next request</td></tr>
+</table>
+<p><strong>Example:</strong> Thread Delay = 1000ms → every user waits exactly 1 second between requests.</p>
+<div class="note">
+    💡 <strong>Use when:</strong> You want a simple, predictable think time for basic tests. Not the most realistic since real users don't all wait the exact same amount of time.
+</div>
+
+<h3>2. Uniform Random Timer</h3>
+<p>Adds a <strong>random delay within a range</strong>. More realistic than Constant Timer.</p>
+<table>
+    <tr><th>Setting</th><th>Description</th></tr>
+    <tr><td><strong>Random Delay Maximum (ms)</strong></td><td>Maximum random delay added</td></tr>
+    <tr><td><strong>Constant Delay Offset (ms)</strong></td><td>Fixed base delay added on top of the random value</td></tr>
+</table>
+<p><strong>Formula:</strong> <code>Total delay = Random(0 to max) + constant offset</code></p>
+<p><strong>Example:</strong> Random max = 2000ms, Offset = 1000ms → delay is between 1000ms and 3000ms</p>
+<div class="note">
+    💡 <strong>Use when:</strong> You want to simulate varied user think times. This is the most commonly used timer for general load testing. A range of <strong>1000–3000ms</strong> is a good default for most web applications.
+</div>
+
+<h3>3. Gaussian Random Timer</h3>
+<p>Adds a delay based on a <strong>normal (bell curve) distribution</strong>. Most users cluster around the average, with some faster and some slower.</p>
+<table>
+    <tr><th>Setting</th><th>Description</th></tr>
+    <tr><td><strong>Deviation (ms)</strong></td><td>Standard deviation — controls how spread out the delays are</td></tr>
+    <tr><td><strong>Constant Delay Offset (ms)</strong></td><td>Base delay added on top</td></tr>
+</table>
+<p><strong>Formula:</strong> <code>Total delay = Gaussian(deviation) + constant offset</code></p>
+<div class="note">
+    💡 <strong>Use when:</strong> You want the most realistic simulation of human think time. The bell curve distribution closely mirrors how real users behave — most take a similar amount of time, with a few being much faster or slower.
+</div>
+
+<h3>4. Poisson Random Timer</h3>
+<p>Adds a delay based on a <strong>Poisson distribution</strong> — models random events occurring over time.</p>
+<table>
+    <tr><th>Setting</th><th>Description</th></tr>
+    <tr><td><strong>Lambda (ms)</strong></td><td>Average delay in milliseconds</td></tr>
+    <tr><td><strong>Constant Delay Offset (ms)</strong></td><td>Base delay added on top</td></tr>
+</table>
+<div class="note">
+    💡 <strong>Use when:</strong> Simulating random user arrival patterns — for example, users arriving at unpredictable intervals like customers entering a store.
+</div>
+
+<h3>5. Constant Throughput Timer ⭐ (Most Powerful)</h3>
+<p>Controls the <strong>number of requests per minute (TPS rate)</strong> rather than adding a fixed delay. JMeter automatically adjusts timing to hit the target throughput.</p>
+<table>
+    <tr><th>Setting</th><th>Description</th></tr>
+    <tr><td><strong>Target Throughput (requests/minute)</strong></td><td>How many requests per minute you want the test to generate</td></tr>
+    <tr><td><strong>Calculate Throughput Based On</strong></td><td>All threads / This thread only / All threads in current thread group</td></tr>
+</table>
+<p><strong>Example:</strong> Target = 60 requests/minute = exactly 1 request per second regardless of thread count.</p>
+<div class="success">
+    ✅ <strong>Use when:</strong> You want to test at a <strong>specific TPS rate</strong> to match an SLA or business requirement. This is the most powerful timer for controlled, precise load testing. Ideal when you know your target throughput (e.g., "system must handle 100 TPS").
+</div>
+
+<h3>6. Synchronizing Timer (Barrier / Spike)</h3>
+<p>Holds all threads and <strong>releases them all at the same time</strong> — simulates a sudden spike where all users hit the system simultaneously.</p>
+<table>
+    <tr><th>Setting</th><th>Description</th></tr>
+    <tr><td><strong>Number of Simulated Users to Group</strong></td><td>How many threads to hold before releasing all at once</td></tr>
+    <tr><td><strong>Timeout (ms)</strong></td><td>Maximum wait time before releasing anyway (0 = wait forever)</td></tr>
+</table>
+<div class="important">
+    ⚠️ <strong>Use when:</strong> Spike testing — simulating all users clicking "Submit" at the exact same moment. For example, everyone submitting a form at shift start or a flash sale scenario.
+</div>
+
+<h3>7. JSR223 Timer / BeanShell Timer</h3>
+<p>Allows you to write <strong>custom Groovy or Java code</strong> to calculate the delay dynamically at runtime.</p>
+<div class="note">
+    💡 <strong>Use when:</strong> You need complex logic for think time — for example, different delays based on user type, time of day, response content, or previous test data. Requires programming knowledge.
+</div>
+
+<h3>Timer Comparison Summary</h3>
+<table>
+    <tr><th>Timer</th><th>Delay Type</th><th>Best For</th><th>Difficulty</th></tr>
+    <tr><td><strong>Constant</strong></td><td>Fixed</td><td>Simple tests, quick setup</td><td>⭐ Easy</td></tr>
+    <tr><td><strong>Uniform Random</strong></td><td>Random range</td><td>General load testing — most common</td><td>⭐ Easy</td></tr>
+    <tr><td><strong>Gaussian Random</strong></td><td>Bell curve</td><td>Realistic human behavior simulation</td><td>⭐⭐ Medium</td></tr>
+    <tr><td><strong>Poisson Random</strong></td><td>Poisson distribution</td><td>Random user arrival patterns</td><td>⭐⭐ Medium</td></tr>
+    <tr><td><strong>Constant Throughput</strong></td><td>Controls TPS rate</td><td>SLA-based / controlled load testing</td><td>⭐⭐ Medium</td></tr>
+    <tr><td><strong>Synchronizing</strong></td><td>Holds then releases all</td><td>Spike testing</td><td>⭐⭐ Medium</td></tr>
+    <tr><td><strong>JSR223 / BeanShell</strong></td><td>Custom code</td><td>Complex dynamic scenarios</td><td>⭐⭐⭐ Advanced</td></tr>
+</table>
+
+<div class="success">
+    ✅ <strong>Recommended Default:</strong> Use <strong>Uniform Random Timer</strong> with Random Delay = 2000ms and Constant Offset = 1000ms for most web application load tests. This gives a realistic 1–3 second think time between requests.
+</div>
 
 <!-- TROUBLESHOOTING -->
 <div class="page-break"></div>
@@ -664,6 +890,7 @@ jmeter -n -t your_test.jmx -r -l results.jtl -e -o report_output</pre>
     <tr><td>9</td><td>Add Listeners</td><td>☐</td></tr>
     <tr><td>10</td><td>Run test in Non-GUI mode</td><td>☐</td></tr>
     <tr><td>11</td><td>Generate and review HTML report</td><td>☐</td></tr>
+    <tr><td>12</td><td>Add Timer (Uniform Random Timer recommended)</td><td>☐</td></tr>
 </table>
 
 <div class="success">
@@ -671,7 +898,7 @@ jmeter -n -t your_test.jmx -r -l results.jtl -e -o report_output</pre>
 </div>
 
 <div class="footer">
-    JMeter Installation &amp; Load Testing Guide &nbsp;|&nbsp; QA Team &nbsp;|&nbsp; Version 1.0 &nbsp;|&nbsp; April 2026<br>
+    JMeter Installation &amp; Load Testing Guide &nbsp;|&nbsp; QA Team &nbsp;|&nbsp; Version 1.0<br>
     Prepared by: Raymond A. Canete Jr &nbsp;|&nbsp; raymondjr.canete@gmail.com
 </div>
 
