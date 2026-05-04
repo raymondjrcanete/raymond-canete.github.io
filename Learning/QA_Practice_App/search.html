@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Search — RAC QA Practice App</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Segoe UI',Arial,sans-serif; background:#f0f2f5; color:#222; min-height:100vh; display:flex; flex-direction:column; }
+nav { background:#1F3864; color:#fff; padding:14px 30px; display:flex; justify-content:space-between; align-items:center; }
+nav .logo { font-size:18px; font-weight:700; color:#fff; text-decoration:none; }
+nav .logo span { color:#BDD7EE; }
+nav ul { list-style:none; display:flex; gap:24px; }
+nav ul li a { color:rgba(255,255,255,0.85); text-decoration:none; font-size:14px; }
+.main { flex:1; padding:30px 20px; max-width:1000px; margin:0 auto; width:100%; }
+.page-title { font-size:22px; font-weight:700; color:#1F3864; margin-bottom:4px; }
+.page-sub { font-size:13px; color:#777; margin-bottom:24px; }
+.search-card { background:#fff; border-radius:12px; padding:24px; box-shadow:0 3px 12px rgba(0,0,0,0.07); margin-bottom:20px; }
+.search-row { display:flex; gap:12px; align-items:flex-end; flex-wrap:wrap; }
+.search-group { flex:1; min-width:200px; }
+label { display:block; font-size:13px; font-weight:600; color:#333; margin-bottom:5px; }
+input, select { width:100%; padding:10px 14px; border:1.5px solid #ddd; border-radius:8px; font-size:14px; outline:none; }
+input:focus, select:focus { border-color:#2E75B6; }
+.btn { padding:10px 22px; border:none; border-radius:8px; font-size:14px; font-weight:600; cursor:pointer; }
+.btn-primary { background:#1F3864; color:#fff; }
+.btn-primary:hover { background:#2E75B6; }
+.btn-secondary { background:#e9ecef; color:#495057; }
+.results-card { background:#fff; border-radius:12px; padding:24px; box-shadow:0 3px 12px rgba(0,0,0,0.07); }
+.results-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; }
+.results-count { font-size:13px; color:#777; }
+table { width:100%; border-collapse:collapse; font-size:13px; }
+th { background:#1F3864; color:#fff; padding:10px 14px; text-align:left; }
+td { padding:10px 14px; border-bottom:1px solid #f0f0f0; }
+tr:hover td { background:#f8f9fa; }
+.badge { display:inline-block; padding:3px 10px; border-radius:12px; font-size:11px; font-weight:600; }
+.badge-success { background:#EBF5EB; color:#375623; }
+.badge-pending { background:#FFF9E6; color:#7F6000; }
+.badge-failed  { background:#FDECEA; color:#c00; }
+.empty-state { text-align:center; padding:40px; color:#999; }
+.empty-state .icon { font-size:40px; margin-bottom:10px; }
+.hint-box { background:#EEF2F7; border-radius:8px; padding:12px 16px; font-size:12px; color:#555; margin-top:16px; }
+.hint-box strong { color:#1F3864; }
+.footer { background:#1F3864; color:rgba(255,255,255,0.6); text-align:center; padding:16px; font-size:12px; }
+.footer span { color:#BDD7EE; }
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="logo">RAC <span>QA Practice App</span></a>
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="dashboard.html">Dashboard</a></li>
+  </ul>
+</nav>
+
+<div class="main">
+  <div class="page-title">🔍 Search Transactions</div>
+  <p class="page-sub">Search and filter transaction records</p>
+
+  <div class="search-card">
+    <div class="search-row">
+      <div class="search-group">
+        <label for="searchKeyword">Keyword / Reference No.</label>
+        <input type="text" id="searchKeyword" placeholder="Search by reference, account, or name..." maxlength="100">
+      </div>
+      <div class="search-group" style="max-width:160px;">
+        <label for="filterStatus">Status</label>
+        <select id="filterStatus">
+          <option value="">All Status</option>
+          <option value="Approved">Approved</option>
+          <option value="Pending">Pending</option>
+          <option value="Failed">Failed</option>
+        </select>
+      </div>
+      <div class="search-group" style="max-width:160px;">
+        <label for="filterType">Type</label>
+        <select id="filterType">
+          <option value="">All Types</option>
+          <option value="Deposit">Deposit</option>
+          <option value="Withdrawal">Withdrawal</option>
+          <option value="Transfer">Transfer</option>
+          <option value="Payment">Payment</option>
+        </select>
+      </div>
+      <div style="display:flex;gap:8px;">
+        <button class="btn btn-primary" onclick="doSearch()">Search</button>
+        <button class="btn btn-secondary" onclick="clearSearch()">Clear</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="results-card">
+    <div class="results-header">
+      <div class="section-title" style="font-size:15px;font-weight:700;color:#1F3864;">Results</div>
+      <div class="results-count" id="resultsCount">Showing all records</div>
+    </div>
+    <div id="resultsBody">
+      <table id="resultsTable">
+        <thead>
+          <tr>
+            <th>Reference No.</th>
+            <th>Type</th>
+            <th>Amount (PHP)</th>
+            <th>Account</th>
+            <th>Name</th>
+            <th>Date</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+      <div class="empty-state" id="emptyState" style="display:none;">
+        <div class="icon">🔍</div>
+        <p>No records found matching your search criteria.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="hint-box">
+    <strong>🧪 QA Scenarios to Test:</strong><br>
+    • Search with empty keyword — should show all records<br>
+    • Search with special characters (&lt;script&gt;, SQL: ' OR 1=1)<br>
+    • Search with spaces only<br>
+    • Filter by each status — verify correct results<br>
+    • Combine keyword + status filter<br>
+    • Search for non-existent reference — verify empty state message<br>
+    • Search with very long keyword (100+ chars)
+  </div>
+</div>
+
+<div class="footer">
+  RAC QA Practice App &nbsp;|&nbsp; Search Module &nbsp;|&nbsp; Built by <span>Raymond A. Cañete Jr.</span>
+</div>
+
+<script>
+const DATA = [
+  { ref:'TXN-20260501', type:'Deposit',    amount:'5,000.00',  account:'123456789012', name:'Juan Dela Cruz',    date:'2026-05-01', status:'Approved' },
+  { ref:'TXN-20260430', type:'Transfer',   amount:'12,500.00', account:'987654321098', name:'Maria Santos',      date:'2026-04-30', status:'Pending'  },
+  { ref:'TXN-20260429', type:'Withdrawal', amount:'2,000.00',  account:'456789012345', name:'Pedro Reyes',       date:'2026-04-29', status:'Failed'   },
+  { ref:'TXN-20260428', type:'Payment',    amount:'850.00',    account:'321098765432', name:'Ana Garcia',        date:'2026-04-28', status:'Approved' },
+  { ref:'TXN-20260427', type:'Deposit',    amount:'25,000.00', account:'654321098765', name:'Jose Ramos',        date:'2026-04-27', status:'Approved' },
+  { ref:'TXN-20260426', type:'Transfer',   amount:'3,200.00',  account:'789012345678', name:'Liza Cruz',         date:'2026-04-26', status:'Pending'  },
+  { ref:'TXN-20260425', type:'Payment',    amount:'1,500.00',  account:'012345678901', name:'Carlos Mendoza',    date:'2026-04-25', status:'Approved' },
+  { ref:'TXN-20260424', type:'Withdrawal', amount:'500.00',    account:'234567890123', name:'Rosa Villanueva',   date:'2026-04-24', status:'Failed'   },
+];
+
+function renderTable(rows) {
+  const tbody = document.getElementById('tableBody');
+  const empty = document.getElementById('emptyState');
+  const table = document.getElementById('resultsTable');
+  tbody.innerHTML = '';
+  if (rows.length === 0) {
+    table.style.display = 'none';
+    empty.style.display = 'block';
+    // BUG-SEARCH-01: Empty state message says "0 records found" but should say
+    // "No records found matching your search criteria."
+    // The count badge shows "0 records found" which is technically correct
+    // but the empty state div ALSO shows — so two messages appear simultaneously
+    // Expected: only the empty state message should show, not the count badge
+    document.getElementById('resultsCount').textContent = '0 records found';
+    return;
+  }
+  table.style.display = 'table';
+  empty.style.display = 'none';
+  // BUG-SEARCH-02: Result count shows wrong number when filters are combined
+  // The count shows total filtered rows correctly BUT
+  // the label says "Showing X record(s)" even when showing ALL records (no filter applied)
+  // Expected: when no filter is applied, should say "Showing all 8 records"
+  // Actual: always says "Showing X record(s)" even for unfiltered results
+  document.getElementById('resultsCount').textContent = `Showing ${rows.length} record(s)`;
+  rows.forEach(r => {
+    const cls = r.status === 'Approved' ? 'badge-success' : r.status === 'Pending' ? 'badge-pending' : 'badge-failed';
+    tbody.innerHTML += `<tr>
+      <td>${r.ref}</td><td>${r.type}</td><td>${r.amount}</td>
+      <td>${r.account}</td><td>${r.name}</td><td>${r.date}</td>
+      <td><span class="badge ${cls}">${r.status}</span></td>
+    </tr>`;
+  });
+}
+
+function doSearch() {
+  const kw     = document.getElementById('searchKeyword').value.trim().toLowerCase();
+  const status = document.getElementById('filterStatus').value;
+  const type   = document.getElementById('filterType').value;
+
+  const results = DATA.filter(r => {
+    // BUG-SEARCH-03: Account number search is case-sensitive for name but
+    // account number comparison uses .includes(kw) where kw is lowercased
+    // but account numbers are numeric strings — this works fine
+    // REAL BUG: Searching by name is case-insensitive (correct) but
+    // searching by reference number IS case-sensitive
+    // Try: search "txn-20260501" (lowercase) — it will NOT find TXN-20260501
+    // Expected: search should be case-insensitive for reference numbers too
+    const matchKw = !kw || r.ref.toLowerCase().includes(kw) || r.account.includes(kw) || r.name.toLowerCase().includes(kw);
+    const matchSt = !status || r.status === status;
+    const matchTy = !type   || r.type   === type;
+    return matchKw && matchSt && matchTy;
+  });
+  renderTable(results);
+}
+
+function clearSearch() {
+  document.getElementById('searchKeyword').value = '';
+  document.getElementById('filterStatus').value  = '';
+  document.getElementById('filterType').value    = '';
+  renderTable(DATA);
+}
+
+// Initial load
+renderTable(DATA);
+</script>
+</body>
+</html>

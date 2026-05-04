@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RAC QA Training Program 2026</title>
+<style>
+
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:Calibri,Arial,sans-serif;font-size:11pt;color:#222;background:#fff;}
+.cover{background:linear-gradient(135deg,#1F3864,#2E75B6);color:#fff;padding:40px 60px;text-align:center;display:flex;flex-direction:column;justify-content:center;}
+.cover h1{font-size:24pt;font-weight:700;margin-bottom:10px;}
+.cover h2{font-size:14pt;color:#BDD7EE;margin-bottom:16px;}
+.cover .badges{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:16px 0;}
+.cover .badge{background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);padding:5px 14px;border-radius:20px;font-size:10pt;}
+.cover .author{margin-top:20px;font-size:10pt;color:#BDD7EE;}
+.cover .author strong{color:#fff;font-size:11pt;}
+.page-break{page-break-before:always;}
+.section{padding:50px 60px;max-width:900px;margin:0 auto;}
+h2.st{font-size:18pt;font-weight:700;color:#1F3864;border-bottom:3px solid #1F3864;padding-bottom:8px;margin-bottom:20px;}
+h3{font-size:13pt;font-weight:700;color:#2E75B6;margin:20px 0 8px;}
+h4{font-size:11pt;font-weight:700;color:#1F3864;margin:14px 0 6px;}
+p{font-size:10.5pt;line-height:1.7;margin-bottom:10px;color:#333;}
+ul,ol{padding-left:24px;margin-bottom:12px;}
+li{font-size:10.5pt;line-height:1.7;color:#333;margin-bottom:3px;}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:10pt;}
+th{background:#1F3864;color:#fff;padding:8px 12px;text-align:left;font-weight:700;}
+td{padding:7px 12px;border:1px solid #ccc;vertical-align:top;}
+tr:nth-child(even){background:#EEF2F7;}
+.mh{background:#2E75B6;color:#fff;padding:12px 20px;border-radius:8px;margin:20px 0 10px;}
+.mh h3{color:#fff;margin:0;font-size:13pt;}
+.mh p{color:#BDD7EE;margin:0;font-size:10pt;}
+.note{background:#FFF9E6;border-left:4px solid #FFC000;padding:10px 14px;margin:10px 0;font-size:10pt;}
+.tip{background:#EBF5EB;border-left:4px solid #375623;padding:10px 14px;margin:10px 0;font-size:10pt;}
+.imp{background:#FDECEA;border-left:4px solid #C00000;padding:10px 14px;margin:10px 0;font-size:10pt;}
+.ms{background:#1F3864;color:#fff;padding:12px 20px;border-radius:8px;margin:20px 0;font-size:10.5pt;}
+.ms strong{color:#BDD7EE;}
+.toc{background:#F2F2F2;border:1px solid #CCC;padding:24px 30px;margin:30px 0;}
+.toc h2{color:#1F3864;border-bottom:2px solid #1F3864;padding-bottom:6px;margin-bottom:14px;}
+.toc ol{padding-left:20px;}
+.toc li{margin:6px 0;font-size:10.5pt;}
+.toc a{color:#1F3864;text-decoration:none;}
+.lb{display:inline-block;padding:3px 10px;border-radius:12px;font-size:9pt;font-weight:700;margin-left:8px;}
+.l1{background:#EBF5EB;color:#375623;}
+.l2{background:#EEF2F7;color:#2E75B6;}
+.l3{background:#FFF9E6;color:#7F6000;}
+.l4{background:#FDECEA;color:#C00000;}
+.fb{background:#1F3864;color:rgba(255,255,255,0.7);text-align:center;padding:16px;font-size:9pt;margin-top:40px;}
+.fb span{color:#BDD7EE;}
+@media print{.page-break{page-break-before:always;}.cover{padding:30px 60px;}}
+
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <h1>QA TRAINING PROGRAM</h1>
+  <h2>Quality Engineer Development Track</h2>
+  <p style="font-size:13pt;color:#BDD7EE;margin-bottom:10px;">Palawan Group of Companies &mdash; IT Department</p>
+  <div class="badges">
+    <span class="badge">3 Months</span>
+    <span class="badge">10 Modules</span>
+    <span class="badge">1 Practice Project</span>
+    <span class="badge">100% Practical</span>
+  </div>
+  <p style="font-size:12pt;color:#BDD7EE;margin-top:20px;">Target Role: Quality Engineer</p>
+  <div class="author">
+    <strong>Raymond A. Ca&ntilde;ete Jr.</strong><br>
+    Testing &amp; Control Supervisor | ISTQB CTAL-TM | CTFL<br>
+    raymondjr.canete@gmail.com
+  </div>
+  <div style="margin-top:24px;">
+    <a href="QA_Practice_App/index.html" target="_blank" style="display:inline-block;background:#fff;color:#1F3864;padding:10px 28px;border-radius:25px;font-weight:700;font-size:11pt;text-decoration:none;box-shadow:0 4px 15px rgba(0,0,0,0.2);">
+      🚀 Open QA Practice App
+    </a>
+  </div>
+  <p style="margin-top:16px;font-size:10pt;color:rgba(255,255,255,0.5);">Version 1.0 &nbsp;|&nbsp; 2026 Edition &nbsp;|&nbsp; CONFIDENTIAL</p>
+</div>
+
+<div class="section page-break">
+<div class="toc">
+  <h2>Table of Contents</h2>
+  <ol>
+    <li><a href="#overview">Program Overview</a></li>
+    <li><a href="#m1">Module 1 &mdash; QA Fundamentals</a> <span class="lb l1">Week 1</span></li>
+    <li><a href="#m2">Module 2 &mdash; SDLC &amp; STLC</a> <span class="lb l1">Week 1</span></li>
+    <li><a href="#m3">Module 3 &mdash; Test Case Design Techniques</a> <span class="lb l2">Week 2</span></li>
+    <li><a href="#m4">Module 4 &mdash; Defect Lifecycle &amp; Bug Reporting</a> <span class="lb l2">Week 2</span></li>
+    <li><a href="#m5">Module 5 &mdash; Test Planning &amp; Test Strategy</a> <span class="lb l2">Week 3</span></li>
+    <li><a href="#m6">Module 6 &mdash; API Testing with Postman</a> <span class="lb l3">Week 4</span></li>
+    <li><a href="#m7">Module 7 &mdash; Database Testing &amp; SQL Basics</a> <span class="lb l3">Week 5</span></li>
+    <li><a href="#m8">Module 8 &mdash; Automation Testing with Robot Framework</a> <span class="lb l3">Week 6&ndash;8</span></li>
+    <li><a href="#m9">Module 9 &mdash; Performance Testing with JMeter</a> <span class="lb l4">Week 9&ndash;10</span></li>
+    <li><a href="#m10">Module 10 &mdash; Practice Project &amp; Assessment</a> <span class="lb l4">Week 11&ndash;12</span></li>
+    <li><a href="#assess">Assessment &amp; Certification Criteria</a></li>
+    <li><a href="#kpi">KPI &amp; Performance Metrics</a></li>
+  </ol>
+</div>
+</div>
+
+<div class="section page-break" id="overview">
+<h2 class="st">Program Overview</h2>
+<h3>Program Philosophy</h3>
+<p>This QA Training Program is designed specifically for the Palawan Group of Companies IT Department. Every module, every exercise, and every assessment is built around one goal: developing Quality Engineers who can independently design, execute, and report on software testing activities that protect the quality of PGC systems before they reach end users.</p>
+<p>We do not train for theory alone. We train for real work &mdash; the kind of testing that happens every sprint, every release, and every deployment in our environment.</p>
+<h3>Skill Progression Ladder</h3>
+<table>
+<tr><th>Level</th><th>Weeks</th><th>Focus</th><th>Outcome</th></tr>
+<tr><td><strong>Level 1 &mdash; Foundation</strong></td><td>Week 1&ndash;2</td><td>QA basics, SDLC, test case writing, bug reporting</td><td>Can write test cases and log bugs independently</td></tr>
+<tr><td><strong>Level 2 &mdash; Core Manual</strong></td><td>Week 3&ndash;5</td><td>Test planning, API testing, database testing</td><td>Can test APIs, validate DB, write test plans</td></tr>
+<tr><td><strong>Level 3 &mdash; Automation</strong></td><td>Week 6&ndash;8</td><td>Robot Framework, Selenium, automation scripting</td><td>Can write and run automated test scripts</td></tr>
+<tr><td><strong>Level 4 &mdash; Performance</strong></td><td>Week 9&ndash;10</td><td>JMeter, load testing, result analysis</td><td>Can design and execute basic load tests</td></tr>
+<tr><td><strong>Level 5 &mdash; Project</strong></td><td>Week 11&ndash;12</td><td>Full test cycle on practice application</td><td>Demonstrates all skills on a real-like project</td></tr>
+</table>
+<h3>Program Duration</h3>
+<table>
+<tr><th>Item</th><th>Detail</th></tr>
+<tr><td>Total Duration</td><td>3 months (12 weeks)</td></tr>
+<tr><td>Sessions per week</td><td>2&ndash;3 sessions</td></tr>
+<tr><td>Hours per session</td><td>2&ndash;3 hours</td></tr>
+<tr><td>Total hours</td><td>~80 hours</td></tr>
+<tr><td>Format</td><td>Lecture + Hands-on exercises + Assessment</td></tr>
+<tr><td>Practice App</td><td>RAC QA Practice App (provided)</td></tr>
+</table>
+</div>
+
+<div class="section page-break" id="m1">
+<div class="mh"><h3>Module 1 &mdash; QA Fundamentals</h3><p>Week 1 &nbsp;|&nbsp; 8 Hours &nbsp;|&nbsp; Level 1 Foundation</p></div>
+<h3>Module Objective</h3>
+<p>Build absolute clarity on what Software Quality Assurance is, why it exists, and where it fits in the software development process. Participants must leave this module thinking like a tester, not like a user.</p>
+<h3>Topics Covered</h3>
+<table>
+<tr><th>Lesson</th><th>Topic</th><th>Duration</th></tr>
+<tr><td>1.1</td><td>What is Software? What is a Bug? Why do bugs happen?</td><td>1 hr</td></tr>
+<tr><td>1.2</td><td>Quality vs Testing &mdash; Verification vs Validation</td><td>1 hr</td></tr>
+<tr><td>1.3</td><td>Roles in a QA Team: Manual Tester, Automation Tester, QA Lead, QA Supervisor</td><td>1 hr</td></tr>
+<tr><td>1.4</td><td>Testing Types &mdash; Functional vs Non-Functional, Black Box vs White Box vs Grey Box</td><td>1.5 hr</td></tr>
+<tr><td>1.5</td><td>Real Bugs from Industry (case studies: Boeing, Facebook, banking systems)</td><td>1 hr</td></tr>
+<tr><td>1.6</td><td>7 Principles of Testing (ISTQB-aligned)</td><td>1 hr</td></tr>
+<tr><td>1.7</td><td>QA Career Path at PGC &mdash; roles, responsibilities, growth</td><td>0.5 hr</td></tr>
+<tr><td>1.8</td><td>Quiz + Q&amp;A Session</td><td>1 hr</td></tr>
+</table>
+<h3>Key Concepts</h3>
+<table>
+<tr><th>Concept</th><th>Definition</th></tr>
+<tr><td>Quality Assurance</td><td>Process-oriented. Prevents defects. Entire team is responsible. Proactive.</td></tr>
+<tr><td>Quality Control</td><td>Product-oriented. Finds defects. QA team responsible. Reactive.</td></tr>
+<tr><td>Verification</td><td>"Are we building the product right?" &mdash; checks process, reviews, walkthroughs</td></tr>
+<tr><td>Validation</td><td>"Are we building the right product?" &mdash; checks product meets user needs</td></tr>
+<tr><td>Error</td><td>Human mistake made by developer (e.g., wrong formula used)</td></tr>
+<tr><td>Defect / Bug</td><td>Flaw in software caused by an error</td></tr>
+<tr><td>Failure</td><td>System produces incorrect output when defect is executed in production</td></tr>
+<tr><td>Black Box Testing</td><td>Tester does NOT know internal code. Tests based on inputs/outputs only.</td></tr>
+<tr><td>White Box Testing</td><td>Tester HAS access to code. Tests internal logic, paths, branches.</td></tr>
+</table>
+<h3>Hands-on Exercise</h3>
+<p><strong>Live Bug Hunt:</strong> Open the RAC QA Practice App. Split into groups. Each group has 15 minutes to find as many bugs as possible. Teams present findings. Discuss: which are functional? Non-functional? UI bugs?</p>
+<h3>Interview Questions to Practice</h3>
+<ul>
+<li>What is the difference between Quality Assurance and Quality Control?</li>
+<li>Explain the difference between Verification and Validation with real examples.</li>
+<li>What is a defect lifecycle? Name all stages.</li>
+<li>What is the difference between a bug, defect, error, and failure?</li>
+<li>Name 5 non-functional testing types and explain when each is used.</li>
+</ul>
+<h3>Assignment</h3>
+<ul>
+<li>Research and document 2 real-world software failures from the last 5 years. Write a 1-page bug impact analysis for each.</li>
+<li>Create a comparison table: Manual Tester vs QA Engineer vs QA Supervisor &mdash; roles, skills, tools.</li>
+<li>Quiz: 20-question MCQ on QA fundamentals &mdash; minimum 80% to pass.</li>
+</ul>
+<div class="ms"><strong>Milestone Checkpoint:</strong> Module 1 Complete &mdash; Participant can define QA, explain testing types, and articulate the tester role clearly.</div>
+</div>
+
+<div class="section page-break" id="m2">
+<div class="mh"><h3>Module 2 &mdash; SDLC &amp; STLC</h3><p>Week 1 &nbsp;|&nbsp; 8 Hours &nbsp;|&nbsp; Level 1 Foundation</p></div>
+<h3>Module Objective</h3>
+<p>Master the Software Development Life Cycle and Software Testing Life Cycle &mdash; the backbone of every QA interview and every real project. Participants must be able to draw and explain both cycles with entry/exit criteria for each phase.</p>
+<h3>SDLC Phases</h3>
+<table>
+<tr><th>Phase</th><th>Who Does It</th><th>Output Document</th><th>QA Role</th></tr>
+<tr><td>Requirement Gathering</td><td>Business Analyst</td><td>BRD / FSD</td><td>Review requirements, identify gaps</td></tr>
+<tr><td>System Design</td><td>Architect / Designer</td><td>HLD, LLD</td><td>Review designs for testability</td></tr>
+<tr><td>Implementation</td><td>Developers</td><td>Source Code</td><td>Write test cases in parallel</td></tr>
+<tr><td>Testing</td><td>QA Team</td><td>Test Cases, Defect Reports</td><td>Execute tests, log bugs, retest</td></tr>
+<tr><td>Deployment</td><td>DevOps</td><td>Release Notes</td><td>UAT support, smoke test</td></tr>
+<tr><td>Maintenance</td><td>Dev + QA</td><td>Patch Notes</td><td>Regression test after each patch</td></tr>
+</table>
+<h3>STLC Phases</h3>
+<table>
+<tr><th>Phase</th><th>Entry Criteria</th><th>Activity</th><th>Exit Criteria / Output</th></tr>
+<tr><td>Requirement Analysis</td><td>Requirements doc available</td><td>Review, identify testable requirements</td><td>Testable reqs list, ambiguity list</td></tr>
+<tr><td>Test Planning</td><td>Testable reqs signed off</td><td>Write Test Plan, estimate effort</td><td>Approved Test Plan</td></tr>
+<tr><td>Test Case Development</td><td>Test Plan approved</td><td>Write test cases, prepare test data</td><td>Reviewed test cases, RTM</td></tr>
+<tr><td>Environment Setup</td><td>Test cases reviewed</td><td>Set up staging environment</td><td>Env ready, smoke test passed</td></tr>
+<tr><td>Test Execution</td><td>Env ready, build deployed</td><td>Execute, log defects, retest</td><td>95%+ executed, 0 Critical open</td></tr>
+<tr><td>Test Closure</td><td>Exit criteria met</td><td>Test Summary Report, sign-off</td><td>Signed Test Closure Report</td></tr>
+</table>
+<h3>Assignment</h3>
+<ul>
+<li>Draw the complete SDLC and STLC flow for a pawnshop transaction system and present it.</li>
+<li>Write Entry and Exit criteria for all 6 phases of STLC for the RAC QA Practice App.</li>
+<li>Create a comparison table: Waterfall vs Agile &mdash; pros, cons, when to use.</li>
+</ul>
+<div class="ms"><strong>Milestone Checkpoint:</strong> Module 2 Complete &mdash; Participant can draw and explain SDLC/STLC, define all phases, and articulate entry/exit criteria confidently.</div>
+</div>
+
+<div class="section page-break" id="m3">
+<div class="mh"><h3>Module 3 &mdash; Test Case Design Techniques</h3><p>Week 2 &nbsp;|&nbsp; 10 Hours &nbsp;|&nbsp; Level 2 Core Manual</p></div>
+<h3>Module Objective</h3>
+<p>Test case design is the core skill of a QA engineer. Participants must master all major design techniques and write test cases at professional quality &mdash; the kind that survives peer review and audit.</p>
+<h3>Test Case Structure &mdash; PGC Standard Format</h3>
+<table>
+<tr><th>Field</th><th>Description</th></tr>
+<tr><td>Test Case ID</td><td>Unique identifier (e.g., TC_LOGIN_001)</td></tr>
+<tr><td>Test Case Title</td><td>Short, clear description of what is being tested</td></tr>
+<tr><td>Module / Feature</td><td>Which area of the application this belongs to</td></tr>
+<tr><td>Pre-conditions</td><td>What must be true before this test can be executed</td></tr>
+<tr><td>Test Steps</td><td>Numbered, clear, atomic steps to reproduce the test</td></tr>
+<tr><td>Test Data</td><td>Specific input data required</td></tr>
+<tr><td>Expected Result</td><td>What the system SHOULD do (based on requirements)</td></tr>
+<tr><td>Actual Result</td><td>What the system DID do (filled during execution)</td></tr>
+<tr><td>Status</td><td>Pass / Fail / Blocked / Not Executed</td></tr>
+<tr><td>Priority</td><td>Critical / High / Medium / Low</td></tr>
+</table>
+<h3>Design Techniques</h3>
+<table>
+<tr><th>Technique</th><th>When to Use</th><th>Example</th></tr>
+<tr><td><strong>Equivalence Class Partitioning (ECP)</strong></td><td>Large input range &mdash; reduce test cases</td><td>Age field (18&ndash;60): test 25 (valid), 10 (low invalid), 70 (high invalid)</td></tr>
+<tr><td><strong>Boundary Value Analysis (BVA)</strong></td><td>Numeric inputs with defined boundaries</td><td>Quantity (1&ndash;100): test 0, 1, 2, 99, 100, 101</td></tr>
+<tr><td><strong>Decision Table</strong></td><td>Multiple conditions determine outcome</td><td>Login: Username valid/invalid x Password valid/invalid = 4 test cases</td></tr>
+<tr><td><strong>State Transition</strong></td><td>System moves through states</td><td>Transaction: Pending &rarr; Approved &rarr; Completed &rarr; Cancelled</td></tr>
+<tr><td><strong>Error Guessing</strong></td><td>Experience-based, exploratory</td><td>Empty fields, spaces, SQL chars, very long input, negative numbers</td></tr>
+</table>
+<h3>Hands-on Exercise</h3>
+<p>Using the RAC QA Practice App &mdash; Registration Module:</p>
+<ul>
+<li>Write 20 test cases for the Age field using ECP and BVA</li>
+<li>Write 10 test cases for the Password field using all techniques</li>
+<li>Peer review: swap test cases with a partner and find gaps in coverage</li>
+</ul>
+<h3>Assignment</h3>
+<ul>
+<li>Write 30 test cases for the Transaction Form module using ECP, BVA, and Error Guessing</li>
+<li>Create a Decision Table for the Login module (valid/invalid email x valid/invalid password)</li>
+<li>Write State Transition test cases for the transaction status lifecycle (Pending &rarr; Approved &rarr; Rejected &rarr; Cancelled &rarr; Expired)</li>
+</ul>
+<div class="ms"><strong>Milestone Checkpoint:</strong> Module 3 Complete &mdash; Participant can write 30+ professional test cases for any feature using industry-standard design techniques.</div>
+</div>
+
+<div class="section page-break" id="m4">
+<div class="mh"><h3>Module 4 &mdash; Defect Lifecycle &amp; Bug Reporting</h3><p>Week 2 &nbsp;|&nbsp; 8 Hours &nbsp;|&nbsp; Level 2 Core Manual</p></div>
+<h3>Module Objective</h3>
+<p>Bug reporting is the primary output of manual testing. A poorly written bug report wastes developer time, causes friction, and gets rejected. This module trains participants to write bug reports that are accepted on first submission.</p>
+<h3>Defect Lifecycle</h3>
+<table>
+<tr><th>Status</th><th>Meaning</th><th>Who Acts Next</th></tr>
+<tr><td>New</td><td>QA logs the bug for the first time</td><td>Bug Triage / Test Lead</td></tr>
+<tr><td>Assigned</td><td>Assigned to a developer</td><td>Developer</td></tr>
+<tr><td>Open</td><td>Developer working on fix</td><td>Developer</td></tr>
+<tr><td>Fixed</td><td>Developer completes the fix</td><td>QA (for retest)</td></tr>
+<tr><td>Retest</td><td>QA verifying the fix</td><td>QA Engineer</td></tr>
+<tr><td>Closed</td><td>Fix verified as working</td><td>No one &mdash; done</td></tr>
+<tr><td>Reopened</td><td>Fix did NOT work on retest</td><td>Developer (again)</td></tr>
+<tr><td>Rejected</td><td>Developer says not a bug (by design)</td><td>QA (accept or escalate)</td></tr>
+<tr><td>Deferred</td><td>Valid bug, fix in next release</td><td>Product Owner (decision)</td></tr>
+</table>
+<h3>Severity vs Priority</h3>
+<table>
+<tr><th>Priority</th><th>Severity</th><th>Example</th></tr>
+<tr><td>High Priority</td><td>High Severity</td><td>Login button not working &mdash; fix immediately</td></tr>
+<tr><td>High Priority</td><td>Low Severity</td><td>Company logo shows wrong on homepage &mdash; visible to all users</td></tr>
+<tr><td>Low Priority</td><td>High Severity</td><td>App crashes on a very rare admin-only screen</td></tr>
+<tr><td>Low Priority</td><td>Low Severity</td><td>Minor typo on an admin-only settings page</td></tr>
+</table>
+<h3>Professional Bug Report Template</h3>
+<table>
+<tr><th>Field</th><th>Value</th></tr>
+<tr><td>Bug ID</td><td>BUG-0001</td></tr>
+<tr><td>Title</td><td>Login fails when email is entered in uppercase</td></tr>
+<tr><td>Module</td><td>Login</td></tr>
+<tr><td>Severity</td><td>High</td></tr>
+<tr><td>Priority</td><td>P2</td></tr>
+<tr><td>Environment</td><td>RAC QA Practice App | Chrome 120 | Windows 11</td></tr>
+<tr><td>Steps to Reproduce</td><td>1. Navigate to login page. 2. Enter email: ADMIN@RAC.COM. 3. Enter password: Admin@123. 4. Click Login.</td></tr>
+<tr><td>Expected Result</td><td>Login succeeds &mdash; user is redirected to dashboard.</td></tr>
+<tr><td>Actual Result</td><td>Login fails &mdash; "Invalid email or password" error is displayed.</td></tr>
+<tr><td>Reproducibility</td><td>100% &mdash; reproduced 3 times</td></tr>
+<tr><td>Attachments</td><td>screenshot_bug001.png</td></tr>
+</table>
+<h3>Hands-on Exercise</h3>
+<p>Using the RAC QA Practice App &mdash; find and document 5 bugs using the professional bug report template above. Each bug report must include steps to reproduce, expected result, actual result, and a screenshot.</p>
+<h3>Assignment</h3>
+<ul>
+<li>Log 5 bugs in the RAC QA Practice App with complete details</li>
+<li>Given 10 bug descriptions, classify each by Severity AND Priority and justify your classification</li>
+<li>Rewrite 3 "bad" bug reports (provided by trainer) into professional-quality bug reports</li>
+</ul>
+<div class="ms"><strong>Milestone Checkpoint:</strong> Module 4 Complete &mdash; Participant writes bug reports that get accepted on first submission, classified correctly, with full reproduction steps and evidence.</div>
+</div>
+
+<div class="section page-break" id="m5">
+<div class="mh"><h3>Module 5 &mdash; Test Planning &amp; Test Strategy</h3><p>Week 3 &nbsp;|&nbsp; 8 Hours &nbsp;|&nbsp; Level 2 Core Manual</p></div>
+<h3>Module Objective</h3>
+<p>A test plan is the most important document a QA professional creates. This module trains participants to write a professional Test Plan that would be accepted in any company review.</p>
+<h3>Test Plan Sections (PGC Standard)</h3>
+<table>
+<tr><th>#</th><th>Section</th><th>Description</th></tr>
+<tr><td>1</td><td>Revision Log</td><td>Version history of the document</td></tr>
+<tr><td>2</td><td>Approval Sheet</td><td>Prepared by, Reviewed by, Approved by</td></tr>
+<tr><td>3</td><td>Test Basis</td><td>FSD, BRD, Use Cases, FR references</td></tr>
+<tr><td>4</td><td>Background</td><td>Project context and purpose</td></tr>
+<tr><td>5</td><td>Purpose and Goal</td><td>What testing aims to achieve</td></tr>
+<tr><td>6</td><td>Test Scope</td><td>In-scope and out-of-scope features</td></tr>
+<tr><td>7</td><td>Overview of Testing</td><td>Functional, Integration, Regression, NFT</td></tr>
+<tr><td>8</td><td>Bug Priority Criteria</td><td>P1&ndash;P4 definitions and SLAs</td></tr>
+<tr><td>9</td><td>Entry / Exit Criteria</td><td>When to start and stop testing</td></tr>
+<tr><td>10</td><td>Test Environment</td><td>Server, tools, test users, test data</td></tr>
+<tr><td>11</td><td>Communication &amp; Reporting</td><td>Daily status, defect reports, summary</td></tr>
+<tr><td>12</td><td>Schedule &amp; Man-Hour</td><td>Timeline and effort estimates</td></tr>
+<tr><td>13</td><td>Risk Assessment</td><td>Product and project risks with mitigations</td></tr>
+<tr><td>14</td><td>References</td><td>All documents used as test basis</td></tr>
+<tr><td>15</td><td>Glossary</td><td>Key terms and definitions</td></tr>
+</table>
+<h3>Assignment</h3>
+<ul>
+<li>Write a complete Test Plan for the RAC QA Practice App covering all sections</li>
+<li>Estimate testing effort for a 2-sprint release with 6 user stories</li>
+<li>Create a Risk Register for testing the Transaction Form module</li>
+</ul>
+<div class="ms"><strong>Milestone Checkpoint:</strong> Module 5 Complete &mdash; Participant can write a professional Test Plan from scratch that would pass review in any IT company.</div>
+</div>
+
+<div class="section page-break" id="m6">
+<div class="mh"><h3>Module 6 &mdash; API Testing with Postman</h3><p>Week 4 &nbsp;|&nbsp; 10 Hours &nbsp;|&nbsp; Level 2 Core Manual</p></div>
+<h3>Module Objective</h3>
+<p>API testing is the most critical differentiator between a junior and mid-level QA in 2026. Every company expects QA engineers to know at least basic Postman. This module covers API testing comprehensively.</p>
+<h3>HTTP Methods QA Must Know</h3>
+<table>
+<tr><th>Method</th><th>Purpose</th><th>Example</th></tr>
+<tr><td>GET</td><td>Retrieve data from server</td><td>GET /api/users/123 &mdash; returns user profile</td></tr>
+<tr><td>POST</td><td>Create new resource</td><td>POST /api/transactions &mdash; creates a new transaction</td></tr>
+<tr><td>PUT</td><td>Update entire resource</td><td>PUT /api/users/123 &mdash; replaces entire user record</td></tr>
+<tr><td>PATCH</td><td>Partial update</td><td>PATCH /api/users/123 &mdash; updates only specified fields</td></tr>
+<tr><td>DELETE</td><td>Remove resource</td><td>DELETE /api/transactions/456 &mdash; deletes the transaction</td></tr>
+</table>
+<h3>HTTP Status Codes to Verify</h3>
+<table>
+<tr><th>Code</th><th>Meaning</th><th>When to Expect It</th></tr>
+<tr><td>200 OK</td><td>Request successful</td><td>Successful GET, PUT, PATCH</td></tr>
+<tr><td>201 Created</td><td>Resource created</td><td>Successful POST</td></tr>
+<tr><td>400 Bad Request</td><td>Invalid request data</td><td>Missing required fields, wrong format</td></tr>
+<tr><td>401 Unauthorized</td><td>Not authenticated</td><td>No token or expired token</td></tr>
+<tr><td>403 Forbidden</td><td>Not authorized</td><td>Valid token but insufficient permissions</td></tr>
+<tr><td>404 Not Found</td><td>Resource does not exist</td><td>Wrong ID or endpoint</td></tr>
+<tr><td>500 Internal Server Error</td><td>Server-side error</td><td>Bug in backend code</td></tr>
+</table>
+<h3>API Test Scenarios to Execute</h3>
+<ul>
+<li>Happy Path: Valid request with correct data &mdash; verify 200 OK and correct response body</li>
+<li>Invalid Data: Send wrong data types, missing required fields &mdash; verify 400 Bad Request</li>
+<li>Authentication: Test without token &mdash; verify 401 Unauthorized</li>
+<li>Authorization: Test with valid token but wrong role &mdash; verify 403 Forbidden</li>
+<li>Not Found: Request non-existent resource &mdash; verify 404 Not Found</li>
+<li>Response Validation: Verify response body structure, all required fields present, data types correct</li>
+<li>Response Time: Every API should respond in &lt; 2 seconds under normal load</li>
+</ul>
+<h3>Assignment</h3>
+<ul>
+<li>Install Postman. Test the public API: https://reqres.in &mdash; write 15 test cases covering GET, POST, PUT, DELETE</li>
+<li>Write API test cases for a Login API &mdash; positive case, wrong password, missing body</li>
+<li>Create a Postman Collection for all CRUD operations and export it</li>
+</ul>
+<div class="ms"><strong>Milestone Checkpoint:</strong> Module 6 Complete &mdash; Participant can test APIs with Postman and validate response codes, body, and response time.</div>
+</div>
+
+<div class="section page-break" id="m7">
+<div class="mh"><h3>Module 7 &mdash; Database Testing &amp; SQL Basics</h3><p>Week 5 &nbsp;|&nbsp; 8 Hours &nbsp;|&nbsp; Level 2 Core Manual</p></div>
+<h3>Module Objective</h3>
+<p>After any user action in the UI, QA must verify the database reflects the correct change. This is called backend verification &mdash; critical for data integrity testing.</p>
+<h3>Essential SQL Queries for QA</h3>
+<table>
+<tr><th>QA Action (UI)</th><th>Database Verification Query</th></tr>
+<tr><td>User registers with email</td><td>SELECT * FROM users WHERE email='newuser@test.com' &mdash; verify record exists</td></tr>
+<tr><td>Transaction submitted</td><td>SELECT * FROM transactions WHERE ref_no='TXN-001' &mdash; verify record created</td></tr>
+<tr><td>Profile updated</td><td>SELECT * FROM users WHERE id=1 &mdash; verify updated fields</td></tr>
+<tr><td>Record deleted</td><td>SELECT * FROM records WHERE id=X &mdash; verify soft delete flag or record gone</td></tr>
+</table>
+<h3>Database Testing Checklist</h3>
+<ul>
+<li>CRUD Verification: After every Create/Update/Delete action in UI, verify the corresponding DB change with SQL</li>
+<li>Null Constraints: Mandatory fields should not allow NULL in the database</li>
+<li>Unique Constraints: Email, phone, transaction ID &mdash; verify DB rejects duplicates</li>
+<li>Default Values: Fields with default values &mdash; verify they are set correctly</li>
+<li>Data Type Validation: Amount field should be DECIMAL, not VARCHAR</li>
+<li>Referential Integrity: Deleting a parent record should handle child records correctly</li>
+</ul>
+<h3>Assignment</h3>
+<ul>
+<li>Write 15 SQL queries to verify backend data after UI actions in the RAC QA Practice App</li>
+<li>Create a database verification checklist for the Transaction Form module</li>
+<li>Practice SQL on https://www.sqlfiddle.com &mdash; complete all exercises in the provided SQL exercise sheet</li>
+</ul>
+<div class="ms"><strong>Milestone Checkpoint:</strong> Module 7 Complete &mdash; Participant can write SQL queries and validate backend data after UI actions.</div>
+</div>
+
+<div class="section page-break" id="m8">
+<div class="mh"><h3>Module 8 &mdash; Automation Testing with Robot Framework</h3><p>Week 6&ndash;8 &nbsp;|&nbsp; 20 Hours &nbsp;|&nbsp; Level 3 Automation</p></div>
+<h3>Module Objective</h3>
+<p>Robot Framework is the primary automation tool used at PGC. This module builds complete proficiency &mdash; from installation and setup to writing and running automated test scripts for the RAC QA Practice App.</p>
+<h3>Setup Requirements</h3>
+<ul>
+<li>Python 3.10 or higher</li>
+<li>Robot Framework: pip install robotframework</li>
+<li>SeleniumLibrary: pip install robotframework-seleniumlibrary</li>
+<li>RequestsLibrary: pip install robotframework-requests</li>
+<li>VS Code with Robot Framework Language Server extension</li>
+<li>ChromeDriver or WebDriver Manager</li>
+</ul>
+<h3>Robot Framework Test Structure</h3>
+<table>
+<tr><th>Section</th><th>Purpose</th><th>Example</th></tr>
+<tr><td>*** Settings ***</td><td>Import libraries and resources</td><td>Library &nbsp;&nbsp;&nbsp;&nbsp;SeleniumLibrary</td></tr>
+<tr><td>*** Variables ***</td><td>Define reusable variables</td><td>${URL} &nbsp;&nbsp;&nbsp;&nbsp;http://localhost/login.html</td></tr>
+<tr><td>*** Test Cases ***</td><td>Define individual test cases</td><td>Login With Valid Credentials</td></tr>
+<tr><td>*** Keywords ***</td><td>Define reusable keywords</td><td>Open Login Page</td></tr>
+</table>
+<h3>Sample Test Case &mdash; Login Module</h3>
+<pre style="background:#1e1e1e;color:#d4d4d4;padding:14px;border-radius:6px;font-size:10pt;overflow-x:auto;">
+*** Settings ***
+Library    SeleniumLibrary
+
+*** Variables ***
+${URL}              http://localhost/login.html
+${BTN_LOGIN}        //button[@id='loginBtn']
+${TXT_EMAIL}        //input[@id='email']
+${TXT_PASSWORD}     //input[@id='password']
+${MSG_ERROR}        //div[@id='alertError']
+
+*** Test Cases ***
+Login With Valid Credentials
+    Open Browser    ${URL}    chrome
+    Input Text      ${TXT_EMAIL}       admin@rac.com
+    Input Text      ${TXT_PASSWORD}    Admin@123
+    Click Element   ${BTN_LOGIN}
+    Wait Until Element Is Visible    //div[@id='alertSuccess']
+    Close Browser
+
+Login With Empty Email
+    Open Browser    ${URL}    chrome
+    Click Element   ${BTN_LOGIN}
+    Element Should Be Visible    //div[@id='emailError']
+    Close Browser
+</pre>
+<h3>Hands-on Exercises</h3>
+<ul>
+<li>Automate the complete login flow for the RAC QA Practice App &mdash; valid login, invalid login, empty fields</li>
+<li>Automate the Registration form &mdash; valid registration, duplicate email, password mismatch</li>
+<li>Automate the Transaction Form &mdash; valid submission, invalid amount, missing fields</li>
+<li>Create a regression suite covering all 6 modules of the RAC QA Practice App</li>
+</ul>
+<h3>Assignment</h3>
+<ul>
+<li>Build a complete Robot Framework test suite for the RAC QA Practice App &mdash; minimum 20 automated test cases</li>
+<li>Organize tests into folders: tests/, resources/, results/</li>
+<li>Run the suite and generate an HTML report</li>
+<li>Create a requirements.txt with all dependencies</li>
+</ul>
+<div class="ms"><strong>Milestone Checkpoint:</strong> Module 8 Complete &mdash; Participant can write and run automated test scripts using Robot Framework for any web application.</div>
+</div>
+
+<div class="section page-break" id="m9">
+<div class="mh"><h3>Module 9 &mdash; Performance Testing with JMeter</h3><p>Week 9&ndash;10 &nbsp;|&nbsp; 12 Hours &nbsp;|&nbsp; Level 4 Performance</p></div>
+<h3>Module Objective</h3>
+<p>Performance testing ensures the system can handle the expected number of users without degradation. This module covers JMeter installation, test design, execution, and result analysis &mdash; aligned with PGC's load testing process.</p>
+<h3>Key Performance Metrics</h3>
+<table>
+<tr><th>Metric</th><th>Definition</th><th>Target</th></tr>
+<tr><td>Response Time</td><td>Time from request to complete response (ms)</td><td>&lt; 500ms (95th pct)</td></tr>
+<tr><td>Throughput (TPS)</td><td>Requests processed per second</td><td>Scales with users</td></tr>
+<tr><td>Error Rate</td><td>% of failed requests</td><td>&lt; 1%</td></tr>
+<tr><td>APDEX Score</td><td>User satisfaction score (0&ndash;1)</td><td>&gt; 0.85</td></tr>
+<tr><td>90th Percentile</td><td>90% of users get response faster than this</td><td>&lt; 1 second</td></tr>
+</table>
+<h3>JMeter Test Plan Structure</h3>
+<ul>
+<li>Thread Group: Define concurrent users, ramp-up period, duration</li>
+<li>HTTP Request Sampler: Define the API endpoint to test</li>
+<li>HTTP Header Manager: Add authentication headers</li>
+<li>Timer: Add think time between requests (Uniform Random Timer)</li>
+<li>Listeners: View Results Tree, Aggregate Report (disable during actual tests)</li>
+</ul>
+<h3>Running a Load Test</h3>
+<pre style="background:#1e1e1e;color:#d4d4d4;padding:14px;border-radius:6px;font-size:10pt;">
+# Run test and generate HTML report
+jmeter -n -t test_script.jmx -l results.jtl -e -o report_output
+
+# Generate report from existing results
+jmeter -g results.jtl -o report_output
+</pre>
+<h3>Reading the HTML Report</h3>
+<table>
+<tr><th>Section</th><th>What to Look For</th></tr>
+<tr><td>APDEX Table</td><td>Score should be &gt; 0.85. Lower = poor user experience.</td></tr>
+<tr><td>Statistics Table</td><td>Check error %, average, 90th/95th/99th percentiles, throughput</td></tr>
+<tr><td>Errors Section</td><td>Identify error types (503, 504, ConnectionClosedException)</td></tr>
+<tr><td>Response Times Over Time</td><td>Should be flat/stable. Spikes = bottlenecks.</td></tr>
+<tr><td>Transactions per Second</td><td>Should increase with load. Plateau = capacity ceiling.</td></tr>
+</table>
+<h3>Assignment</h3>
+<ul>
+<li>Install JMeter and run a basic load test against a public API (https://reqres.in)</li>
+<li>Design a load test for 50 concurrent users, 60-second ramp-up, 5-minute duration</li>
+<li>Generate an HTML report and write a 1-page analysis of the results</li>
+<li>Identify the breaking point by gradually increasing users from 10 to 100</li>
+</ul>
+<div class="ms"><strong>Milestone Checkpoint:</strong> Module 9 Complete &mdash; Participant can design, execute, and analyze a basic load test using JMeter.</div>
+</div>
+
+<div class="section page-break" id="m10">
+<div class="mh"><h3>Module 10 &mdash; Practice Project &amp; Final Assessment</h3><p>Week 11&ndash;12 &nbsp;|&nbsp; 16 Hours &nbsp;|&nbsp; Level 4 Project</p></div>
+<h3>Module Objective</h3>
+<p>Apply all skills learned in Modules 1&ndash;9 on the RAC QA Practice App. This is a full test cycle simulation &mdash; from test planning to test closure &mdash; demonstrating readiness for the Quality Engineer role.</p>
+<h3>Project Deliverables</h3>
+<table>
+<tr><th>Deliverable</th><th>Description</th><th>Due</th></tr>
+<tr><td>Test Plan</td><td>Complete test plan for the RAC QA Practice App following PGC format</td><td>Week 11, Day 1</td></tr>
+<tr><td>Test Cases</td><td>Minimum 50 test cases covering all 6 modules using PGC format</td><td>Week 11, Day 3</td></tr>
+<tr><td>Bug Reports</td><td>All bugs found documented with complete details (minimum 5 bugs)</td><td>Week 11, Day 5</td></tr>
+<tr><td>Automation Suite</td><td>Robot Framework test suite with minimum 15 automated test cases</td><td>Week 12, Day 2</td></tr>
+<tr><td>Test Summary Report</td><td>Final report with pass/fail counts, defect summary, and recommendation</td><td>Week 12, Day 5</td></tr>
+</table>
+<h3>Evaluation Criteria</h3>
+<table>
+<tr><th>Area</th><th>Weight</th><th>Criteria</th></tr>
+<tr><td>Test Case Quality</td><td>25%</td><td>Coverage, structure, clarity, use of design techniques</td></tr>
+<tr><td>Bug Reporting</td><td>20%</td><td>Completeness, reproducibility, severity/priority classification</td></tr>
+<tr><td>Test Planning</td><td>20%</td><td>Completeness of test plan, risk identification</td></tr>
+<tr><td>Automation</td><td>20%</td><td>Working scripts, proper structure, meaningful assertions</td></tr>
+<tr><td>Test Summary Report</td><td>15%</td><td>Accuracy, clarity, professional presentation</td></tr>
+</table>
+<div class="ms"><strong>Milestone Checkpoint:</strong> Module 10 Complete &mdash; Participant has demonstrated all Quality Engineer competencies and is ready for independent work.</div>
+</div>
+
+<div class="section page-break" id="assess">
+<h2 class="st">Assessment &amp; Certification Criteria</h2>
+<h3>Assessment Structure</h3>
+<table>
+<tr><th>Assessment</th><th>Weight</th><th>Passing Score</th></tr>
+<tr><td>Module Quizzes (10 modules)</td><td>20%</td><td>80% per quiz</td></tr>
+<tr><td>Practical Exercises (per module)</td><td>30%</td><td>75% per exercise</td></tr>
+<tr><td>Final Project (Module 10)</td><td>40%</td><td>75% overall</td></tr>
+<tr><td>Attendance &amp; Participation</td><td>10%</td><td>80% attendance</td></tr>
+<tr><td><strong>Total</strong></td><td><strong>100%</strong></td><td><strong>75% overall to pass</strong></td></tr>
+</table>
+<h3>Certification Levels</h3>
+<table>
+<tr><th>Score</th><th>Level</th><th>Certificate</th></tr>
+<tr><td>90&ndash;100%</td><td>Outstanding</td><td>QE Certificate with Distinction</td></tr>
+<tr><td>80&ndash;89%</td><td>Proficient</td><td>QE Certificate</td></tr>
+<tr><td>75&ndash;79%</td><td>Competent</td><td>QE Certificate</td></tr>
+<tr><td>Below 75%</td><td>Not Yet Competent</td><td>Certificate of Participation only</td></tr>
+</table>
+<div class="imp">Participants who do not pass may retake the final assessment once after additional coaching from the supervisor.</div>
+</div>
+
+<div class="section page-break" id="kpi">
+<h2 class="st">KPI &amp; Performance Metrics</h2>
+<p>After completing the program, Quality Engineers will be evaluated against these KPIs every sprint:</p>
+<table>
+<tr><th>KPI</th><th>Minimum</th><th>Target</th><th>Stretch</th></tr>
+<tr><td>Test Case Execution Rate</td><td>50% of adjusted target</td><td>75&ndash;89%</td><td>&ge; 100%</td></tr>
+<tr><td>Defect Detection Rate</td><td>&ge; 70%</td><td>&ge; 85%</td><td>&ge; 95%</td></tr>
+<tr><td>Defect Leakage Rate</td><td>&le; 10%</td><td>&le; 5%</td><td;&le; 1%</td></tr>
+<tr><td>Bug Report Quality</td><td>Accepted on 2nd submission</td><td>Accepted on 1st submission</td><td>Zero rejections</td></tr>
+<tr><td>Sprint Participation</td><td>80% attendance</td><td>100% attendance</td><td>100% + contributions</td></tr>
+<tr><td>Test Documentation</td><td>Test cases submitted</td><td>Test plan + cases + report</td><td>Full RTM + automation</td></tr>
+</table>
+<h3>Daily Target</h3>
+<table>
+<tr><th>Role</th><th>Daily Target</th><th>Adjusted For Leaves</th></tr>
+<tr><td>Quality Engineer</td><td>5 test cases per working day</td><td>Target = 5 x actual working days</td></tr>
+</table>
+<div class="tip">Approved leaves are deducted from the target. Unapproved absences with no output are counted against the performance score.</div>
+</div>
+
+<div class="fb">
+  RAC QA Training Program &nbsp;|&nbsp; Palawan Group of Companies &nbsp;|&nbsp;
+  Prepared by: <span>Raymond A. Ca&ntilde;ete Jr.</span> &nbsp;|&nbsp;
+  Testing &amp; Control Supervisor &nbsp;|&nbsp; Version 1.0 &nbsp;|&nbsp; 2026 &nbsp;|&nbsp; CONFIDENTIAL
+</div>
+</body>
+</html>

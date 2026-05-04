@@ -757,7 +757,7 @@
         <div class="timeline-item collapsed">
             <div class="timeline-header" onclick="toggleTimeline(this)">
                 <div class="timeline-header-left">
-                    <div class="job-title">Sr. Test Specialist Engineer</div>
+                    <div class="job-title">Test Specialist Engineer</div>
                     <div class="company">Music Group Commercial BM Ltd</div>
                 </div>
                 <div class="toggle-icon">▾</div>
@@ -904,6 +904,40 @@
             <button class="open-btn">📖 Open Guide</button>
         </div>
 
+        <!-- Card 5: QA Training Program -->
+        <div class="kb-card" onclick="openModal('training')">
+            <div class="kb-icon">🎓</div>
+            <h3>QA Training Program</h3>
+            <p>
+                A structured 3-month Quality Engineer development track covering
+                10 modules from QA fundamentals to automation and performance testing.
+            </p>
+            <div class="kb-tags">
+                <span class="kb-tag">Training</span>
+                <span class="kb-tag">10 Modules</span>
+                <span class="kb-tag">Quality Engineer</span>
+                <span class="kb-tag">3 Months</span>
+            </div>
+            <button class="open-btn">📖 Open Program</button>
+        </div>
+
+        <!-- Card 6: QA Practice App -->
+        <div class="kb-card" onclick="openPracticeApp()">
+            <div class="kb-icon">🧪</div>
+            <h3>QA Practice App</h3>
+            <p>
+                A hands-on web application with 6 modules for QA engineers to practice
+                test case writing, bug hunting, and automation scripting.
+            </p>
+            <div class="kb-tags">
+                <span class="kb-tag">Practice</span>
+                <span class="kb-tag">Bug Hunting</span>
+                <span class="kb-tag">6 Modules</span>
+                <span class="kb-tag">Hands-on</span>
+            </div>
+            <button class="open-btn">🚀 Open App</button>
+        </div>
+
     </div>
 </section>
 
@@ -980,8 +1014,17 @@
             title: '🔍 RAC XPath Extractor',
             subtitle: 'Chrome Extension · Robot Framework · XPath Generator',
             file: 'RAC_XPath_Extractor_Guide.html'
+        },
+        training: {
+            title: '🎓 QA Training Program',
+            subtitle: 'Quality Engineer Development Track · 3 Months · 10 Modules',
+            file: 'Learning/RAC_QA_Training_Program.html'
         }
     };
+
+    function openPracticeApp() {
+        window.open('Learning/QA_Practice_App/index.html', '_blank');
+    }
 
     function openModal(key) {
         const guide = guides[key];

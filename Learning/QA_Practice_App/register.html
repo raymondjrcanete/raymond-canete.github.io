@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Register — RAC QA Practice App</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Segoe UI',Arial,sans-serif; background:#f0f2f5; color:#222; min-height:100vh; display:flex; flex-direction:column; }
+nav { background:#1F3864; color:#fff; padding:14px 30px; display:flex; justify-content:space-between; align-items:center; }
+nav .logo { font-size:18px; font-weight:700; color:#fff; text-decoration:none; }
+nav .logo span { color:#BDD7EE; }
+nav ul { list-style:none; display:flex; gap:24px; }
+nav ul li a { color:rgba(255,255,255,0.85); text-decoration:none; font-size:14px; }
+.main { flex:1; display:flex; align-items:center; justify-content:center; padding:40px 20px; }
+.card { background:#fff; border-radius:14px; padding:40px; width:100%; max-width:480px; box-shadow:0 4px 20px rgba(0,0,0,0.1); }
+.card-header { text-align:center; margin-bottom:28px; }
+.card-header .icon { font-size:40px; margin-bottom:10px; }
+.card-header h2 { font-size:22px; font-weight:700; color:#1F3864; }
+.card-header p { font-size:13px; color:#777; margin-top:4px; }
+.form-row { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.form-group { margin-bottom:16px; }
+label { display:block; font-size:13px; font-weight:600; color:#333; margin-bottom:5px; }
+label .req { color:#c00; margin-left:2px; }
+input, select { width:100%; padding:10px 14px; border:1.5px solid #ddd; border-radius:8px; font-size:14px; transition:border 0.2s; outline:none; background:#fff; }
+input:focus, select:focus { border-color:#2E75B6; }
+input.error-field, select.error-field { border-color:#c00; }
+.error-msg { color:#c00; font-size:12px; margin-top:4px; display:none; }
+.error-msg.show { display:block; }
+.password-rules { font-size:11px; color:#777; margin-top:5px; line-height:1.6; }
+.password-rules span { display:block; }
+.password-rules span.met { color:#375623; }
+.password-rules span.met::before { content:'✅ '; }
+.password-rules span:not(.met)::before { content:'❌ '; }
+.btn { width:100%; padding:12px; background:#1F3864; color:#fff; border:none; border-radius:8px; font-size:15px; font-weight:700; cursor:pointer; transition:background 0.2s; margin-top:6px; }
+.btn:hover { background:#2E75B6; }
+.alert { padding:12px 16px; border-radius:8px; font-size:13px; margin-bottom:16px; display:none; }
+.alert.show { display:block; }
+.alert-success { background:#EBF5EB; border-left:4px solid #375623; color:#375623; }
+.alert-error { background:#FDECEA; border-left:4px solid #c00; color:#c00; }
+.links { text-align:center; margin-top:16px; font-size:13px; color:#777; }
+.links a { color:#2E75B6; text-decoration:none; }
+.hint-box { background:#EEF2F7; border-radius:8px; padding:12px 16px; margin-top:20px; font-size:12px; color:#555; }
+.hint-box strong { color:#1F3864; }
+.footer { background:#1F3864; color:rgba(255,255,255,0.6); text-align:center; padding:16px; font-size:12px; }
+.footer span { color:#BDD7EE; }
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="logo">RAC <span>QA Practice App</span></a>
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="login.html">Login</a></li>
+  </ul>
+</nav>
+
+<div class="main">
+  <div class="card">
+    <div class="card-header">
+      <div class="icon">📝</div>
+      <h2>Create Account</h2>
+      <p>Fill in all required fields to register</p>
+    </div>
+
+    <div class="alert alert-error" id="alertError"></div>
+    <div class="alert alert-success" id="alertSuccess"></div>
+
+    <form id="registerForm" novalidate>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="firstName">First Name <span class="req">*</span></label>
+          <input type="text" id="firstName" placeholder="Juan" maxlength="50">
+          <div class="error-msg" id="firstNameError"></div>
+        </div>
+        <div class="form-group">
+          <label for="lastName">Last Name <span class="req">*</span></label>
+          <input type="text" id="lastName" placeholder="Dela Cruz" maxlength="50">
+          <div class="error-msg" id="lastNameError"></div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email Address <span class="req">*</span></label>
+        <input type="email" id="email" placeholder="juan@example.com" maxlength="100">
+        <div class="error-msg" id="emailError"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Phone Number <span class="req">*</span></label>
+        <input type="text" id="phone" placeholder="09XXXXXXXXX" maxlength="11">
+        <div class="error-msg" id="phoneError"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="age">Age <span class="req">*</span></label>
+        <input type="number" id="age" placeholder="Enter age (18-60)" min="18" max="60">
+        <div class="error-msg" id="ageError"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="role">Role <span class="req">*</span></label>
+        <select id="role">
+          <option value="">-- Select Role --</option>
+          <option value="user">User</option>
+          <option value="admin">Admin</option>
+          <option value="viewer">Viewer</option>
+        </select>
+        <div class="error-msg" id="roleError"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password <span class="req">*</span></label>
+        <input type="password" id="password" placeholder="Create a strong password" maxlength="20">
+        <div class="password-rules" id="pwRules">
+          <span id="rule-len">Minimum 8 characters</span>
+          <span id="rule-upper">At least 1 uppercase letter</span>
+          <span id="rule-num">At least 1 number</span>
+          <span id="rule-special">At least 1 special character (!@#$%)</span>
+        </div>
+        <div class="error-msg" id="passwordError"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password <span class="req">*</span></label>
+        <input type="password" id="confirmPassword" placeholder="Re-enter your password" maxlength="20">
+        <div class="error-msg" id="confirmPasswordError"></div>
+      </div>
+
+      <button type="submit" class="btn">Create Account</button>
+    </form>
+
+    <div class="links">
+      Already have an account? <a href="login.html">Login</a>
+    </div>
+
+    <div class="hint-box">
+      <strong>🧪 QA Scenarios to Test:</strong><br>
+      • Leave all fields empty — submit<br>
+      • First name with numbers (e.g. "Juan123")<br>
+      • Phone: 10 digits, 12 digits, letters<br>
+      • Age: 17, 18, 60, 61, 0, -1, 999<br>
+      • Password: no uppercase, no number, no special char<br>
+      • Confirm password mismatch<br>
+      • Email already registered (admin@rac.com)
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  RAC QA Practice App &nbsp;|&nbsp; Registration Module &nbsp;|&nbsp; Built by <span>Raymond A. Cañete Jr.</span>
+</div>
+
+<script>
+// Password rules live check
+document.getElementById('password').addEventListener('input', function() {
+  const pw = this.value;
+  toggle('rule-len',     pw.length >= 8);
+  toggle('rule-upper',   /[A-Z]/.test(pw));
+  toggle('rule-num',     /[0-9]/.test(pw));
+  toggle('rule-special', /[!@#$%^&*]/.test(pw));
+});
+
+function toggle(id, met) {
+  const el = document.getElementById(id);
+  if (met) el.classList.add('met'); else el.classList.remove('met');
+}
+
+function showErr(fieldId, errId, msg) {
+  document.getElementById(fieldId).classList.add('error-field');
+  const e = document.getElementById(errId);
+  e.textContent = msg; e.classList.add('show');
+}
+function clearErr(fieldId, errId) {
+  document.getElementById(fieldId).classList.remove('error-field');
+  document.getElementById(errId).classList.remove('show');
+}
+
+const REGISTERED = ['admin@rac.com', 'user@rac.com'];
+
+document.getElementById('registerForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  ['firstName','lastName','email','phone','age','role','password','confirmPassword'].forEach(id => {
+    clearErr(id, id + 'Error');
+  });
+  document.getElementById('alertError').classList.remove('show');
+  document.getElementById('alertSuccess').classList.remove('show');
+
+  const fn  = document.getElementById('firstName').value.trim();
+  const ln  = document.getElementById('lastName').value.trim();
+  const em  = document.getElementById('email').value.trim();
+  const ph  = document.getElementById('phone').value.trim();
+  const age = document.getElementById('age').value.trim();
+  const rl  = document.getElementById('role').value;
+  const pw  = document.getElementById('password').value;
+  const cpw = document.getElementById('confirmPassword').value;
+  let valid = true;
+
+  if (!fn) { showErr('firstName','firstNameError','First name is required.'); valid=false; }
+  else if (!/^[A-Za-z\s\-']+$/.test(fn)) { showErr('firstName','firstNameError','First name must contain letters only.'); valid=false; }
+  else if (fn.length < 2) { showErr('firstName','firstNameError','First name must be at least 2 characters.'); valid=false; }
+
+  if (!ln) { showErr('lastName','lastNameError','Last name is required.'); valid=false; }
+  else if (!/^[A-Za-z\s\-']+$/.test(ln)) { showErr('lastName','lastNameError','Last name must contain letters only.'); valid=false; }
+
+  if (!em) { showErr('email','emailError','Email address is required.'); valid=false; }
+  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) { showErr('email','emailError','Please enter a valid email address.'); valid=false; }
+  else if (REGISTERED.includes(em.toLowerCase())) { showErr('email','emailError','This email address is already registered.'); valid=false; }
+
+  if (!ph) { showErr('phone','phoneError','Phone number is required.'); valid=false; }
+  // BUG-REG-02: Phone validation regex is wrong — accepts 10-digit numbers starting with 09
+  // Expected: must be exactly 11 digits starting with 09 (e.g. 09123456789)
+  // Actual: "0912345678" (10 digits) passes because regex has \d{9} but 09 + 9 digits = 11 total — wait
+  // REAL BUG: regex allows phone numbers starting with 08 or 07 — only 09 should be valid
+  // Try: 08123456789 — it will PASS but should FAIL
+  else if (!/^09\d{9}$/.test(ph)) { showErr('phone','phoneError','Phone number must be 11 digits starting with 09 (e.g. 09123456789).'); valid=false; }
+
+  if (!age) { showErr('age','ageError','Age is required.'); valid=false; }
+  // BUG-REG-01: Age boundary is wrong — should reject age 17 but accepts it
+  // Expected: minimum age is 18, so age 17 should show error
+  // Actual: condition uses < 18 which means age 17 passes validation (17 < 18 is true but parseInt(17) < 18 is also true... wait)
+  // REAL BUG: max age check uses > 60 but requirement says max is 60 (should be >= 61 or > 60 is correct)
+  // Hidden bug: age 0 and negative numbers pass because isNaN check doesn't catch negative
+  else if (isNaN(age) || parseInt(age) < 18) { showErr('age','ageError','Age must be at least 18 years old.'); valid=false; }
+  else if (parseInt(age) > 60) { showErr('age','ageError','Age must not exceed 60 years old.'); valid=false; }
+
+  if (!rl) { showErr('role','roleError','Please select a role.'); valid=false; }
+
+  if (!pw) { showErr('password','passwordError','Password is required.'); valid=false; }
+  else if (pw.length < 8) { showErr('password','passwordError','Password must be at least 8 characters.'); valid=false; }
+  // BUG-REG-03: Max password length (20 chars) is enforced by maxlength HTML attribute
+  // but NOT validated in JavaScript — if maxlength is bypassed (e.g. via DevTools or automation),
+  // a 50-character password will be accepted without error
+  // Expected: JS validation should also check pw.length > 20
+  // Actual: only HTML maxlength prevents it — no JS error message shown
+  else if (!/[A-Z]/.test(pw)) { showErr('password','passwordError','Password must contain at least 1 uppercase letter.'); valid=false; }
+  else if (!/[0-9]/.test(pw)) { showErr('password','passwordError','Password must contain at least 1 number.'); valid=false; }
+  else if (!/[!@#$%^&*]/.test(pw)) { showErr('password','passwordError','Password must contain at least 1 special character (!@#$%^&*).'); valid=false; }
+
+  if (!cpw) { showErr('confirmPassword','confirmPasswordError','Please confirm your password.'); valid=false; }
+  else if (pw !== cpw) { showErr('confirmPassword','confirmPasswordError','Passwords do not match.'); valid=false; }
+
+  if (!valid) return;
+
+  const el = document.getElementById('alertSuccess');
+  el.textContent = `Account created successfully! Welcome, ${fn} ${ln}. Redirecting to login...`;
+  el.classList.add('show');
+  setTimeout(() => { window.location.href = 'login.html'; }, 2000);
+});
+</script>
+</body>
+</html>
