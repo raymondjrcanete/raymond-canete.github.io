@@ -167,6 +167,18 @@
             background: linear-gradient(to right, var(--accent), transparent);
         }
 
+        .section-content-collapse {
+            overflow: hidden;
+            transition: max-height 0.4s ease, opacity 0.3s ease;
+            max-height: 3000px;
+            opacity: 1;
+        }
+
+        .section-content-collapse.collapsed {
+            max-height: 0;
+            opacity: 0;
+        }
+
         .section-subtitle {
             color: var(--muted);
             font-size: 14px;
@@ -258,8 +270,8 @@
             margin-bottom: 30px;
             background: var(--white);
             border-radius: 12px;
-            padding: 20px 25px;
             box-shadow: var(--card-shadow);
+            overflow: hidden;
         }
 
         .timeline-item::before {
@@ -274,6 +286,20 @@
             border: 2px solid white;
             box-shadow: 0 0 0 2px var(--accent);
         }
+
+        .timeline-header {
+            padding: 20px 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+            transition: background 0.2s;
+        }
+
+        .timeline-header:hover { background: #f8f9fa; }
+
+        .timeline-header-left { flex: 1; }
 
         .timeline-item .job-title {
             font-size: 15px;
@@ -291,13 +317,42 @@
         .timeline-item .period {
             font-size: 12px;
             color: var(--muted);
-            margin-bottom: 10px;
+            margin-top: 2px;
+        }
+
+        .toggle-icon {
+            font-size: 18px;
+            color: var(--accent);
+            font-weight: bold;
+            transition: transform 0.3s;
+            flex-shrink: 0;
+            margin-left: 15px;
+        }
+
+        .timeline-item.collapsed .toggle-icon { transform: rotate(-90deg); }
+
+        .timeline-body {
+            padding: 0 25px 20px 25px;
+            border-top: 1px solid #f0f0f0;
+            transition: max-height 0.35s ease, opacity 0.3s ease, padding 0.3s ease;
+            max-height: 500px;
+            opacity: 1;
+            overflow: hidden;
+        }
+
+        .timeline-item.collapsed .timeline-body {
+            max-height: 0;
+            opacity: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+            border-top: none;
         }
 
         .timeline-item ul {
             padding-left: 18px;
             font-size: 13px;
             color: var(--muted);
+            margin-top: 12px;
         }
 
         .timeline-item ul li { margin-bottom: 4px; }
@@ -673,65 +728,105 @@
 
 <!-- EXPERIENCE -->
 <section id="experience">
-    <div class="section-title">Experience</div>
-    <p class="section-subtitle">Professional background and key responsibilities</p>
+    <div class="section-title" onclick="toggleSection('experienceContent', this)" style="cursor:pointer; user-select:none;">
+        Experience <span id="experienceToggle" style="font-size:14px; color:var(--accent); margin-left:8px;">▾</span>
+    </div>
+    <p class="section-subtitle">Professional background and key responsibilities — click title to collapse</p>
+    <div id="experienceContent" class="section-content-collapse">
     <div class="timeline">
+
         <div class="timeline-item">
-            <div class="job-title">Testing &amp; Control Supervisor</div>
-            <div class="company">Palawan Group of Companies</div>
-            <div class="period">📅 November 2023 – Present</div>
-            <ul>
-                <li>Create and execute both manual and automated tests with focus on test plans and test strategies</li>
-                <li>Implemented automation frameworks and utilized UFT One as an automation tool; trained team members in automation testing</li>
-                <li>Leading load testing initiatives including planning, execution, and analysis using JMeter and other performance test frameworks</li>
-                <li>Spearheading the formulation and improvement of QA Policies and Processes aligned with organizational goals and industry best practices</li>
-                <li>Managing a team of QA professionals — providing mentorship, task delegation, and performance monitoring</li>
-            </ul>
+            <div class="timeline-header" onclick="toggleTimeline(this)">
+                <div class="timeline-header-left">
+                    <div class="job-title">Testing &amp; Control Supervisor</div>
+                    <div class="company">Palawan Group of Companies</div>
+                </div>
+                <div class="toggle-icon">▾</div>
+            </div>
+            <div class="timeline-body">
+                <ul>
+                    <li>Create and execute both manual and automated tests with focus on test plans and test strategies</li>
+                    <li>Implemented automation frameworks and utilized UFT One as an automation tool; trained team members in automation testing</li>
+                    <li>Leading load testing initiatives including planning, execution, and analysis using JMeter and other performance test frameworks</li>
+                    <li>Proactively proposed and contributed to the improvement of QA Policies and Processes in alignment with organizational goals and industry best practices.</li>
+                    <li>Managing a team of QA professionals by providing mentorship, task delegation, and performance monitoring</li>
+                </ul>
+            </div>
         </div>
-        <div class="timeline-item">
-            <div class="job-title">Test Specialist Engineer</div>
-            <div class="company">Music Group Commercial BM Ltd</div>
-            <div class="period">📅 September 2020 – October 2023</div>
-            <ul>
-                <li>Created and executed manual and automation testing for e-commerce and Digital Asset Management (AEM) platforms</li>
-                <li>Responsible for test plan creation, test case design, execution, and automation</li>
-                <li>Served as one of the administrators for Adobe Experience Manager (AEM)</li>
-            </ul>
+
+        <div class="timeline-item collapsed">
+            <div class="timeline-header" onclick="toggleTimeline(this)">
+                <div class="timeline-header-left">
+                    <div class="job-title">Test Specialist Engineer</div>
+                    <div class="company">Music Group Commercial BM Ltd</div>
+                </div>
+                <div class="toggle-icon">▾</div>
+            </div>
+            <div class="timeline-body">
+                <ul>
+                    <li>Created and executed manual and automation testing for e-commerce and Digital Asset Management (AEM) platforms</li>
+                    <li>Responsible for test plan creation, test case design, execution, and automation</li>
+                    <li>Served as one of the administrators for Adobe Experience Manager (AEM)</li>
+                </ul>
+            </div>
         </div>
-        <div class="timeline-item">
-            <div class="job-title">Test Specialist Engineer</div>
-            <div class="company">Salarium</div>
-            <div class="period">📅 January 2020 – August 2020</div>
-            <ul>
-                <li>Analyzed requirements and created test designs and test cases</li>
-                <li>Designed testing scenarios demonstrating conformance to functional and non-functional requirements</li>
-                <li>Executed functional, usability, and performance testing on mobile applications</li>
-                <li>Analyzed test results and reported on testing progress</li>
-            </ul>
+
+        <div class="timeline-item collapsed">
+            <div class="timeline-header" onclick="toggleTimeline(this)">
+                <div class="timeline-header-left">
+                    <div class="job-title">Test Specialist Engineer</div>
+                    <div class="company">Salarium</div>
+                </div>
+                <div class="toggle-icon">▾</div>
+            </div>
+            <div class="timeline-body">
+                <ul>
+                    <li>Analyzed requirements and created test designs and test cases</li>
+                    <li>Designed testing scenarios demonstrating conformance to functional and non-functional requirements</li>
+                    <li>Executed functional, usability, and performance testing on mobile applications</li>
+                    <li>Analyzed test results and reported on testing progress</li>
+                </ul>
+            </div>
         </div>
-        <div class="timeline-item">
-            <div class="job-title">Test Engineer 4</div>
-            <div class="company">VALTES Advanced Technology</div>
-            <div class="period">📅 January 2018 – January 2020</div>
-            <ul>
-                <li>Analyzed requirements and created test designs and test cases</li>
-                <li>Conducted comprehensive testing for mobile applications in banking and payroll domains</li>
-                <li>Ensured delivery of high-quality and secure software solutions</li>
-                <li>Analyzed test results and reported on testing progress</li>
-            </ul>
+
+        <div class="timeline-item collapsed">
+            <div class="timeline-header" onclick="toggleTimeline(this)">
+                <div class="timeline-header-left">
+                    <div class="job-title">Test Engineer 4</div>
+                    <div class="company">VALTES Advanced Technology</div>
+                </div>
+                <div class="toggle-icon">▾</div>
+            </div>
+            <div class="timeline-body">
+                <ul>
+                    <li>Analyzed requirements and created test designs and test cases</li>
+                    <li>Conducted comprehensive testing for mobile applications in banking and payroll domains</li>
+                    <li>Ensured delivery of high-quality and secure software solutions</li>
+                    <li>Analyzed test results and reported on testing progress</li>
+                </ul>
+            </div>
         </div>
-        <div class="timeline-item">
-            <div class="job-title">Failure Analysis (QA)</div>
-            <div class="company">Toshiba Information Equipment (Phils.), Inc.</div>
-            <div class="period">📅 September 2014 – January 2018</div>
-            <ul>
-                <li>Regular monitoring and analysis of workshop pass rate (Electrical/Servo-related failures)</li>
-                <li>Provided countermeasures and design revision suggestions based on investigation results</li>
-                <li>Improved in-process yield by investigating failures and creating Design of Experiments (DOE)</li>
-                <li>Created basic automation tools using VBA for faster workflow and data analysis</li>
-                <li>Published investigation results to concerned parties</li>
-            </ul>
+
+        <div class="timeline-item collapsed">
+            <div class="timeline-header" onclick="toggleTimeline(this)">
+                <div class="timeline-header-left">
+                    <div class="job-title">Failure Analyst (QA)</div>
+                    <div class="company">Toshiba Information Equipment (Phils.), Inc.</div>
+                </div>
+                <div class="toggle-icon">▾</div>
+            </div>
+            <div class="timeline-body">
+                <ul>
+                    <li>Regular monitoring and analysis of workshop pass rate (Electrical/Servo-related failures)</li>
+                    <li>Provided countermeasures and design revision suggestions based on investigation results</li>
+                    <li>Improved in-process yield by investigating failures and creating Design of Experiments (DOE)</li>
+                    <li>Created basic automation tools using VBA for faster workflow and data analysis</li>
+                    <li>Published investigation results to concerned parties</li>
+                </ul>
+            </div>
         </div>
+
+    </div>
     </div>
 </section>
 
@@ -924,6 +1019,20 @@
             }
         });
     });
+
+    // Toggle experience items
+    function toggleTimeline(header) {
+        const item = header.closest('.timeline-item');
+        item.classList.toggle('collapsed');
+    }
+
+    // Toggle entire section
+    function toggleSection(contentId, titleEl) {
+        const content = document.getElementById(contentId);
+        const icon = titleEl.querySelector('span');
+        content.classList.toggle('collapsed');
+        icon.textContent = content.classList.contains('collapsed') ? '▸' : '▾';
+    }
 </script>
 
 </body>
