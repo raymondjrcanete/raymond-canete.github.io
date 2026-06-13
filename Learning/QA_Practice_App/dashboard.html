@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — RAC QA Practice App</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Segoe UI',Arial,sans-serif; background:#f0f2f5; color:#222; min-height:100vh; display:flex; flex-direction:column; }
+nav { background:#1F3864; color:#fff; padding:14px 30px; display:flex; justify-content:space-between; align-items:center; }
+nav .logo { font-size:18px; font-weight:700; color:#fff; text-decoration:none; }
+nav .logo span { color:#BDD7EE; }
+nav .nav-right { display:flex; align-items:center; gap:20px; }
+nav .user-info { font-size:13px; color:#BDD7EE; }
+nav .btn-logout { background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.3); color:#fff; padding:6px 14px; border-radius:6px; font-size:13px; cursor:pointer; }
+nav .btn-logout:hover { background:rgba(255,255,255,0.25); }
+.main { flex:1; padding:30px 20px; max-width:1100px; margin:0 auto; width:100%; }
+.welcome { margin-bottom:24px; }
+.welcome h2 { font-size:22px; font-weight:700; color:#1F3864; }
+.welcome p { font-size:13px; color:#777; margin-top:4px; }
+.stats-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:16px; margin-bottom:30px; }
+.stat-card { background:#fff; border-radius:12px; padding:20px; box-shadow:0 3px 12px rgba(0,0,0,0.07); border-left:4px solid #2E75B6; }
+.stat-card .stat-label { font-size:12px; color:#777; margin-bottom:6px; }
+.stat-card .stat-value { font-size:26px; font-weight:700; color:#1F3864; }
+.stat-card .stat-change { font-size:11px; color:#375623; margin-top:4px; }
+.section-title { font-size:16px; font-weight:700; color:#1F3864; margin-bottom:14px; }
+.table-card { background:#fff; border-radius:12px; padding:24px; box-shadow:0 3px 12px rgba(0,0,0,0.07); margin-bottom:24px; }
+table { width:100%; border-collapse:collapse; font-size:13px; }
+th { background:#1F3864; color:#fff; padding:10px 14px; text-align:left; font-weight:600; }
+td { padding:10px 14px; border-bottom:1px solid #f0f0f0; }
+tr:last-child td { border-bottom:none; }
+tr:hover td { background:#f8f9fa; }
+.badge { display:inline-block; padding:3px 10px; border-radius:12px; font-size:11px; font-weight:600; }
+.badge-success { background:#EBF5EB; color:#375623; }
+.badge-pending { background:#FFF9E6; color:#7F6000; }
+.badge-failed  { background:#FDECEA; color:#c00; }
+.action-btn { padding:5px 12px; border:none; border-radius:6px; font-size:12px; cursor:pointer; }
+.btn-view { background:#EEF2F7; color:#2E75B6; }
+.btn-view:hover { background:#BDD7EE; }
+.quick-actions { display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:14px; margin-bottom:30px; }
+.qa-btn { background:#fff; border-radius:10px; padding:18px; box-shadow:0 3px 12px rgba(0,0,0,0.07); text-align:center; cursor:pointer; text-decoration:none; color:inherit; transition:transform 0.2s; display:block; }
+.qa-btn:hover { transform:translateY(-3px); }
+.qa-btn .icon { font-size:26px; margin-bottom:8px; }
+.qa-btn span { font-size:13px; font-weight:600; color:#1F3864; }
+.admin-only { display:none; }
+.footer { background:#1F3864; color:rgba(255,255,255,0.6); text-align:center; padding:16px; font-size:12px; }
+.footer span { color:#BDD7EE; }
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="logo">RAC <span>QA Practice App</span></a>
+  <div class="nav-right">
+    <span class="user-info" id="userInfo">Welcome, Guest</span>
+    <button class="btn-logout" onclick="logout()">Logout</button>
+  </div>
+</nav>
+
+<div class="main">
+  <div class="welcome">
+    <h2 id="welcomeMsg">Dashboard</h2>
+    <p id="roleMsg">Loading...</p>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-label">Total Transactions</div>
+      <div class="stat-value">1,284</div>
+      <div class="stat-change">↑ 12% this month</div>
+    </div>
+    <div class="stat-card" style="border-color:#375623;">
+      <div class="stat-label">Approved</div>
+      <div class="stat-value" style="color:#375623;">1,102</div>
+      <div class="stat-change">85.8% approval rate</div>
+    </div>
+    <div class="stat-card" style="border-color:#FFC000;">
+      <div class="stat-label">Pending</div>
+      <div class="stat-value" style="color:#7F6000;">142</div>
+      <div class="stat-change">Awaiting review</div>
+    </div>
+    <div class="stat-card" style="border-color:#c00;">
+      <div class="stat-label">Failed</div>
+      <div class="stat-value" style="color:#c00;">40</div>
+      <div class="stat-change">3.1% failure rate</div>
+    </div>
+  </div>
+
+  <div class="section-title">Quick Actions</div>
+  <div class="quick-actions">
+    <a href="transaction.html" class="qa-btn">
+      <div class="icon">💳</div>
+      <span>New Transaction</span>
+    </a>
+    <a href="search.html" class="qa-btn">
+      <div class="icon">🔍</div>
+      <span>Search Records</span>
+    </a>
+    <a href="profile.html" class="qa-btn">
+      <div class="icon">👤</div>
+      <span>My Profile</span>
+    </a>
+    <a href="#" class="qa-btn admin-only" id="adminPanel">
+      <div class="icon">⚙️</div>
+      <span>Admin Panel</span>
+    </a>
+  </div>
+
+  <div class="table-card">
+    <div class="section-title">Recent Transactions</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Reference No.</th>
+          <th>Type</th>
+          <th>Amount (PHP)</th>
+          <th>Account</th>
+          <th>Date</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>TXN-20260501</td>
+          <td>Deposit</td>
+          <td>5,000.00</td>
+          <td>123456789012</td>
+          <td>2026-05-01</td>
+          <td><span class="badge badge-success">Approved</span></td>
+          <td><button class="action-btn btn-view">View</button></td>
+        </tr>
+        <tr>
+          <td>TXN-20260430</td>
+          <td>Transfer</td>
+          <td>12,500.00</td>
+          <td>987654321098</td>
+          <td>2026-04-30</td>
+          <td><span class="badge badge-pending">Pending</span></td>
+          <td><button class="action-btn btn-view">View</button></td>
+        </tr>
+        <tr>
+          <td>TXN-20260429</td>
+          <td>Withdrawal</td>
+          <td>2,000.00</td>
+          <td>456789012345</td>
+          <td>2026-04-29</td>
+          <td><span class="badge badge-failed">Failed</span></td>
+          <td><button class="action-btn btn-view">View</button></td>
+        </tr>
+        <tr>
+          <td>TXN-20260428</td>
+          <td>Payment</td>
+          <td>850.00</td>
+          <td>321098765432</td>
+          <td>2026-04-28</td>
+          <td><span class="badge badge-success">Approved</span></td>
+          <td><button class="action-btn btn-view">View</button></td>
+        </tr>
+        <tr>
+          <td>TXN-20260427</td>
+          <td>Deposit</td>
+          <td>25,000.00</td>
+          <td>654321098765</td>
+          <td>2026-04-27</td>
+          <td><span class="badge badge-success">Approved</span></td>
+          <td><button class="action-btn btn-view">View</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="footer">
+  RAC QA Practice App &nbsp;|&nbsp; Dashboard &nbsp;|&nbsp; Built by <span>Raymond A. Cañete Jr.</span>
+</div>
+
+<script>
+// Load user from session
+const user = JSON.parse(sessionStorage.getItem('loggedInUser') || '{"name":"Guest","role":"User","email":"guest"}');
+document.getElementById('userInfo').textContent = user.name + ' (' + user.role + ')';
+document.getElementById('welcomeMsg').textContent = 'Welcome back, ' + user.name + '!';
+document.getElementById('roleMsg').textContent = 'Role: ' + user.role + ' | ' + new Date().toLocaleDateString('en-PH', {weekday:'long', year:'numeric', month:'long', day:'numeric'});
+
+// Show admin panel only for Admin role
+if (user.role === 'Admin') {
+  document.getElementById('adminPanel').style.display = 'block';
+}
+
+function logout() {
+  sessionStorage.removeItem('loggedInUser');
+  window.location.href = 'login.html';
+}
+</script>
+</body>
+</html>
